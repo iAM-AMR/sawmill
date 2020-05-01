@@ -1,11 +1,18 @@
 Package: sawmill
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Process Queries from the CEDAR Database
+Version: 0.0.0.9000
+Authors@R: 
+    person("Brennan", "Chapman", email = "chapmanb@uoguelph.ca", role = c("aut", "cre"))
+Description:
+    The data in CEDAR requires processing before it can be used in an iAM.AMR model. sawmill
+    processes the queries from CEDAR, by converting raw data into measures of association, 
+    by performing meta-analysess, and by standardizing output fields.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.1.0
+Imports: 
+    dplyr,
+    readr,
+    readxl

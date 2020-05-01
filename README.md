@@ -20,11 +20,11 @@ These instructions will walk you through how to download and install `sawmill`, 
 - timber
 - the CEDAR version number (v1 or v2)
 - R and (optionally) RStudio
-- the [bootstrap code](bootstrap/bootstrap.R)
+- the [bootstrap code](bootstrap/)
 
 #### Instructions
 
-1. Download or copy the [bootstrap code](bootstrap/bootstrap.R) and run it in R or RStudio
+1. Download or copy the [bootstrap code](bootstrap) and run it in R or RStudio
    to download and install `sawmill` and start the processing pipeline.
 1. When prompted, supply the timber, CEDAR version number (1 or 2), and choose a save location for the output.
 1. Enjoy.

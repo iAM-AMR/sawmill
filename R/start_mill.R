@@ -20,9 +20,9 @@ start_mill <- function(){
   file_path  <- file.choose()
   raw_timber <- readxl::read_excel(file_path)
 
-  user_vers  <- readline(prompt="\nWhat version of CEDAR is this export from? Enter 1 or 2 to continue.")
+  user_vers  <- readline(prompt="\nWhat version of CEDAR is this export from? Enter 1 or 2 to continue:  ")
 
-  sawmill::check_version(user_vers)
+  check_version(user_vers)
 
   furniture  <- mill(raw_timber, cedar_version = user_vers)
 

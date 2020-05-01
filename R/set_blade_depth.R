@@ -33,7 +33,7 @@ set_blade_depth <- function(cedar_version = 2) {
                            cedar_v1 = readr::col_character(),
                            cedar_v2 = readr::col_character())
 
-  kerf      <- readr::read_csv("data/import_filter.csv",
+  kerf      <- readr::read_csv(system.file("raw_Data", "import_filter.csv", package = "sawmill"),
                                col_types = kerf_cols)
 
   old_names          <- kerf[, paste0("cedar_v", cedar_version)]

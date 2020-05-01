@@ -31,7 +31,7 @@ These instructions will walk you through how to download and install `sawmill`, 
 
 ### Standard Installation
 
-The standard installation method is also quick and easy, but is best suited for more experienced users, those looking to run `sawmill` with non-default settings, and development.
+The standard installation method is also quick and easy, but is best suited for more experienced users, those looking to run `sawmill` with non-default settings, and those looking to perform development tasks.
 
 #### You Will Need:
 
@@ -43,11 +43,11 @@ The standard installation method is also quick and easy, but is best suited for 
 
 1. Download or clone the repository.
 1. Either:
-  - use RStudio's *Install and Restart* feature in the *Build* tab to install the package
-  - use devtools to load the package
+   - use RStudio's *Install and Restart* feature in the *Build* tab to install the package.
+   - use devtools to load the package.
 1. Either:
-  - load the timber, and run the main function, `sawmill::mill()` with custom arguments.
-  - run the interactive, default pipeline with `sawmill::start_mill()` to load the timber and run the main function, `sawmill::mill()` with default arguments.
+   - load the timber, and run the main function, `sawmill::mill()` with custom arguments.
+   - run the interactive, default pipeline with `sawmill::start_mill()` to load the timber and run the main function, `sawmill::mill()` with default arguments.
 
 ## Getting Help
 

@@ -7,6 +7,8 @@ Each of the iAM.AMR models are informed by one or more queries to the CEDAR (*Co
 
 The **sawmill** package processes CEDAR timber, performing quality control, and calculating measures of association.
 
+
+
 ## Installation and Use
 
 ### Bootstrap Installation
@@ -18,7 +20,7 @@ These instructions will walk you through how to download and install `sawmill`, 
 #### You Will Need:
 
 - timber
-- the CEDAR version number (v1 or v2)
+- the CEDAR version number (version 1, or version 2)
 - R and (optionally) RStudio
 - the [bootstrap code](bootstrap/)
 
@@ -29,6 +31,7 @@ These instructions will walk you through how to download and install `sawmill`, 
 1. When prompted, supply the timber, CEDAR version number (1 or 2), and choose a save location for the output.
 1. Enjoy.
 
+
 ### Standard Installation
 
 The standard installation method is also quick and easy, but is best suited for more experienced users, those looking to run `sawmill` with non-default settings, and those looking to perform development tasks.
@@ -36,7 +39,7 @@ The standard installation method is also quick and easy, but is best suited for 
 #### You Will Need:
 
 - timber
-- the CEDAR version number (v1 or v2)
+- the CEDAR version number (version 1, or version 2)
 - R and RStudio
 
 #### Instructions
@@ -49,27 +52,56 @@ The standard installation method is also quick and easy, but is best suited for 
    - load the timber, and run the main function, `sawmill::mill()` with custom arguments.
    - run the interactive, default pipeline with `sawmill::start_mill()` to load the timber and run the main function, `sawmill::mill()` with default arguments.
 
+
+
 ## Getting Help
 
-### FAQs
+### General FAQs
 
 #### What is going on here? I'm new.
 
-CEDAR is a database of factors along the agri-food production system that influence antimicrobial resistance. The iAM.AMR project aims to create integrated assessment models (IAMs) using these data. These data need to be processed after they are exported from the database, and before they can be used in the models. `sawmill` is the R package that does that processing.
+CEDAR is a database of factors along the agri-food production system that influence antimicrobial resistance. The iAM.AMR project aims to create integrated assessment models (IAMs) using these data.
+
+When queries from CEDAR are exported, we call the export *timber*. The data need to be processed after they are exported from the database, before they can be used in the models.
+
+`sawmill` is the R package that does that processing.
+
+
+#### So what does `sawmill` actually do (in a nutshell)?
+
+`sawmill` looks at each factor in the timber, checks that the raw data required to calculate an odds ratio and standard error of the log(odds ratio) is available and usable, and then performs those calculations.  
+
+#### I normally install packages using `install.packages()`, why doesn't this work for `sawmill`?
+
+The `install.packages()` function only searches [CRAN](https://cran.r-project.org/), and `sawmill` is not currently available in CRAN.
+
+#### Why is `sawmill` not available in CRAN?
+
+Submitting to CRAN involves meeting submission requirements, which not yet been met by the project. Some of these requirements are time prohibitory, given the small user base and alternative download methods available here.
+
+We may submit the package to CRAN in the future.
 
 #### What is an R Package?
 
-[According to](http://r-pkgs.had.co.nz/intro.html) Hadley Wickham:
+[According to](https://r-pkgs.org/intro.html) Hadley Wickham and Jennifer Bryan:
 
-> In R, the fundamental unit of shareable code is the package. A package bundles together code, data, documentation, and tests, and is easy to share with others. As of January 2015, there were over 6,000 packages available on the Comprehensive R Archive Network, or CRAN, the public clearing house for R packages. This huge variety of packages is one of the reasons that R is so successful: the chances are that someone has already solved a problem that you’re working on, and you can benefit from their work by downloading their package.
+> In R, the fundamental unit of shareable code is the package. A package bundles together code, data, documentation, and tests, and is easy to share with others.
 
-#### I do not know my CEDAR version number. Can you help?
+#### What is an R, an RStudio, and how do I get them?
 
-No, just try both.
+I can tell I'm going to get an email... that's outside our scope here, but [see the official R homepage](https://www.r-project.org/), and [R for Data Science](https://r4ds.had.co.nz/).
 
 #### Where can I find more information about the package?
 
 Try accessing the individual function help files -- using R's `?function()` notation -- or consulting the iAM.AMR project's [documentation](https://docs.iam.amr.pub/en/latest/).
+
+
+### Specific FAQs
+
+#### I don't know my CEDAR version number. Can you help?
+
+Nope, just try both.  
+
 
 ### Contact
 

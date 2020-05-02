@@ -2,6 +2,16 @@
 # sawmill
 An R package used to prepare queries from CEDAR (timber) for use in the iAM.AMR models.
 
+
+```
+ ______     ______     __     __     __    __     __     __         __        
+/\  ___\   /\  __ \   /\ \  _ \ \   /\ "-./  \   /\ \   /\ \       /\ \       
+\ \___  \  \ \  __ \  \ \ \/ ".\ \  \ \ \-./\ \  \ \ \  \ \ \____  \ \ \____  
+ \/\_____\  \ \_\ \_\  \ \__/".~\_\  \ \_\ \ \_\  \ \_\  \ \_____\  \ \_____\ 
+  \/_____/   \/_/\/_/   \/_/   \/_/   \/_/  \/_/   \/_/   \/_____/   \/_____/ 
+```
+
+
 ## About sawmill
 Each of the iAM.AMR models are informed by one or more queries to the CEDAR (*Collection of Epidemiologically Derived Factors Associated with Resistance*) database. The exported query results are called **timber**. Unfortunately, these raw timber are not usable, as they lack key calculated fields (such as the odds ratio), and have not been screened for simple errors.
 

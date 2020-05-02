@@ -5,7 +5,7 @@
 
 The bootstrap installation method is the quickest and easiest way of getting started with `sawmill`, and is best-suited for novice R users, or experienced R users who want to quickly process timber with default settings.
 
-[Bootstrapping](https://en.wikipedia.org/wiki/Bootstrapping) generally refers to a program that can "start itself". Here, it means using code from `sawmill` to download and start `sawmill`.
+[Bootstrapping](https://en.wikipedia.org/wiki/Bootstrapping) generally refers to a program that can 'start itself'. Here, it means using code from `sawmill` to download and start `sawmill`.
 
 
 

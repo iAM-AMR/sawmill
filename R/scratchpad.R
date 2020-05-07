@@ -19,3 +19,5 @@
 # devtools::session_info()
 # devtools::load_all()
 
+
+#mutate(data, oddsup = as.numeric(oddsup))

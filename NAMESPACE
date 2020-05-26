@@ -2,6 +2,7 @@
 
 export(add_CI)
 export(build_chairs)
+export(build_horse)
 export(build_table)
 export(check_grain)
 export(debark)

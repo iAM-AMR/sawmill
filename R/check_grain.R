@@ -1,5 +1,4 @@
 
-
 #' @title
 #'   Check the Grain (Set of Numeric Fields) of Each Factor in Timber
 #'
@@ -76,17 +75,19 @@
 
 check_grain <- function(timber) {
 
+  # Charly: fixed error in rate_table_pos_neg condition for v1 inputs, by allowing for
+  #         cases when R and S columns do not exist
+
   dplyr::mutate(timber,
                 grain = dplyr::case_when(
                   res_format == "Odds Ratio"        & !is.na(odds) & !is.na(oddslo) & !is.na(oddsup)                ~ "odds_ratio",
                   res_format == "Contingency Table" & !is.na(A)    & !is.na(B)      & !is.na(C)      & !is.na(D)    ~ "con_table_pos_neg",
                   res_format == "Contingency Table" & !is.na(A)    & !is.na(nexp)   & !is.na(C)      & !is.na(nref) ~ "con_table_pos_tot",
-                  res_format == "Rate Table"        & !is.na(P)    & !is.na(R)      & !is.na(Q)      & !is.na(S)    ~ "rate_table_pos_neg",
+                  res_format == "Rate Table"        & !is.na(P)    & ("R" %in% names(timber) && !is.na(R))      & !is.na(Q)      & ("S" %in% names(timber) && !is.na(S))    ~ "rate_table_pos_neg",
                   res_format == "Rate Table"        & !is.na(P)    & !is.na(nexp)   & !is.na(Q)      & !is.na(nref) ~ "rate_table_pos_tot",
                   TRUE ~ NA_character_))
 
 }
-
 
 
 

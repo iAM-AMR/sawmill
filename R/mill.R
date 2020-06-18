@@ -19,9 +19,12 @@ mill <- function(timber, cedar_version = 2, write_scrap = TRUE, low_cell_correct
                          low_cell_threshold = low_cell_threshold)
   timber5 <- add_CI(timber4)
   timber6 <- build_chairs(timber5)
+  timber7 <- build_horse(timber6)
+  timber8 <- do_MA(timber7, cedar_version = cedar_version)
 
-  return(timber6)
+  return(timber8)
 
 }
+
 
 

@@ -35,8 +35,6 @@
 #' @importFrom tibble add_row
 #'
 #' @export
-#'
-#'
 
 
 do_MA <- function(query, cedar_version, dropRaw = TRUE, log_base = 10) {

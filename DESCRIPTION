@@ -1,10 +1,9 @@
 Package: sawmill
 Type: Package
 Title: Process Queries from the CEDAR Database
-Version: 1.0.1
+Version: 1.0.0
 Authors@R: 
     person("Brennan", "Chapman", email = "chapmanb@uoguelph.ca", role = c("aut", "cre"))
-    person("Charly", "Phillips", email = "charly.phillips@canada.ca", role = c("aut", "cre"))
 Description:
     The data in CEDAR requires processing before it can be used in an iAM.AMR model. sawmill
     processes the queries from CEDAR, by converting raw data into measures of association, 
@@ -16,7 +15,4 @@ RoxygenNote: 7.1.0
 Imports: 
     dplyr,
     readr,
-    readxl,
-    metafor,
-    magrittr,
-    tibble
+    readxl

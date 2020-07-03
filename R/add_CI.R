@@ -17,10 +17,13 @@
 #' @export
 
 
-
 add_CI <- function(timber){
   dplyr::mutate(timber, oddsci = 95)
 }
+
+
+
+
 
 
 

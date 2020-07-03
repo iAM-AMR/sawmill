@@ -1,4 +1,5 @@
 
+
 #' @title
 #'    Perform Meta-analyses on Factors in a CEDAR Query
 #'
@@ -30,8 +31,7 @@
 #'
 #' @importFrom metafor rma
 #' @importFrom magrittr %<>%
-#' @importFrom dplyr filter
-#' @importFrom dplyr select
+#' @importFrom dplyr filter select
 #' @importFrom tibble add_row
 #'
 #' @export
@@ -48,118 +48,127 @@ do_MA <- function(query, cedar_version, dropRaw = TRUE, log_base = 10) {
 
   query %<>% dedupe_MA()
 
-  query$logOR <- log(query$odds_ratio, base = log_base)
+  mas <- unique(query$ID_meta[!is.na(query$ID_meta) & !(query$ID_meta == "NA")])
 
-  mas         <- unique(query$ID_meta[!is.na(query$ID_meta) & !(query$ID_meta == "NA")])
+  if (length(mas) > 0) {
 
-  for (x in mas) {
+    query$logOR <- log(query$odds_ratio, base = log_base)
 
-    g   <- dplyr::filter(query, ID_meta == x)
-    mag <- metafor::rma(yi = logOR, sei = se_log_or, data = g)
-    mag_OR <- log_base ^ (as.numeric(mag$beta)) #exponentiate the OR for display purposes
-    mag_se_log_or <- mag$se
-    mag_pval <- as.character(mag$pval)
+    for (x in mas) {
 
+      g   <- dplyr::filter(query, ID_meta == x)
+      mag <- metafor::rma(yi = logOR, sei = se_log_or, data = g)
+      mag_OR <- log_base ^ (as.numeric(mag$beta)) #exponentiate the OR for display purposes
+      mag_se_log_or <- mag$se
+      mag_pval <- as.character(mag$pval)
 
-    host_01 <- g[1,]$host_01
-    microbe_01 <- g[1,]$microbe_01
-    meta_resistance <- g[1,]$meta_amr
+      host_01 <- g[1,]$host_01
+      microbe_01 <- g[1,]$microbe_01
+      meta_resistance <- g[1,]$meta_amr
 
-    if (length(unique(g$microbe_02)) > 1) {
-      microbe_02  <- "spp."
-    } else {
-      microbe_02  <- g[1,]$microbe_02
+      if (length(unique(g$microbe_02)) > 1) {
+        microbe_02  <- "spp."
+      } else {
+        microbe_02  <- g[1,]$microbe_02
+      }
+
+      if (cedar_version == 1) {
+        authors <- paste(unique(g$name_short), collapse = ", ")
+      }
+      else {
+        authors <- paste(unique(g$name_bibtex), collapse = ", ")
+      }
+
+      factor_title      <- g[1,]$factor_title
+
+      factor_description <- paste("A random effects meta-analysis of outcomes described in ", authors, " related to ", factor_title,
+                                  ". The outcome of interest is ", meta_resistance, " resistance of ", microbe_01, " in ", host_01,
+                                  ".", sep = "")
+      exposed    <- paste(unique(g$group_exposed), collapse = " or ")
+      referent   <- paste(unique(g$group_referent), collapse = " or ")
+
+      if (cedar_version == 1) {
+        query <- tibble::add_row(query,
+                                 #status
+                                 name_short = "Meta-analysis", #different field names in v1 vs v2
+                                 #docID
+                                 host_01           = host_01, #same in v1 and v2
+                                 host_02           = g[1,]$host_02, #same
+                                 microbe_01        = microbe_01, #same
+                                 microbe_02        = microbe_02, #same
+                                 stage_allocate    = g[1,]$stage_allocate, #same
+                                 AMR               = meta_resistance, #same
+                                 factor_title      = factor_title, #same
+                                 factor_description = factor_description, #same
+                                 group_exposed     = exposed, #same
+                                 group_referent    = referent, #same
+                                 res_format        = "Odds Ratio", #same
+                                 exclude          = any(g$exclude), #doesn't exist in v2
+                                 ID_meta           = x, #same
+                                 #ma_resistance
+                                 meta_type         = g[1,]$meta_type, #same
+                                 grain             = "oddsRatioSet", #same
+                                 #A
+                                 #B
+                                 #C
+                                 #D
+                                 null_comparison       = any(g$null_comparison), #same
+                                 low_cell_count        = any(g$low_cell_count), #same
+                                 odds_ratio        = mag_OR, #same
+                                 se_log_or         = mag_se_log_or, #same
+                                 pval              = mag_pval #same
+                                 #URL
+                                 #Link
+        )
+      }
+      else {
+        query <- tibble::add_row(query,
+                                 #status
+                                 name_bibtex       = "Meta-analysis",
+                                 #docID
+                                 host_01           = host_01,
+                                 host_02           = g[1,]$host_02,
+                                 microbe_01        = microbe_01,
+                                 microbe_02        = microbe_02,
+                                 stage_allocate    = g[1,]$stage_allocate,
+                                 AMR               = meta_resistance,
+                                 factor_title      = factor_title,
+                                 factor_description = factor_description,
+                                 group_exposed     = exposed,
+                                 group_referent    = referent,
+                                 res_format        = "Odds Ratio",
+                                 ID_meta           = x,
+                                 #ma_resistance
+                                 meta_type         = g[1,]$meta_type,
+                                 grain             = "oddsRatioSet",
+                                 #A
+                                 #B
+                                 #C
+                                 #D
+                                 low_cell_count    = any(g$low_cell_count),
+                                 null_comparison   = any(g$null_comparison),
+                                 odds_ratio        = mag_OR,
+                                 se_log_or         = mag_se_log_or,
+                                 pval              = mag_pval
+                                 #URL
+                                 #Link
+        )
+      }
+
     }
 
-    if (cedar_version == 1) {
-      authors <- paste(unique(g$name_short), collapse = ", ")
-    }
-    else {
-      authors <- paste(unique(g$name_bibtex), collapse = ", ")
-    }
+    query %<>% select(-logOR, -meta_amr)
 
-    factor_title      <- g[1,]$factor_title
+    if (dropRaw == TRUE) {
+      if (cedar_version == 1) {
+        query <- dplyr::filter(query, is.na(ID_meta) | name_short == "Meta-analysis")
+      }
+      else {
+        query <- dplyr::filter(query, is.na(ID_meta) | name_bibtex == "Meta-analysis")
+      }
 
-    factor_description <- paste("A random effects meta-analysis of outcomes described in ", authors, " related to ", factor_title,
-                                ". The outcome of interest is ", meta_resistance, " resistance of ", microbe_01, " in ", host_01,
-                                ".", sep = "")
-    exposed    <- paste(unique(g$group_exposed), collapse = " or ")
-    referent   <- paste(unique(g$group_referent), collapse = " or ")
-
-    if (cedar_version == 1) {
-      query <- tibble::add_row(query,
-                               #status
-                               name_short = "Meta-analysis", #different field names in v1 vs v2
-                               #docID
-                               host_01           = host_01, #same in v1 and v2
-                               host_02           = g[1,]$host_02, #same
-                               microbe_01        = microbe_01, #same
-                               microbe_02        = microbe_02, #same
-                               stage_allocate    = g[1,]$stage_allocate, #same
-                               AMR               = meta_resistance, #same
-                               factor_title      = factor_title, #same
-                               factor_description = factor_description, #same
-                               group_exposed     = exposed, #same
-                               group_referent    = referent, #same
-                               res_format        = "Odds Ratio", #same
-                               exclude          = any(g$exclude), #doesn't exist in v2
-                               ID_meta           = x, #same
-                               #ma_resistance
-                               meta_type         = g[1,]$meta_type, #same
-                               grain             = "oddsRatioSet", #same
-                               #A
-                               #B
-                               #C
-                               #D
-                               null_comparison       = any(g$null_comparison), #same
-                               low_cell_count        = any(g$low_cell_count), #same
-                               odds_ratio        = mag_OR, #same
-                               se_log_or         = mag_se_log_or, #same
-                               pval              = mag_pval #same
-                               #URL
-                               #Link
-      )
-    }
-    else {
-      query <- tibble::add_row(query,
-                               #status
-                               name_bibtex       = "Meta-analysis",
-                               #docID
-                               host_01           = host_01,
-                               host_02           = g[1,]$host_02,
-                               microbe_01        = microbe_01,
-                               microbe_02        = microbe_02,
-                               stage_allocate    = g[1,]$stage_allocate,
-                               AMR               = meta_resistance,
-                               factor_title      = factor_title,
-                               factor_description = factor_description,
-                               group_exposed     = exposed,
-                               group_referent    = referent,
-                               res_format        = "Odds Ratio",
-                               ID_meta           = x,
-                               #ma_resistance
-                               meta_type         = g[1,]$meta_type,
-                               grain             = "oddsRatioSet",
-                               #A
-                               #B
-                               #C
-                               #D
-                               low_cell_count    = any(g$low_cell_count),
-                               null_comparison   = any(g$null_comparison),
-                               odds_ratio        = mag_OR,
-                               se_log_or         = mag_se_log_or,
-                               pval              = mag_pval
-                               #URL
-                               #Link
-      )
     }
 
-  }
-
-  query %<>% select(-logOR, -meta_amr)
-
-  if (dropRaw == TRUE) {
-    dplyr::filter(query, is.na(ID_meta) | ifelse(cedar_version == 1, "name_short", "name_bibtex") == "Meta-analysis")
   }
 
   return(query)

@@ -66,29 +66,39 @@
 #'  }
 #'
 #' @return
-#'   A tible of timber with additional column \emph{grain}.
+#'   A tibble of timber with additional column \emph{grain}.
 #'
-#' @importFrom dplyr mutate case_when
+#' @importFrom dplyr rowwise mutate case_when ungroup
+#' @importFrom magrittr %>%
 #'
 #' @export
 
 
-
 check_grain <- function(timber) {
 
-  # Charly: fixed error in rate_table_pos_neg condition for v1 inputs, by allowing for
-  #         cases when R and S columns do not exist
+  # Changes: 1) Fixed error in rate_table_pos_neg condition for v1 inputs, by allowing for
+  #             cases when R and S columns do not exist
+  #          2) Check for rate_table_pos_tot before rate_table_pos_neg, so that all rate
+  #             tables with nexp and nref information can be retained for odds ratio calculations
 
-  dplyr::mutate(timber,
-                grain = dplyr::case_when(
-                  res_format == "Odds Ratio"        & !is.na(odds) & !is.na(oddslo) & !is.na(oddsup)                ~ "odds_ratio",
-                  res_format == "Contingency Table" & !is.na(A)    & !is.na(B)      & !is.na(C)      & !is.na(D)    ~ "con_table_pos_neg",
-                  res_format == "Contingency Table" & !is.na(A)    & !is.na(nexp)   & !is.na(C)      & !is.na(nref) ~ "con_table_pos_tot",
-                  res_format == "Rate Table"        & !is.na(P)    & ("R" %in% names(timber) && !is.na(R))      & !is.na(Q)      & ("S" %in% names(timber) && !is.na(S))    ~ "rate_table_pos_neg",
-                  res_format == "Rate Table"        & !is.na(P)    & !is.na(nexp)   & !is.na(Q)      & !is.na(nref) ~ "rate_table_pos_tot",
-                  TRUE ~ NA_character_))
+  timber <- timber %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(grain = dplyr::case_when(
+                    res_format == "Odds Ratio"        & !is.na(odds) & !is.na(oddslo) & !is.na(oddsup)                ~ "odds_ratio",
+                    res_format == "Contingency Table" & !is.na(A)    & !is.na(B)      & !is.na(C)      & !is.na(D)    ~ "con_table_pos_neg",
+                    res_format == "Contingency Table" & !is.na(A)    & !is.na(nexp)   & !is.na(C)      & !is.na(nref) ~ "con_table_pos_tot",
+                    res_format == "Rate Table"        & !is.na(P)    & !is.na(nexp)   & !is.na(Q)      & !is.na(nref) ~ "rate_table_pos_tot",
+                    res_format == "Rate Table"        & !is.na(P)    & ifelse("R" %in% names(timber), !is.na(R), FALSE)   & !is.na(Q)      & ifelse("S" %in% names(timber), !is.na(S), FALSE)    ~ "rate_table_pos_neg",
+                    TRUE ~ NA_character_)) %>%
+    dplyr::ungroup()
 
+  return(timber)
 }
+
+
+
+
+
 
 
 

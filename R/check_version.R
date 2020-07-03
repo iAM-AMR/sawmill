@@ -13,7 +13,6 @@
 #'   NULL or stop().
 
 
-
 check_version <- function(cedar_version){
 
   if(cedar_version != 1 & cedar_version != 2){
@@ -21,6 +20,11 @@ check_version <- function(cedar_version){
   }
 
 }
+
+
+
+
+
 
 
 

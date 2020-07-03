@@ -43,7 +43,6 @@
 #' @export
 
 
-
 trim_scraps <- function(timber, write_scrap = TRUE) {
 
   # GRAIN

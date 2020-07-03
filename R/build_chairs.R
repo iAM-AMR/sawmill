@@ -48,7 +48,6 @@
 #' @export
 
 
-
 build_chairs <- function(timber, log_base = 10) {
 
   dplyr::mutate(timber,
@@ -62,6 +61,11 @@ build_chairs <- function(timber, log_base = 10) {
                   TRUE ~ NA_real_))
 
 }
+
+
+
+
+
 
 
 

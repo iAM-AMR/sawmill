@@ -1,4 +1,5 @@
 
+
 #' @title
 #'   The sawmill Pipeline
 #'
@@ -6,7 +7,6 @@
 #'  The \code{mill()} runs the CEDAR pipeline with useful defaults.
 #'
 #' @export
-
 
 
 mill <- function(timber, cedar_version = 2, write_scrap = TRUE, low_cell_correction = 0.5, low_cell_threshold = 0){
@@ -21,8 +21,12 @@ mill <- function(timber, cedar_version = 2, write_scrap = TRUE, low_cell_correct
   timber6 <- build_chairs(timber5)
   timber7 <- build_horse(timber6)
   timber8 <- do_MA(timber7, cedar_version = cedar_version)
+  timber9 <- add_URL(timber8)
+  timber10 <- add_HTMLink(timber9)
+  timber11 <- add_ident(timber10, cedar_version = cedar_version)
 
-  return(timber8)
+  return(timber11)
 
 }
+
 

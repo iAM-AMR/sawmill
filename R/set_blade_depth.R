@@ -23,7 +23,6 @@
 #'  @export
 
 
-
 set_blade_depth <- function(cedar_version = 2) {
 
   check_version(cedar_version)

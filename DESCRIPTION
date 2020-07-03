@@ -1,7 +1,7 @@
 Package: sawmill
 Type: Package
 Title: Process Queries from the CEDAR Database
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: 
     person("Brennan", "Chapman", email = "chapmanb@uoguelph.ca", role = c("aut", "cre"))
     person("Charly", "Phillips", email = "charly.phillips@canada.ca", role = c("aut", "cre"))
@@ -19,4 +19,7 @@ Imports:
     readxl,
     metafor,
     magrittr,
-    tibble
+    tibble,
+    tidyr,
+    stringr
+

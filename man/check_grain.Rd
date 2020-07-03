@@ -10,7 +10,7 @@ check_grain(timber)
 \item{timber}{a tibble of timber.}
 }
 \value{
-A tible of timber with additional column \emph{grain}.
+A tibble of timber with additional column \emph{grain}.
 }
 \description{
 \code{check_grain()} determines which set of numeric fields are used to specify each factor in timber (i.e. the factor's \emph{grain}).

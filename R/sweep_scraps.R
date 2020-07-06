@@ -18,7 +18,6 @@
 #' @export
 
 
-
 sweep_scraps <- function(csv_path = file.choose()) {
 
   readr::write_csv(scrap_pile, path = csv_path)

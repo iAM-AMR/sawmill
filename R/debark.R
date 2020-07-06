@@ -20,7 +20,6 @@
 #' @export
 
 
-
 debark <- function(timber, cedar_version = 2){
 
   check_version(cedar_version)

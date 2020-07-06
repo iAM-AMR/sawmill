@@ -35,7 +35,6 @@
 #' @export
 
 
-
 build_table <- function(timber, low_cell_correction = 0.5, low_cell_threshold = 0) {
 
   table_grain <- c("con_table_pos_neg", "con_table_pos_tot", "rate_table_pos_tot")

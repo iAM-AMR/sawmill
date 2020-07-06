@@ -1,4 +1,5 @@
 
+
 #' @title
 #'    Remove Duplicate Rows for Meta-Analysis
 #'
@@ -32,11 +33,8 @@
 #' @return
 #'    A tibble of timber, with duplicate rows removed.
 #'
-#' @importFrom magrittr %<>%
-#' @importFrom magrittr %>%
-#' @importFrom dplyr filter
-#' @importFrom dplyr count
-#' @importFrom dplyr bind_rows
+#' @importFrom magrittr %<>% %>%
+#' @importFrom dplyr filter count bind_rows
 #'
 #' @export
 

@@ -30,7 +30,7 @@ A document identifier is a unique sequence of letters and/or numbers
 
    The \code{add_URL} function works by detecting the appropriate
    document identifier type, using regular expressions. The DOI is identified
-   as beginning with two numerical digits, followed by a period, four numerical
+   as beginning with two numerical digits, followed by a period, four or five numerical
    digits, and a forward slash. The PMID is a series of eight numerical digits.
    There is no additional validation done; while a non-DOI is unlikely to be
    inadvertently recognized as a DOI, a non-PMID string of eight numbers could

@@ -4,7 +4,7 @@
 \alias{add_ident}
 \title{Generate a Suggested Analytica Identifier}
 \usage{
-add_ident(query, cedar_version)
+add_ident(query, cedar_version = 2)
 }
 \arguments{
 \item{query}{a tibble of timber, with a table built by \code{\link{build_table}}.}
@@ -16,7 +16,7 @@ The passed tibble of timber with an additional column containing the generated
    identifiers.
 }
 \description{
-\code{add_ident()} adds a column to the passes data frame, containing an
+\code{add_ident()} adds a column to the passed tibble of timber, containing an
    identifier for use in Analytica.
 }
 \details{

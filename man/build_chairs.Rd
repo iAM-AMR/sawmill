@@ -4,7 +4,7 @@
 \alias{build_chairs}
 \title{Calculate the Odds Ratio (OR) and the SE(log(OR))}
 \usage{
-build_chairs(timber, log_base = 10)
+build_chairs(timber, log_base = exp(1))
 }
 \arguments{
 \item{timber}{a tibble of timber, with a table built by \code{\link{build_table}}.}

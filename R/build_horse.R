@@ -19,9 +19,9 @@
 
 build_horse <- function(timber) {
 
-  mutate(timber, pval = ifelse(grain %in% c("con_table_pos_neg", "con_table_pos_tot", "rate_table_pos_tot"),
-                               apply(timber, 1, fisher_p),
-                               oddsig))
+  dplyr::mutate(timber, pval = ifelse(grain %in% c("con_table_pos_neg", "con_table_pos_tot", "rate_table_pos_tot"),
+                                      apply(timber, 1, fisher_p),
+                                      oddsig))
 
 }
 

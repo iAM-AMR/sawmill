@@ -24,7 +24,7 @@
 #'
 #'    The \code{add_URL} function works by detecting the appropriate
 #'    document identifier type, using regular expressions. The DOI is identified
-#'    as beginning with two numerical digits, followed by a period, four numerical
+#'    as beginning with two numerical digits, followed by a period, four or five numerical
 #'    digits, and a forward slash. The PMID is a series of eight numerical digits.
 #'    There is no additional validation done; while a non-DOI is unlikely to be
 #'    inadvertently recognized as a DOI, a non-PMID string of eight numbers could
@@ -50,7 +50,7 @@ add_URL <- function(timber) {
   timber <- timber %>%
     dplyr::rowwise() %>%
     dplyr::mutate(url = dplyr::case_when(
-                    str_detect(doi, "^\\d{2}\\.\\d{4}\\/") ~ paste("http://dx.doi.org/", doi, sep = ""),
+                    str_detect(doi, "^\\d{2}\\.\\d{4}\\/") | str_detect(doi, "^\\d{2}\\.\\d{5}\\/")  ~ paste("http://dx.doi.org/", doi, sep = ""),
                     ifelse("pmid" %in% names(timber), str_detect(pmid, "\\d{8}"), FALSE) ~ ifelse("pmid" %in% names(timber), paste("https://www.ncbi.nlm.nih.gov/pubmed/", pmid, sep = ""), ""),
                     str_detect(doi, "\\d{8}") ~ paste("https://www.ncbi.nlm.nih.gov/pubmed/", doi, sep = ""),
                     TRUE ~ NA_character_)) %>%

@@ -16,7 +16,7 @@ set_blade_depth(cedar_version = 2)
  @details
    The \code{set_blade_depth()} maps original, non-standardized CEDAR export column names to
    standardized timber column names -- for both versions of CEDAR. These column names are provided
-   in an external .CSV: \code{/data/import_filter.csv}.
+   in an external .CSV: \code{/inst/raw_data/import_filter.csv}.
 
  @return
    A named vector.

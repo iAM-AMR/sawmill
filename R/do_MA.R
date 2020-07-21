@@ -37,16 +37,15 @@
 #' @export
 
 
-do_MA <- function(query, cedar_version, dropRaw = TRUE, log_base = 10) {
+do_MA <- function(query, cedar_version = 2, dropRaw = FALSE, log_base = exp(1)) {
 
   # Main changes from cedarr to Sawmill:
   #     1) Performs MA on both v1 and v2 inputs instead of just v1
-  #     2) Conducts MA with the log(OR) and SE of the log(OR), with a default base of 10
-  #        (to match the default base in build_chairs.R), instead of using the natural
-  #        logarithm. MA rows in the output csv file will display the OR and SE of the
-  #        log(OR), however.
+  #     2) Conducts MA with the natural log(OR) and SE of the natural log(OR),
+  #        instead of using the natural logarithm. MA rows in the output csv file will
+  #        display the OR and SE of the log(OR), however.
 
-  query %<>% dedupe_MA()
+  sub_mill(query %<>% dedupe_MA(), "dedupe_MA")
 
   mas <- unique(query$ID_meta[!is.na(query$ID_meta) & !(query$ID_meta == "NA")])
 
@@ -103,7 +102,7 @@ do_MA <- function(query, cedar_version, dropRaw = TRUE, log_base = 10) {
                                  group_exposed     = exposed, #same
                                  group_referent    = referent, #same
                                  res_format        = "Odds Ratio", #same
-                                 exclude          = any(g$exclude), #doesn't exist in v2
+                                 exclude           = toString(any(g$exclude)), #doesn't exist in v2
                                  ID_meta           = x, #same
                                  #ma_resistance
                                  meta_type         = g[1,]$meta_type, #same
@@ -159,7 +158,7 @@ do_MA <- function(query, cedar_version, dropRaw = TRUE, log_base = 10) {
 
     query %<>% select(-logOR, -meta_amr)
 
-    if (dropRaw == TRUE) {
+    if (dropRaw) {
       if (cedar_version == 1) {
         query <- dplyr::filter(query, is.na(ID_meta) | name_short == "Meta-analysis")
       }
@@ -174,3 +173,4 @@ do_MA <- function(query, cedar_version, dropRaw = TRUE, log_base = 10) {
   return(query)
 
 }
+

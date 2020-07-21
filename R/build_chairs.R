@@ -48,7 +48,7 @@
 #' @export
 
 
-build_chairs <- function(timber, log_base = 10) {
+build_chairs <- function(timber, log_base = exp(1)) {
 
   dplyr::mutate(timber,
                 odds_ratio = dplyr::case_when(

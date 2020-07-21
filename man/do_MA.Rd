@@ -4,7 +4,7 @@
 \alias{do_MA}
 \title{Perform Meta-analyses on Factors in a CEDAR Query}
 \usage{
-do_MA(query, cedar_version, dropRaw = TRUE, log_base = 10)
+do_MA(query, cedar_version = 2, dropRaw = FALSE, log_base = exp(1))
 }
 \arguments{
 \item{query}{a tibble of timber, with a table built by \code{\link{build_table}}.}

@@ -68,7 +68,6 @@ build_table <- function(timber, low_cell_correction = 0.5, low_cell_threshold = 
                                               yes = TRUE,
                                               no = FALSE))
 
-
   timber <- dplyr::mutate(timber,
                    A = ifelse(low_cell_count == TRUE,
                               yes = A + low_cell_correction,
@@ -86,7 +85,6 @@ build_table <- function(timber, low_cell_correction = 0.5, low_cell_threshold = 
   return(timber)
 
 }
-
 
 
 

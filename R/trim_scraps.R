@@ -61,8 +61,10 @@ trim_scraps <- function(timber, write_scrap = TRUE) {
                                          scrap_because = exclude_grain_message)
 
   # WRITE SCRAPS
-  scrap_pile <<- exclude_grain
-  message("Reminder, scrap_pile was written to global environment.")
+  if (write_scrap) {
+    scrap_pile <<- exclude_grain
+    message("Reminder, scrap_pile was written to global environment.")
+  }
 
   # INCLUDE
   timber                <- dplyr::filter(timber,  grain %in% good_grain)

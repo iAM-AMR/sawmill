@@ -9,7 +9,11 @@ mill(
   cedar_version = 2,
   write_scrap = TRUE,
   low_cell_correction = 0.5,
-  low_cell_threshold = 0
+  low_cell_threshold = 0,
+  insensible_rt_lo = 99,
+  insensible_rt_hi = 101,
+  log_base = exp(1),
+  dropRaw = FALSE
 )
 }
 \description{

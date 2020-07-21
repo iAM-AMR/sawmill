@@ -4,7 +4,7 @@
 #'    Generate a Suggested Analytica Identifier
 #'
 #' @description
-#'    \code{add_ident()} adds a column to the passes data frame, containing an
+#'    \code{add_ident()} adds a column to the passed tibble of timber, containing an
 #'    identifier for use in Analytica.
 #'
 #' @param query
@@ -28,7 +28,7 @@
 #' @export
 
 
-add_ident <- function(query, cedar_version) {
+add_ident <- function(query, cedar_version = 2) {
 
   if (cedar_version == 1) {
     nameCol <- "name_short"

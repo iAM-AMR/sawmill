@@ -22,9 +22,9 @@
 
 debark <- function(timber, cedar_version = 2){
 
-  check_version(cedar_version)
+  sub_mill(check_version(cedar_version), "check_version")
 
-  cuts   <- set_blade_depth(cedar_version)
+  sub_mill(cuts   <- set_blade_depth(cedar_version), "set_blade_depth")
 
   if(!all((cuts) %in% names(timber))) {
     stop("There are requisite columns missing from your CEDAR export.")}

@@ -13,7 +13,7 @@
 #'  @details
 #'    The \code{set_blade_depth()} maps original, non-standardized CEDAR export column names to
 #'    standardized timber column names -- for both versions of CEDAR. These column names are provided
-#'    in an external .CSV: \code{/data/import_filter.csv}.
+#'    in an external .CSV: \code{/inst/raw_data/import_filter.csv}.
 #'
 #'  @return
 #'    A named vector.
@@ -25,7 +25,7 @@
 
 set_blade_depth <- function(cedar_version = 2) {
 
-  check_version(cedar_version)
+  sub_mill(check_version(cedar_version), "check_version")
 
   # Specify Cols to suppress warnings
   kerf_cols <- readr::cols(uniform  = readr::col_character(),
@@ -44,7 +44,6 @@ set_blade_depth <- function(cedar_version = 2) {
   return(depth_guide)
 
 }
-
 
 
 

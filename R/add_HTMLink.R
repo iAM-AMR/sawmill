@@ -24,7 +24,7 @@
 #'
 #'    The \code{add_HTMLink} function works by detecting the appropriate
 #'    document identifier type, using regular expressions. The DOI is identified
-#'    as beginning with two numerical digits, followed by a period, four numerical
+#'    as beginning with two numerical digits, followed by a period, four or five numerical
 #'    digits, and a forward slash. The PMID is a series of eight numerical digits.
 #'    There is no additional validation done; while a non-DOI is unlikely to be
 #'    inadvertently recognized as a DOI, a non-PMID string of eight numbers could
@@ -48,7 +48,7 @@ add_HTMLink <- function(timber) {
   timber <- timber %>%
     dplyr::rowwise() %>%
     dplyr::mutate(html_link = dplyr::case_when(
-                    str_detect(doi, "^\\d{2}\\.\\d{4}\\/") ~ paste("<a href=\"http://dx.doi.org/", doi, "\">Click Here</a>", sep = ""),
+                    str_detect(doi, "^\\d{2}\\.\\d{4}\\/") | str_detect(doi, "^\\d{2}\\.\\d{5}\\/") ~ paste("<a href=\"http://dx.doi.org/", doi, "\">Click Here</a>", sep = ""),
                     ifelse("pmid" %in% names(timber), str_detect(pmid, "\\d{8}"), FALSE) ~ ifelse("pmid" %in% names(timber), paste("<a href=\"https://www.ncbi.nlm.nih.gov/pubmed/", pmid, "\">Click Here</a>", sep = ""), ""),
                     str_detect(doi, "\\d{8}") ~ paste("<a href=\"https://www.ncbi.nlm.nih.gov/pubmed/", doi, "\">Click Here</a>", sep = ""),
                     TRUE ~ NA_character_)) %>%

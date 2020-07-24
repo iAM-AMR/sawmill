@@ -52,8 +52,8 @@ polish_table <- function(timber, cedar_version = 2, insensible_rt_lo = 99, insen
     timber <- dplyr::mutate(timber,
                             insensible_rate_table = dplyr::case_when(
                               grain == "rate_table_pos_tot" & !is.na(R) & !is.na(S)
-                                       & !((P + R) >= insensible_rt_lo & (P + R) <= insensible_rt_hi)
-                                       & !((Q + S) >= insensible_rt_lo & (Q + S) <= insensible_rt_hi)
+                                       & (!((P + R) >= insensible_rt_lo & (P + R) <= insensible_rt_hi)
+                                          | !((Q + S) >= insensible_rt_lo & (Q + S) <= insensible_rt_hi))
                                     ~ "TRUE",
                               grain == "con_table_pos_neg" | grain == "con_table_pos_tot" | grain == "odds_ratio"
                                        | is.na(R) | is.na(S)
@@ -65,7 +65,4 @@ polish_table <- function(timber, cedar_version = 2, insensible_rt_lo = 99, insen
   return(timber)
 
 }
-
-
-
 

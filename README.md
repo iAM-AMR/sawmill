@@ -25,7 +25,7 @@ The **sawmill** package processes CEDAR timber, performing quality control, and 
 
 The bootstrap installation method is the quickest and easiest way of getting started with `sawmill`, and is best-suited for novice R users, or experienced R users who want to quickly process timber with default settings.
 
-These instructions will walk you through how to download and install `sawmill`, and run it's processing pipeline.
+These instructions will walk you through how to download and install `sawmill`, and run its processing pipeline.
 
 #### You Will Need:
 
@@ -59,8 +59,76 @@ The standard installation method is also quick and easy, but is best suited for 
    - use RStudio's *Install and Restart* feature in the *Build* tab to install the package.
    - use devtools to load the package.
 1. Either:
-   - load the timber, and run the main function, `sawmill::mill()` with custom arguments.
-   - run the interactive, default pipeline with `sawmill::start_mill()` to load the timber and run the main function, `sawmill::mill()` with default arguments.
+   - run the interactive, default pipeline with `sawmill::start_mill()`. This will allow you to load the timber and will automatically run the main function, `sawmill::mill()`, using default arguments.
+   - run the pipeline with custom arguments:
+        * open the main function, `sawmill::mill()`, by opening `mill.R` in RStudio
+        * change the default values (for more information on what these mean, see **Default Arguments**)
+        * use RStudio's *Install and Restart* feature in the *Build* tab to save your changes
+        * run the pipeline with `sawmill::start_mill()`
+
+### General Instructions for Both Installations
+
+#### Warnings
+
+### Default Arguments
+
+#### `cedar_version` (default = `2`)
+
+**Accepted values**: `1, 2`
+
+Upon running `sawmill::start_mill()`, you will be prompted to enter the version of CEDAR used to produce your timber. Whatever you enter at this stage will overwrite this default value. This is the only argument 
+
+#### `write_scrap` (default = `TRUE`)
+
+**Accepted values**: `TRUE, FALSE`
+
+When set to `TRUE`, `write_scrap` allows the `scrap_pile` to be written to the global environment. So what is the scrap pile, and what is the global environment?
+
+- `scrap_pile` contains all of those factors for which inadequate data is available to calculate a measure of association; they are discarded at the "trimming" stage of the pipeline
+- Once written to the global environment, `scrap_pile` is easily accessible from the console. After the pipeline is finished running, you can view the discarded factors by entering `scrap_pile` into the console
+
+#### `low_cell_threshold` (default = `0`)
+
+All four counts in the contingency table (# AMR+ individuals in the exposed group, # AMR- individuals in the referent group) should be greater than `low_cell_threshold`, as values of 0 will create divide by 0 error in the measure of association calculation. 
+
+If any of the four counts for a given factor is not greater than this threshold, all four counts will be incremented by `low_cell_correction`, to prevent such errors.
+
+#### `low_cell_correction` (default = `0.5`)
+
+The amount which is added to each of the four counts for a given factor in the event that at least one of them does not meet `low_cell_threshold`.
+
+#### `insensible_rt_lo` (default = `99`)
+
+**Accepted values**: numeric values close to, but less than 100
+
+Some factors defined by rate tables are considered to have "insensible rate tables". This is the case when the sum of the % AMR+ and % AMR- within the exposed group, and/or when the sum of the % AMR+ and % AMR- within the referent group do not add up to approximately 100. 
+
+`insensible_rt_lo` specifies the lower bound of this range of acceptability surrounding 100.
+
+#### `insensible_rt_hi` (default = `101`)
+
+**Accepted values**: numeric values close to, but greater than 100
+
+See `insensible_rt_lo`. 
+
+`insensible_rt_hi` specifies the upper bound of this range of acceptability surrounding 100.
+
+#### `log_base` (default = `exp(1)`, a.k.a. Euler's number)
+
+This parameter provides the base with which the logarithm of the odds ratio (`log(OR)`), as well as the standard error of the log odds ratio (`SE(log(OR))`), are calculated. The former is used in meta-analysis and the latter is one of the key outputs of Sawmill.
+
+With the default value, the natural logarithm is used. This is the recommended `log_base`.
+
+#### `dropRaw` (default = `FALSE`)
+
+**Accepted values**: `TRUE`, `FALSE`
+
+Certain factors in the input timber may be flagged for meta-analysis with a unique meta-analysis ID: `ID_meta`. One meta-analysis calculation is performed for each unique meta-analysis ID, incorporating all factors with that specific meta-analysis ID. When set to TRUE, `dropRaw` deletes all individual factors with meta-analysis IDs from Sawmill's output, leaving only the results of the meta-analysis in the output.
+
+## Notes
+
+- For changes to any of Sawmill's functions to take effect, the package must be re-loaded using RStudio's *Install and Restart* feature in the *Build* tab
+- 
 
 
 

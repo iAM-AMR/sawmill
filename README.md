@@ -73,17 +73,17 @@ Each argument is assigned a default value in [mill.R](R/mill.R) and subsequently
 
 #### `cedar_version` (default = `2`)
 
-**Accepted values:** `1`, `2`  
+##### **Accepted values:** `1`, `2`  
 
-**Passed to functions:** [`sawmill::debark()`](R/debark.R), [`sawmill::polish_table()`](R/polish_table.R), [`sawmill::do_MA()`](R/do_MA.R), [`sawmill::add_ident()`](R/add_ident.R)
+##### **Passed to functions:** [`sawmill::debark()`](R/debark.R), [`sawmill::polish_table()`](R/polish_table.R), [`sawmill::do_MA()`](R/do_MA.R), [`sawmill::add_ident()`](R/add_ident.R)
 
 Please note that this default value will be overwritten by the version you enter into the console, when prompted, upon running `sawmill::start_mill()`. 
 
 #### `write_scrap` (default = `TRUE`)
 
-**Accepted values:** `TRUE`, `FALSE`  
+##### **Accepted values:** `TRUE`, `FALSE`  
 
-**Passed to functions:** [`sawmill::trim_scraps()`](R/trim_scraps.R)
+##### **Passed to functions:** [`sawmill::trim_scraps()`](R/trim_scraps.R)
 
 When set to `TRUE`, `write_scrap` allows the `scrap_pile` to be written to the global environment.
 
@@ -92,7 +92,7 @@ When set to `TRUE`, `write_scrap` allows the `scrap_pile` to be written to the g
 
 #### `low_cell_threshold` (default = `0`)
 
-**Passed to functions:** [`sawmill::build_table()`](R/build_table.R)
+##### **Passed to functions:** [`sawmill::build_table()`](R/build_table.R)
 
 All four counts in the contingency table (# AMR+ and # AMR- individuals in the exposed group, # AMR+ and # AMR- individuals in the referent group) for a given factor should be greater than `low_cell_threshold`, as value(s) of 0 will create divide by 0 error(s) in the measure of association calculation. 
 
@@ -100,15 +100,15 @@ If any of the four counts for a given factor do not meet this threshold, all fou
 
 #### `low_cell_correction` (default = `0.5`)
 
-**Passed to functions:** [`sawmill::build_table()`](R/build_table.R)
+##### **Passed to functions:** [`sawmill::build_table()`](R/build_table.R)
 
 The amount which is added to each of the four counts in the contingency table for a given factor, in the event that at least one of them does not meet `low_cell_threshold`.
 
 #### `insensible_rt_lo` (default = `99`)
 
-**Accepted values:** numeric values close to, but less than 100  
+##### **Accepted values:** numeric values close to, but less than 100  
 
-**Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
+##### **Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
 
 Some factors are defined by "insensible rate tables". This is the case when the sum of the % AMR+ and % AMR- within the exposed group, and/or when the sum of the % AMR+ and % AMR- within the referent group do not add up to approximately 100. 
 
@@ -116,9 +116,9 @@ Some factors are defined by "insensible rate tables". This is the case when the 
 
 #### `insensible_rt_hi` (default = `101`)
 
-**Accepted values:** numeric values close to, but greater than 100  
+##### **Accepted values:** numeric values close to, but greater than 100  
 
-**Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
+##### **Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
 
 See `insensible_rt_lo`. 
 
@@ -126,7 +126,7 @@ See `insensible_rt_lo`.
 
 #### `log_base` (default = `exp(1)`, a.k.a. Euler's number)
 
-**Passed to functions:** [`sawmill::build_chairs()`](R/build_chairs.R), [`sawmill::do_MA()`](R/do_MA.R)
+##### **Passed to functions:** [`sawmill::build_chairs()`](R/build_chairs.R), [`sawmill::do_MA()`](R/do_MA.R)
 
 This parameter provides the base with which the logarithm of the odds ratio (`log(OR)`), as well as the standard error of the log odds ratio (`SE(log(OR))`), are calculated. The latter is one of sawmill's key outputs, and both are used in meta-analysis calculations.
 
@@ -134,9 +134,9 @@ With the default value, the natural logarithm is used. This is the recommended `
 
 #### `dropRaw` (default = `FALSE`)
 
-**Accepted values:** `TRUE`, `FALSE`  
+##### **Accepted values:** `TRUE`, `FALSE`  
 
-**Passed to functions:** [`sawmill::do_MA()`](R/do_MA.R)
+##### **Passed to functions:** [`sawmill::do_MA()`](R/do_MA.R)
 
 Certain factors in the input timber may be flagged for meta-analysis with a unique meta-analysis ID: `ID_meta`. `sawmill` performs one meta-analysis calculation for each unique meta-analysis ID, incorporating all factors with that specific meta-analysis ID. When set to TRUE, `dropRaw` deletes all individual factors with meta-analysis IDs from sawmill's output, leaving only the results of the meta-analysis.
 

@@ -221,7 +221,7 @@ I can tell I'm going to get an email... that's outside our scope here, but [see 
 
 Try accessing the individual function help files -- using R's `?function()` notation -- or consulting the iAM.AMR project's [documentation](https://docs.iam.amr.pub/en/latest/). 
 
-`sawmill` is set up so that its main functions (a.k.a. main steps in the processing pipeline) exist within their own `.R` files, found in the [R](R) directory of this repository. For example, the function `sawmill::debark()` is found in [debark.R](R/debark.R) `debark.R`. To access the help file for this function, enter `?debark()` or `?sawmill::debark()` into the RStudio console. Make sure you install and load `sawmill` as per the instructions in [**Installation and Use**](#installation-and-use) above before doing this.
+`sawmill` is set up so that its main functions (a.k.a. main steps in the processing pipeline) exist within their own `.R` files, found in the [R](R) directory of this repository. For example, the function `sawmill::debark()` is found in [debark.R](R/debark.R). To access the help file for this function, enter `?debark()` or `?sawmill::debark()` into the RStudio console. Make sure you install and load `sawmill` as per the instructions in [**Installation and Use**](#installation-and-use) above before doing this.
 
 
 ### Specific FAQs

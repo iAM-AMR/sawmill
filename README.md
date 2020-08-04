@@ -193,7 +193,7 @@ Sawmill is set up so that main functions (each of which represents a main step i
 
 Nope, just try both.  
 
-#### I made changes to the code in RStudio and saved them. When I run the pipeline, it behaves as though I never made the changes. What am I doing wrong?
+#### I made changes to the code in RStudio and saved them. When I run the pipeline, it behaves as though the changes were never made. What am I doing wrong?
 
 The package needs to be re-loaded using RStudio's *Install and Restart* feature in the *Build* tab to ensure your changes take effect.
 

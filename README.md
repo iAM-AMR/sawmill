@@ -164,6 +164,8 @@ This parameter provides the base with which the logarithm of the odds ratio (`lo
 With the default value, the natural logarithm is used. This is the recommended `log_base`.
 <br/>
 <br/>
+<br/>
+
 
 #### `dropRaw` (default = `FALSE`)
 

@@ -31,6 +31,18 @@ debark <- function(timber, cedar_version = 2){
 
   timber <- dplyr::rename(timber, cuts)
 
+
+
+  # Add exclude_sawmill and exclude_sawmill_reason columns to indicate factors
+  # to omit from further processing.
+
+  timber$exclude_sawmill <- FALSE
+  timber$exclude_sawmill_reason <- NA
+
+  # Create Scrap Pile for unusable factors.
+
+  scrap_pile <<- data.frame()
+
   return(timber)
 
 }

@@ -10,8 +10,8 @@
 #
 # timber1 <- debark(timber = raw_timber, cedar_version = 2)
 # timber2 <- check_grain(timber = timber1)
-# timber3 <- trim_scraps(timber = timber2, write_scrap = TRUE)
-# timber4 <- build_table(timber = timber3,
+# # Timber 3 removed (trim_scraps)
+# timber4 <- build_table(timber = timber2,
 #                        low_cell_correction = 0.5,
 #                        low_cell_threshold = 0)
 # timber5 <- add_CI(timber4)

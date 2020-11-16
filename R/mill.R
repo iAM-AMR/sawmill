@@ -13,7 +13,6 @@ mill <- function(timber, cedar_version = 2, write_scrap = TRUE, low_cell_correct
 
   sub_mill(timber1 <- debark(timber = timber, cedar_version = cedar_version), "debark")
   sub_mill(timber2 <- check_grain(timber = timber1), "check_grain")
-  sub_mill(timber3 <- trim_scraps(timber = timber2, write_scrap = write_scrap), "trim_scraps")
   sub_mill(timber4 <- build_table(timber = timber3,
                                   low_cell_correction = low_cell_correction,
                                   low_cell_threshold = low_cell_threshold), "build_table")

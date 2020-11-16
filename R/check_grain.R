@@ -92,6 +92,13 @@ check_grain <- function(timber) {
                     TRUE ~ NA_character_)) %>%
     dplyr::ungroup()
 
+
+  timber <- mutate(timber, exclude_sawmill = if_else(is.na(grain), TRUE, FALSE))
+
+  timber <- trim_scraps2(timber, reason = paste0("one or more values required to calculate the odds ratio are ",
+                                       "missing -- check that the data were extracted correctly"))
+
+
   return(timber)
 }
 

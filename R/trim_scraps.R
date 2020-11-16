@@ -10,7 +10,7 @@
 trim_scraps <- function(timber, reason) {
 
   # Select excluded factors
-  new_scraps <- filter(timbr, exclude_sawmill)
+  new_scraps <- filter(timber, exclude_sawmill)
 
   # Add reason for exclusion
   new_scraps$exclude_sawmill_reason <- reason

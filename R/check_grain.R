@@ -93,7 +93,7 @@ check_grain <- function(timber) {
     dplyr::ungroup()
 
 
-  timber <- mutate(timber, exclude_sawmill = if_else(is.na(grain), TRUE, FALSE))
+  timber <- mutate(timber, exclude_sawmill = ifelse(is.na(grain), TRUE, FALSE))
 
   timber <- trim_scraps(timber, reason = paste0("one or more values required to calculate the odds ratio are ",
                                        "missing -- check that the data were extracted correctly"))

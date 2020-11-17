@@ -37,3 +37,5 @@ exclude,exclude_iam,
 ID_meta,metaID,ID_meta
 meta_amr,ma_resistance,meta_amr
 meta_type,type,meta_type
+exclude_model,,exclude_model
+exclude_model_reason,,exclude_model_reason

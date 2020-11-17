@@ -20,7 +20,7 @@
 get_col_types <- function(cedar_version){
 
   if (cedar_version == 2) {
-    raw_col_types <- rep("text", times = 35)
+    raw_col_types <- rep("text", times = 37)
     raw_col_types[c(1,3,5,19:31,33)] <- "numeric"
   }
 

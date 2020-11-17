@@ -44,7 +44,7 @@ mill <- function(timber, cedar_version = 2, write_scrap = TRUE, low_cell_correct
   scrap_pile$identifier <- NA
   processed_timber <- bind_rows(timber12, scrap_pile)
 
-  return(timber1)
+  return(timber2)
 
 }
 

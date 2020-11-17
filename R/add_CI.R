@@ -10,7 +10,7 @@
 #'   a tibble of timber.
 #'
 #' @return
-#'   A tible of timber with additional column \emph{oddsci}.
+#'   A tibble of timber with additional column \emph{oddsci}.
 #'
 #' @importFrom dplyr mutate
 #'

@@ -68,7 +68,7 @@
 #' @return
 #'   A tibble of timber with additional column \emph{grain}.
 #'
-#' @importFrom dplyr rowwise mutate case_when ungroup
+#' @importFrom dplyr rowwise mutate case_when ungroup if_else
 #' @importFrom magrittr %>%
 #'
 #' @export

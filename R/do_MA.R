@@ -1,13 +1,12 @@
 
 
 #' @title
-#'    Perform Meta-analyses on Factors in a CEDAR Query
+#'    Perform meta-analyses on specified factors in timber
 #'
 #' @description
-#'    \code{do_MA()} performs a meta-analysis on pre-identified factors in a CEDAR query.
-#'    It was adapted from the now depreciated cedarr package for Sawmill.
+#'    \code{do_MA()} performs a meta-analysis on pre-identified factors in a CEDAR timber.
 #'
-#' @param query
+#' @param timber
 #'    a tibble of timber, with a table built by \code{\link{build_table}}.
 #'
 #' @param cedar_version
@@ -22,12 +21,12 @@
 #'   match that used to calculate SE(log(OR)) in \code{\link{build_chairs}}
 #'
 #' @details
-#'    Similar factors are combined in the IAM.AMR models using random-effect
+#'    Similar factors are combined in the iAM.AMR models using random-effect
 #'    meta-analysis. The \code{do_MA} function performs meta-analyses on
 #'    groups of factors indicated as alike by their metaID.
 #'
 #' @return
-#'    The results of the meta-analyses, appended to the passed timber query.
+#'    The results of the meta-analyses, appended to the passed timber timber.
 #'
 #' @importFrom metafor rma
 #' @importFrom magrittr %<>%
@@ -36,141 +35,110 @@
 #'
 #' @export
 
+# Requires: ID_meta, logOR, se_log_OR
 
-do_MA <- function(query, cedar_version = 2, dropRaw = FALSE, log_base = exp(1)) {
 
-  # Main changes from cedarr to Sawmill:
-  #     1) Performs MA on both v1 and v2 inputs instead of just v1
-  #     2) Conducts MA with the natural log(OR) and SE of the natural log(OR),
-  #        instead of using the natural logarithm. MA rows in the output csv file will
-  #        display the OR and SE of the log(OR), however.
 
-  sub_mill(query %<>% dedupe_MA(), "dedupe_MA")
 
-  mas <- unique(query$ID_meta[!is.na(query$ID_meta) & !(query$ID_meta == "NA")])
+do_MA <- function(timber, log_base = exp(1)) {
 
-  if (length(mas) > 0) {
+  # Extract the set of all pods of meta-analyses specified in timber. Note,
+  # unique() does not support igmore.na or rm.na, so we must use a more complex
+  # function.
 
-    query$logOR <- log(query$odds_ratio, base = log_base)
+  pod_set <- unique(timber$ID_meta[!is.na(timber$ID_meta) & !(timber$ID_meta == "NA")])
 
-    for (x in mas) {
+  # If no meta-analyses are specified, return the timber unchanged.
 
-      g   <- dplyr::filter(query, ID_meta == x)
-      mag <- metafor::rma(yi = logOR, sei = se_log_or, data = g)
-      mag_OR <- log_base ^ (as.numeric(mag$beta)) #exponentiate the OR for display purposes
-      mag_se_log_or <- mag$se
-      mag_pval <- as.character(mag$pval)
+  if (length(pod_set) == 0) {return(timber)}
 
-      host_01 <- g[1,]$host_01
-      microbe_01 <- g[1,]$microbe_01
-      meta_resistance <- g[1,]$meta_amr
+  # Calculate the log(OR)
 
-      if (length(unique(g$microbe_02)) > 1) {
-        microbe_02  <- "spp."
-      } else {
-        microbe_02  <- g[1,]$microbe_02
-      }
+  timber$logOR <- log(timber$odds_ratio, base = log_base)
 
-      if (cedar_version == 1) {
-        authors <- paste(unique(g$name_short), collapse = ", ")
-      }
-      else {
-        authors <- paste(unique(g$name_bibtex), collapse = ", ")
-      }
+  # Create a list to record the results in the global environment.
 
-      factor_title      <- g[1,]$factor_title
+  ma_results <<- list()
 
-      factor_description <- paste("A random effects meta-analysis of outcomes described in ", authors, " related to ", factor_title,
-                                  ". The outcome of interest is ", meta_resistance, " resistance of ", microbe_01, " in ", host_01,
-                                  ".", sep = "")
-      exposed    <- paste(unique(g$group_exposed), collapse = " or ")
-      referent   <- paste(unique(g$group_referent), collapse = " or ")
+  # For each pod: extract the factors, run the meta-analysis, save a copy of the
+  # results to the global environment,
 
-      if (cedar_version == 1) {
-        query <- tibble::add_row(query,
-                                 #status
-                                 name_short = "Meta-analysis", #different field names in v1 vs v2
-                                 #docID
-                                 host_01           = host_01, #same in v1 and v2
-                                 host_02           = g[1,]$host_02, #same
-                                 microbe_01        = microbe_01, #same
-                                 microbe_02        = microbe_02, #same
-                                 stage_allocate    = g[1,]$stage_allocate, #same
-                                 AMR               = meta_resistance, #same
-                                 factor_title      = factor_title, #same
-                                 factor_description = factor_description, #same
-                                 group_exposed     = exposed, #same
-                                 group_referent    = referent, #same
-                                 res_format        = "Odds Ratio", #same
-                                 exclude           = toString(any(g$exclude)), #doesn't exist in v2
-                                 ID_meta           = x, #same
-                                 #ma_resistance
-                                 meta_type         = g[1,]$meta_type, #same
-                                 grain             = "oddsRatioSet", #same
-                                 #A
-                                 #B
-                                 #C
-                                 #D
-                                 null_comparison       = any(g$null_comparison), #same
-                                 low_cell_count        = any(g$low_cell_count), #same
-                                 odds_ratio        = mag_OR, #same
-                                 se_log_or         = mag_se_log_or, #same
-                                 pval              = mag_pval #same
-                                 #URL
-                                 #Link
-        )
-      }
-      else {
-        query <- tibble::add_row(query,
-                                 #status
-                                 name_bibtex       = "Meta-analysis",
-                                 #docID
-                                 host_01           = host_01,
-                                 host_02           = g[1,]$host_02,
-                                 microbe_01        = microbe_01,
-                                 microbe_02        = microbe_02,
-                                 stage_allocate    = g[1,]$stage_allocate,
-                                 AMR               = meta_resistance,
-                                 factor_title      = factor_title,
-                                 factor_description = factor_description,
-                                 group_exposed     = exposed,
-                                 group_referent    = referent,
-                                 res_format        = "Odds Ratio",
-                                 ID_meta           = x,
-                                 #ma_resistance
-                                 meta_type         = g[1,]$meta_type,
-                                 grain             = "oddsRatioSet",
-                                 #A
-                                 #B
-                                 #C
-                                 #D
-                                 low_cell_count    = any(g$low_cell_count),
-                                 null_comparison   = any(g$null_comparison),
-                                 odds_ratio        = mag_OR,
-                                 se_log_or         = mag_se_log_or,
-                                 pval              = mag_pval
-                                 #URL
-                                 #Link
-        )
-      }
+  for (pod_num in pod_set) {
 
+    # Subset factors.
+
+    pod    <- dplyr::filter(timber, ID_meta == pod_num)
+
+    # Run random-effects meta-analysis using REML as an estimation method.
+
+    pod_ma <- metafor::rma(yi = logOR, sei = se_log_or, method = "REML", data = pod)
+
+    # Save meta-analysis result objects in the global environment for review.
+
+    ma_results[[paste0("ma_", pod_num)]] <<- pod_ma
+
+
+
+    pod_authors <- paste(unique(pod$name_bibtex), collapse = ", ")
+
+    pod_title   <- pod[1,]$factor_title
+
+    pod_resistance <- pod[1,]$meta_amr
+
+    pod_microbe_01 <- pod[1,]$microbe_01
+
+    pod_host_01    <- pod[1,]$host_01
+
+    pod_desc    <- paste("A random effects meta-analysis of outcomes described in ", pod_authors, " related to ", pod_title,
+                         ". The outcome of interest is ", pod_resistance, " resistance of ", pod_microbe_01, " in ", pod_host_01,
+                         ".", sep = "")
+
+
+    if (length(unique(pod$microbe_02)) > 1) {
+      pod_microbe_02  <- "spp."
+    } else {
+      pod_microbe_02  <- pod[1,]$microbe_02
     }
 
-    query %<>% select(-logOR, -meta_amr)
 
-    if (dropRaw) {
-      if (cedar_version == 1) {
-        query <- dplyr::filter(query, is.na(ID_meta) | name_short == "Meta-analysis")
-      }
-      else {
-        query <- dplyr::filter(query, is.na(ID_meta) | name_bibtex == "Meta-analysis")
-      }
+    timber <- tibble::add_row(timber,
+                              #status
+                              name_bibtex        = "Meta-analysis",
+                              #docID
+                              host_01            = pod_host_01,
+                              host_02            = pod[1,]$host_02,
+                              microbe_01         = pod_microbe_01,
+                              microbe_02         = pod_microbe_02,              #*
+                              stage_allocate     = pod[1,]$stage_allocate,
+                              AMR                = pod_resistance,
+                              factor_title       = pod_title,
+                              factor_description = pod_desc,
+                              group_exposed      = paste(unique(pod$group_exposed), collapse = " or "),
+                              group_referent     = paste(unique(pod$group_referent), collapse = " or "),
+                              res_format         = "Odds Ratio",
+                              ID_meta            = pod_num,
+                              #ma_resistance
+                              meta_type         = pod[1,]$meta_type,
+                              grain             = "oddsRatioSet",
+                              #A
+                              #B
+                              #C
+                              #D
+                              low_cell_count    = any(pod$low_cell_count),
+                              null_comparison   = any(pod$null_comparison),
+                              odds_ratio        = log_base ^ (as.numeric(pod_ma$beta)),
+                              se_log_or         = pod_ma$se,
+                              pval              = as.character(pod_ma$pval)
+                              #URL
+                              #Link
+                              )
 
-    }
-
-  }
-
-  return(query)
 
 }
+
+  return(timber)
+
+
+}
+
 

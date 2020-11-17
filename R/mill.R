@@ -32,18 +32,17 @@ mill <- function(timber, cedar_version = 2, write_scrap = TRUE, low_cell_correct
   sub_mill(timber12 <- add_ident(query = timber11, cedar_version = cedar_version), "add_ident")
   
   #Append scrap pile to the end of the processed timber file
+  scrap_pile$low_cell_count <- NA
+  scrap_pile$null_comparison <- NA
+  scrap_pile$insensible_rate_table <- NA
+  scrap_pile$oddsci <- NA
+  scrap_pile$odds_ratio <- NA
+  scrap_pile$se_log_or <- NA
+  scrap_pile$pval <- NA
+  scrap_pile$url <- NA
+  scrap_pile$html_link <- NA
+  scrap_pile$identifier <- NA
   processed_timber <- bind_rows(timber12, scrap_pile)
-  
-  #low_cell_count
-  #null_comparison
-  #insensible_rate_table
-  #oddsci
-  #odds_ratio
-  #se_log_or
-  #pval
-  #url
-  #html_link
-  #identifier
 
   return(processed_timber)
 

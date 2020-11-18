@@ -19,7 +19,7 @@ Or, you can copy the contents of [bootstrap.R](bootstrap.R) into R or RStudio by
 
 ### Run Code
 
-Then, run the code.  
+Then, run the code: *it is important to do this by clicking **Source** in RStudio.* 
 
 The code will install the requirements to download `sawmill`, then download it, along with its requirements. Then, it'll install it, and start the default processing pipeline.
 

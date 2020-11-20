@@ -20,6 +20,7 @@
 #' @export
 
 
+
 debark <- function(timber, cedar_version = 2){
 
   sub_mill(check_version(cedar_version), "check_version")

@@ -1,11 +1,22 @@
 
 
 #' @title
-#'   Start the sawmill Pipeline
+#'   Start the sawmill pipeline
 #'
 #' @description
-#'  The \code{start_mill()} function prompts the user for a CEDAR query, the CEDAR query version,
-#'  and runs the CEDAR pipeline with useful defaults.
+#'   The \code{start_mill()} function prompts the user to select an exported
+#'   CEDAR query (timber) and runs the \code{mill()} pipeline with default values.
+#'
+#' @details
+#'   The \code{start_mill()} function is the primary entry-point for end users -
+#'   it is a one-click-to-run function, and is automatically called during
+#'   bootstrap installation of sawmill.
+#'
+#'   By default, cedar_version is set to 2; all modern timber was created in
+#'   version 2.
+#'
+#' @param cedar_version
+#'   numeric [1,2]: the version (1 or 2) of CEDAR, used to create timber.
 #'
 #' @importFrom readxl read_excel
 #' @importFrom readr write_csv
@@ -13,17 +24,21 @@
 #' @export
 
 
-start_mill <- function(){
+start_mill <- function(cedar_version = 2){
 
-  readline(prompt="\nYou will now be asked to provide a CEDAR query. Press any key, followed by the Enter key, to continue.")
+  # Prompt the user to press [Enter] to continue, and select a timber.
+  # readline() is wrapped in invisible(), to avoid printing keys to console.
+
+  invisible(readline(prompt=paste("Welcome to sawmill.",
+                                  "Press the [Enter] key to start_mill; you will be asked to select a query (timber) from CEDAR.",
+                                  sep = "\n")))
+  # Select timber.
 
   file_path  <- file.choose()
 
-  user_vers  <- readline(prompt="\nWhat version of CEDAR is this export from? Enter 1 or 2, followed by the Enter key, to continue:  ")
 
-  sub_mill(check_version(user_vers), "check_version")
 
-  sub_mill(timber_col_types <- get_col_types(user_vers), "get_col_types")
+
 
   sub_mill(log_warnings(raw_timber <- readxl::read_excel(file_path, col_types = timber_col_types)), "log_warnings")
 

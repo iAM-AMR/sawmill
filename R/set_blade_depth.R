@@ -30,7 +30,8 @@ set_blade_depth <- function(cedar_version = 2) {
   # Specify Cols to suppress warnings
   kerf_cols <- readr::cols(uniform  = readr::col_character(),
                            cedar_v1 = readr::col_character(),
-                           cedar_v2 = readr::col_character())
+                           cedar_v2 = readr::col_character(),
+                           col_type = readr::col_character())
 
   kerf      <- readr::read_csv(system.file("raw_Data", "import_filter.csv", package = "sawmill"),
                                col_types = kerf_cols)

@@ -81,6 +81,7 @@ check_grain <- function(timber) {
   #          2) Check for rate_table_pos_tot before rate_table_pos_neg, so that all rate
   #             tables with nexp and nref information can be retained for odds ratio calculations
 
+  # Process timber row by row, otherwise neither the vectorized if_else() or the non-vectorized ifelse() versions of the statements in the last case (rate_table_pos_neg) will work
   timber <- timber %>%
     dplyr::rowwise() %>%
     dplyr::mutate(grain = dplyr::case_when(
@@ -93,10 +94,10 @@ check_grain <- function(timber) {
     dplyr::ungroup()
 
 
-  timber <- mutate(timber, exclude_sawmill = ifelse(is.na(grain), TRUE, FALSE))
+  timber <- dplyr::mutate(timber, exclude_sawmill = dplyr::if_else(is.na(grain), TRUE, FALSE))
 
-  timber <- trim_scraps(timber, reason = paste0("one or more values required to calculate the odds ratio are ",
-                                       "missing -- check that the data were extracted correctly"))
+  timber <- sub_mill(trim_scraps(timber, reason = paste0("one or more values required to calculate the odds ratio are ",
+                                       "missing -- check that the data were extracted correctly")), "trim_scraps")
 
 
   return(timber)

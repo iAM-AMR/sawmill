@@ -79,7 +79,7 @@ do_MA <- function(timber, log_base = exp(1)) {
 
 
 
-    pod_authors <- paste(unique(pod$name_bibtex), collapse = ", ")
+    pod_authors <- paste(unique(pod$ref_key), collapse = ", ")
 
     pod_title   <- pod[1,]$factor_title
 
@@ -103,7 +103,7 @@ do_MA <- function(timber, log_base = exp(1)) {
 
     timber <- tibble::add_row(timber,
                               #status
-                              name_bibtex        = "Meta-analysis",
+                              ref_key            = "Meta-analysis",
                               #docID
                               host_01            = pod_host_01,
                               host_02            = pod[1,]$host_02,
@@ -124,8 +124,8 @@ do_MA <- function(timber, log_base = exp(1)) {
                               #B
                               #C
                               #D
-                              low_cell_count    = any(pod$low_cell_count),
-                              null_comparison   = any(pod$null_comparison),
+                              low_cell_count    = any(pod$low_cell_count), #
+                              null_comparison   = any(pod$null_comparison), #
                               odds_ratio        = log_base ^ (as.numeric(pod_ma$beta)),
                               se_log_or         = pod_ma$se,
                               pval              = as.character(pod_ma$pval)

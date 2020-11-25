@@ -36,28 +36,31 @@ start_mill <- function(cedar_version = 2){
 
   file_path  <- file.choose()
 
+  # Verify that the version is valid
 
+  sub_mill(check_version(cedar_version), "check_version")
 
+  # Calibrate processing tools to the cedar version
 
+  sub_mill(tools   <- set_blade_depth(cedar_version), "set_blade_depth")
+  depth_guide <- tools[[1]]
+  timber_col_types <- tools[[2]]
 
-  sub_mill(log_warnings(raw_timber <- readxl::read_excel(file_path, col_types = timber_col_types)), "log_warnings")
+  # Start the main pipeline
 
-  tryCatch(raw_timber <- readxl::read_excel(file_path, col_types = timber_col_types),
-           warning = function(w) {
-             sub_mill(handle_col_warnings(), "handle_col_warnings")
-           })
+  sub_mill(planks  <- mill(timber_path = file_path, cuts = depth_guide, col_data_types = timber_col_types, cedar_version = cedar_version), "mill")
 
-  sub_mill(furniture  <- mill(raw_timber, cedar_version = user_vers), "mill")
+  # Save the processed timber
 
   readline(prompt = paste0("\n\nYou will now be asked to save the processed timber.\n",
                            "You MUST save the file with a .csv extension.\n",
                            "Press any key, followed by the Enter key, to continue."))
 
-  readr::write_csv(furniture, file.choose())
+  readr::write_csv(planks, file.choose())
 
   readline(prompt = paste0("\nDone.\n",
                            "Press any key, followed by the Enter key, to exit."))
-  return(furniture)
+  return(planks)
 
 }
 

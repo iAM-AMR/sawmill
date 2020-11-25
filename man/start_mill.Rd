@@ -2,11 +2,22 @@
 % Please edit documentation in R/start_mill.R
 \name{start_mill}
 \alias{start_mill}
-\title{Start the sawmill Pipeline}
+\title{Start the sawmill pipeline}
 \usage{
-start_mill()
+start_mill(cedar_version = 2)
+}
+\arguments{
+\item{cedar_version}{numeric [1,2]: the version (1 or 2) of CEDAR, used to create timber.}
 }
 \description{
-The \code{start_mill()} function prompts the user for a CEDAR query, the CEDAR query version,
- and runs the CEDAR pipeline with useful defaults.
+The \code{start_mill()} function prompts the user to select an exported
+  CEDAR query (timber) and runs the \code{mill()} pipeline with default values.
+}
+\details{
+The \code{start_mill()} function is the primary entry-point for end users -
+  it is a one-click-to-run function, and is automatically called during
+  bootstrap installation of sawmill.
+
+  By default, cedar_version is set to 2; all modern timber was created in
+  version 2.
 }

@@ -19,13 +19,15 @@
 #'    A named vector.
 #'
 #'  @importFrom readr cols read_csv
+#'  @importFrom tidyr drop_na
+#'  @importFrom dplyr pull %>%
 #'
 #'  @export
 
 
 set_blade_depth <- function(cedar_version = 2) {
 
-  sub_mill(check_version(cedar_version), "check_version")
+  #sub_mill(check_version(cedar_version), "check_version")
 
   # Specify Cols to suppress warnings
   kerf_cols <- readr::cols(uniform  = readr::col_character(),
@@ -33,16 +35,19 @@ set_blade_depth <- function(cedar_version = 2) {
                            cedar_v2 = readr::col_character(),
                            col_type = readr::col_character())
 
+  #Read in the import_filter and drop rows not applicable to the current cedar version
   kerf      <- readr::read_csv(system.file("raw_Data", "import_filter.csv", package = "sawmill"),
-                               col_types = kerf_cols)
+                               col_types = kerf_cols) %>% tidyr::drop_na(paste0("cedar_v", cedar_version))
+  timber_col_types <- kerf$col_type
 
-  old_names          <- kerf[, paste0("cedar_v", cedar_version)]
-  new_names          <- kerf$uniform[which(!is.na(old_names))]
+  #Get info needed to rename columns
+  depth_guide        <- dplyr::pull(kerf[, paste0("cedar_v", cedar_version)]) #old_names
+  new_names          <- kerf$uniform
 
-  depth_guide        <- old_names[!is.na(old_names)]
+  #depth_guide        <- old_names[!is.na(old_names)]
   names(depth_guide) <- new_names
 
-  return(depth_guide)
+  return(list(depth_guide, timber_col_types))
 
 }
 

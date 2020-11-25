@@ -21,17 +21,31 @@
 
 
 
-debark <- function(timber, cedar_version = 2){
+debark <- function(timber_path, cuts, col_data_types){
 
-  sub_mill(check_version(cedar_version), "check_version")
+  raw_timber <- readxl::read_excel(timber_path)
 
-  sub_mill(cuts   <- set_blade_depth(cedar_version), "set_blade_depth")
+  # Screen for missing columns (report which ones are missing)
+  missing <- setdiff(as.vector(depth_guide), names(raw_timber))
 
-  if(!all((cuts) %in% names(timber))) {
-    stop("There are requisite columns missing from your CEDAR export.")}
+  if(length(missing)>0) {
+    stop(paste('ERROR: The following requisite columns are missing from your timber: ',
+               paste(missing, collapse = ", ")
+        )
+    )
+  }
 
-  timber <- dplyr::rename(timber, cuts)
+  # Screen for cells that do not match the expected data type for their column
 
+  sub_mill(log_warnings(raw_timber <- readxl::read_excel(timber_path, col_types = col_data_types)), "log_warnings")
+
+  tryCatch(raw_timber <- readxl::read_excel(timber_path, col_types = col_data_types),
+    warning = function(w) {
+      sub_mill(handle_col_warnings(), "handle_col_warnings")
+    })
+
+
+  timber <- dplyr::rename(raw_timber, cuts)
 
 
   # Add exclude_sawmill and exclude_sawmill_reason columns to indicate factors

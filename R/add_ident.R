@@ -30,31 +30,22 @@
 
 add_ident <- function(query, cedar_version = 2) {
 
-  if (cedar_version == 1) {
-    nameCol <- "name_short"
-  }
-  else {
-    nameCol <- "name_bibtex"
-  }
+  nameCol <- "ref_key"
 
   prefix <- ifelse(query[nameCol] == "Meta-analysis", "M", "R")
 
   getnum <- function(name, ID, metaID) {
 
-    if (cedar_version == 1) {
-      if (name == "Meta-analysis") {
-        formatC(metaID, width = 5, flag = 0)
-      } else {
-        formatC(ID, width = 5, flag = 0)
-      }
+    if (name == "Meta-analysis") {
+      formatC(metaID, width = 5, format = "d", flag = "0")
     }
     else {
-      formatC(ID, width = 5, digits = 0, format = "f")
+      formatC(ID, width = 5, format = "d", flag = "0")
     }
 
   }
 
-  number <- as.vector(mapply(getnum, query[[nameCol]], query[["ID"]], query[["ID_meta"]]))
+  number <- as.vector(mapply(getnum, query[[nameCol]], as.numeric(query[["ID"]]), as.numeric(query[["ID_meta"]])))
 
   suffix <- substr(query[["factor_title"]], start = 1, stop = 13)
   suffix <- gsub(pattern = " ", replacement = "_", x = suffix)

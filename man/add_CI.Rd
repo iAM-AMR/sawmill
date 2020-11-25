@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_CI.R
 \name{add_CI}
 \alias{add_CI}
-\title{Add a Confidence Interval (CI) Column to Timber}
+\title{Fill in the Confidence Interval (CI) Column}
 \usage{
 add_CI(timber)
 }
@@ -10,8 +10,9 @@ add_CI(timber)
 \item{timber}{a tibble of timber.}
 }
 \value{
-A tible of timber with additional column \emph{oddsci}.
+A tibble of timber with a complete \emph{oddsci} column.
 }
 \description{
-\code{add_CI} checks if the CEDAR version specified is 1 or 2, else throws an error.
+\code{add_CI} fills in empty cells in the confidence interval column with the
+  value 95.
 }

@@ -1,10 +1,9 @@
 uniform,cedar_v1,cedar_v2,col_type
 ID,ID,ID_factor,numeric
 RWID,,RWID,text
-name_short,name,,text
 doi,docID,ident_doi,text
 pmid,,ident_pmid,text
-ref_key,,name_bibtex,text
+ref_key,name,name_bibtex,text
 AMR,antimicrobial,AMR,text
 factor_title,title,factor_title,text
 factor_description,definition,factor_description,text
@@ -32,7 +31,8 @@ odds,factor_or,odds_ratio,numeric
 oddslo,or_lo,odds_ratio_lo,numeric
 oddsup,or_up,odds_ratio_up,numeric
 oddsig,or_sig,odds_ratio_sig,text
+oddsci,,odds_ratio_confidence,numeric
 exclude,exclude_iam,,text
-ID_meta,metaID,ID_meta,
+ID_meta,metaID,ID_meta,text
 meta_amr,ma_resistance,meta_amr,text
 meta_type,type,meta_type,text

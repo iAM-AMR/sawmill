@@ -5,7 +5,9 @@
 \title{The sawmill Pipeline}
 \usage{
 mill(
-  timber,
+  timber_path,
+  cuts,
+  col_data_types,
   cedar_version = 2,
   write_scrap = TRUE,
   low_cell_correction = 0.5,

@@ -4,7 +4,7 @@
 \alias{debark}
 \title{Standardize Column Names or "Debark" Timber}
 \usage{
-debark(timber, cedar_version = 2)
+debark(timber_path, cuts, col_data_types)
 }
 \arguments{
 \item{timber}{a tibble of timber.}

@@ -22,6 +22,8 @@ set_blade_depth(cedar_version = 2)
    A named vector.
 
  @importFrom readr cols read_csv
+ @importFrom tidyr drop_na
+ @importFrom dplyr pull %>%
 
  @export
 }

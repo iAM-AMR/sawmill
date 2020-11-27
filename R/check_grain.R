@@ -1,10 +1,12 @@
 
 
 #' @title
-#'   Check the Grain (Set of Numeric Fields) of Each Factor in Timber
+#'   Check the grain (set of numeric fields) of each factor in the timber
 #'
 #' @description
 #'   \code{check_grain()} determines which set of numeric fields are used to specify each factor in timber (i.e. the factor's \emph{grain}).
+#'   It also flags unusable factors using the \emph{exclude_sawmill} field, passing the timber to \code{\link{trim_scraps}} for handling
+#'   of these factors.
 #'
 #' @param timber
 #'   a tibble of timber.
@@ -49,7 +51,7 @@
 #'   }
 #'
 #'   \subsection{Recognized Grains}{
-#'     There are currently four recognized grains:
+#'     There are currently five recognized grains:
 #'
 #'     \itemize{
 #'            \item{con_table_pos_neg: A, B, C, D}
@@ -60,13 +62,32 @@
 #'     }
 #'   }
 #'
+#'   \subsection{Usable Grains}{
+#'     Of the five recognized grains, four are usable.
+#'
+#'     \itemize{
+#'            \item{con_table_pos_neg: A, B, C, D}
+#'            \item{con_table_pos_tot: A, C, M1, M2}
+#'            \item{rate_table_pos_tot: P, Q, M1, M2}
+#'            \item{odds_ratio: oddslo, odds, oddsup}
+#'     }
+#'
+#'     Please note that factors with a grain of \emph{rate_table_pos_tot} may also contain R and S,
+#'     however these fields are not useful in the calculation of the measure of association.
+#'
+#'     Also note that, although an \emph{odds_ratio} grain is usable without a significance
+#'     value (p-value), \code{sawmill} can only calculate a p-value (see \code{\link{build_horse}})
+#'     for contingency or rate table grains. So, the p-values for odds ratio factors should be extracted
+#'     whenever they are available. Otherwise, they will appear as \code{NA} in the processed timber.
+#'   }
+#'
 #'   \subsection{Unrecognized Grains}{
 #'     If \code{check_grain()} fails to recognize the grain, it returns \code{NA}.
 #'
 #'  }
 #'
 #' @return
-#'   A tibble of timber with additional column \emph{grain}.
+#'   A tibble of timber with additional column \emph{grain}, and with unusable factors removed.
 #'
 #' @importFrom dplyr rowwise mutate case_when ungroup if_else
 #' @importFrom magrittr %>%
@@ -93,7 +114,7 @@ check_grain <- function(timber) {
                     TRUE ~ NA_character_)) %>%
     dplyr::ungroup()
 
-
+  # Flag unusable factors and send them to be added to the scrap pile
   timber <- dplyr::mutate(timber, exclude_sawmill = dplyr::if_else(is.na(grain), TRUE, FALSE))
 
   timber <- sub_mill(trim_scraps(timber, reason = paste0("one or more values required to calculate the odds ratio are ",

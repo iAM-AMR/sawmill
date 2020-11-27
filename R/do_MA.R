@@ -9,16 +9,12 @@
 #' @param timber
 #'    a tibble of timber, with a table built by \code{\link{build_table}}.
 #'
-#' @param cedar_version
-#'    numeric [1,2]: the version of CEDAR that created the export.
-#'
-#' @param dropRaw
-#'    logical; where \code{dropRaw = TRUE} the individual studies used in the
-#'    meta-analyses are dropped from the data frame.
-#'
 #' @param log_base
-#'   numeric: the logarithm base used in the calculation of the log(OR). Should
+#'   numeric: the logarithm base used in the calculation of the log(OR). It should
 #'   match that used to calculate SE(log(OR)) in \code{\link{build_chairs}}
+#'
+#' @param cedar_version
+#'   numeric [1,2]: the version of CEDAR that created the export.
 #'
 #' @details
 #'    Similar factors are combined in the iAM.AMR models using random-effect
@@ -26,7 +22,7 @@
 #'    groups of factors indicated as alike by their metaID.
 #'
 #' @return
-#'    The results of the meta-analyses, appended to the passed timber timber.
+#'    The results of the meta-analyses, appended to the passed timber.
 #'
 #' @importFrom metafor rma
 #' @importFrom magrittr %<>%
@@ -40,7 +36,7 @@
 
 
 
-do_MA <- function(timber, log_base = exp(1)) {
+do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
 
   # Extract the set of all pods of meta-analyses specified in timber. Note,
   # unique() does not support igmore.na or rm.na, so we must use a more complex
@@ -78,6 +74,7 @@ do_MA <- function(timber, log_base = exp(1)) {
     ma_results[[paste0("ma_", pod_num)]] <<- pod_ma
 
 
+    # Gather fields for the meta-analysis result rows that will be added to the timber
 
     pod_authors <- paste(unique(pod$ref_key), collapse = ", ")
 
@@ -117,7 +114,7 @@ do_MA <- function(timber, log_base = exp(1)) {
                               group_referent     = paste(unique(pod$group_referent), collapse = " or "),
                               res_format         = "Odds Ratio",
                               ID_meta            = pod_num,
-                              #ma_resistance
+                              meta_amr          = pod_resistance,
                               meta_type         = pod[1,]$meta_type,
                               grain             = "oddsRatioSet",
                               #A
@@ -134,7 +131,7 @@ do_MA <- function(timber, log_base = exp(1)) {
                               )
 
 
-}
+  }
 
   return(timber)
 

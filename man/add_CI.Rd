@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_CI.R
 \name{add_CI}
 \alias{add_CI}
-\title{Fill in the Confidence Interval (CI) Column}
+\title{Fill in the confidence interval (CI) column}
 \usage{
 add_CI(timber)
 }
@@ -13,6 +13,6 @@ add_CI(timber)
 A tibble of timber with a complete \emph{oddsci} column.
 }
 \description{
-\code{add_CI} fills in empty cells in the confidence interval column with the
-  value 95.
+\code{add_CI} fills in any blank cells in the confidence interval column
+  with the assumed value of 95.
 }

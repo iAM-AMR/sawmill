@@ -1,10 +1,11 @@
 
 
 #' @title
-#'   Flag Rate Tables as Sensible or Not
+#'   Flag rate tables as sensible or insensible
 #'
 #' @description
-#'    \code{polish_table()} identifies factors with rate tables that do not sum to approximately 100%
+#'    \code{polish_table()} identifies factors with rate tables that do not sum to approximately 100%, for
+#'    timber produced by CEDAR v2 only.
 #'
 #' @param timber
 #'    a tibble of timber.
@@ -21,7 +22,7 @@
 #'    considered "sensible", i.e. close to 100\%.
 #'
 #' @details
-#'    For factors with a rate_table_pos_tot grain (see \code{\link{check_grain}} for more information),
+#'    For factors with a \emph{rate_table_pos_tot} grain (see \code{\link{check_grain}} for more information),
 #'    for which R and S (% AMR- individuals within the exposed and referent groups, respectively)
 #'    are also available, the resulting rate table may or not be sensible, i.e. each of P% + R%
 #'    and Q% + S% may or may not sum to approximately 100%. Where these sums do not fall within
@@ -31,14 +32,14 @@
 #'    grains, or for factors of this grain where R and S are not available, this column will
 #'    have a value of NA.
 #'
-#'    Since inputs produced by CEDAR v2 are the only ones to contain R and S columns, this
-#'    new \emph{insensible_rate_table} column is only added to v2 inputs. If a CEDAR v1
-#'    query is provided as the input to the pipeline, the tibble produced by the
+#'    Since timber produced by CEDAR v2 are the only ones to contain R and S columns, this
+#'    new \emph{insensible_rate_table} column is only added to v2 timber. If timber from
+#'    CEDAR v1 is provided as the input to the pipeline, the tibble produced by the
 #'    \code{polish_table} function will be exactly the same as the tibble passed into the
 #'    function.
 #'
 #' @return
-#'    A tibble of timber, with an additional column added to inputs produced by CEDAR
+#'    A tibble of timber, with an additional column added to timber produced by CEDAR
 #'    v2: \emph{insensible_rate_table}.
 #'
 #' @importFrom dplyr mutate case_when

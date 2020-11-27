@@ -1,7 +1,7 @@
 
 
 #' @title
-#'   Append the Scrap Pile to the Processed Timber
+#'   Append the scrap pile to the processed timber (planks)
 #'
 #' @description
 #'   \code{append_scraps()} adds the unusable factors in the scrap pile to the end of the

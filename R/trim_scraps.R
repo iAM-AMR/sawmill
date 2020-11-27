@@ -1,24 +1,23 @@
 
 
 #' @title
-#'   Trim Unusable Factors from Timber
+#'   Trim unusable factors from timber
 #'
 #' @description
-#'   \code{trim_scraps()} removes unusable factors from timber, as marked in exclude_sawmill.
+#'   \code{trim_scraps()} removes unusable factors from timber, as marked in the \emph{exclude_sawmill}
+#'   field, attaches a reason for exclusion using \emph{exclude_sawmill_reason}, and sends these factors to
+#'   the \code{scrap_pile}.
 #'
 #' @param timber
 #'   a tibble of timber, with grain checked by \code{\link{check_grain}}.
 #'
 #' @param reason
-#'   string: a description of why this factor was removed from the models? \code{scrap_pile}.
-#'
-#' @details
-#'
+#'   string: a description of why a given factor is unusable.
 #'
 #' @return
 #'   A tibble of timber without unusable factors.
 #'
-#' @importFrom dplyr filter mutate
+#' @importFrom dplyr filter
 #'
 #' @export
 
@@ -27,16 +26,16 @@
 trim_scraps <- function(timber, reason) {
 
   # Select excluded factors
-  new_scraps <- filter(timber, exclude_sawmill)
+  new_scraps <- dplyr::filter(timber, exclude_sawmill)
 
   # Add reason for exclusion
   new_scraps$exclude_sawmill_reason <- reason
 
-  # Write to scrap_pile
+  # Write excluded factors to the scrap_pile
   scrap_pile <<- bind_rows(scrap_pile, new_scraps)
 
   # Return timber without exclusions
-  return(filter(timber, !exclude_sawmill))
+  return(dplyr::filter(timber, !exclude_sawmill))
 
 
 }

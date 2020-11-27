@@ -2,21 +2,20 @@
 % Please edit documentation in R/trim_scraps.R
 \name{trim_scraps}
 \alias{trim_scraps}
-\title{Trim Unusable Factors from Timber}
+\title{Trim unusable factors from timber}
 \usage{
 trim_scraps(timber, reason)
 }
 \arguments{
 \item{timber}{a tibble of timber, with grain checked by \code{\link{check_grain}}.}
 
-\item{reason}{string: a description of why this factor was removed from the models? \code{scrap_pile}.}
+\item{reason}{string: a description of why a given factor is unusable.}
 }
 \value{
 A tibble of timber without unusable factors.
 }
 \description{
-\code{trim_scraps()} removes unusable factors from timber, as marked in exclude_sawmill.
-}
-\details{
-
+\code{trim_scraps()} removes unusable factors from timber, as marked in the \emph{exclude_sawmill}
+  field, attaches a reason for exclusion using \emph{exclude_sawmill_reason}, and sends these factors to
+  the \code{scrap_pile}.
 }

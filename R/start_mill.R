@@ -5,7 +5,7 @@
 #'
 #' @description
 #'   The \code{start_mill()} function prompts the user to select an exported
-#'   CEDAR query (timber) and runs the \code{mill()} pipeline with default values.
+#'   CEDAR query (raw timber) and runs the \code{mill()} pipeline with default values.
 #'
 #' @details
 #'   The \code{start_mill()} function is the primary entry-point for end users -
@@ -18,7 +18,6 @@
 #' @param cedar_version
 #'   numeric [1,2]: the version (1 or 2) of CEDAR, used to create timber.
 #'
-#' @importFrom readxl read_excel
 #' @importFrom readr write_csv
 #'
 #' @export
@@ -50,7 +49,7 @@ start_mill <- function(cedar_version = 2){
 
   sub_mill(planks  <- mill(timber_path = file_path, cuts = depth_guide, col_data_types = timber_col_types, cedar_version = cedar_version), "mill")
 
-  # Save the processed timber
+  # Save the processed timber (planks)
 
   readline(prompt = paste0("\n\nYou will now be asked to save the processed timber.\n",
                            "You MUST save the file with a .csv extension.\n",

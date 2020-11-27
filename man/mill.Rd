@@ -19,5 +19,5 @@ mill(
 )
 }
 \description{
-The \code{mill()} runs the CEDAR pipeline with useful defaults.
+The \code{mill()} runs the sawmill pipeline with useful defaults.
 }

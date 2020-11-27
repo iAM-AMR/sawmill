@@ -2,7 +2,7 @@
 % Please edit documentation in R/build_horse.R
 \name{build_horse}
 \alias{build_horse}
-\title{Calculate the Significance of a Factor}
+\title{Calculate the significance of a factor}
 \usage{
 build_horse(timber)
 }
@@ -13,5 +13,7 @@ build_horse(timber)
 A tibble of timber with additional columns: \emph{pval}.
 }
 \description{
-\code{build_horse()} calculates the significance of the OR of a factor.
+\code{build_horse()} calculates the significance of the OR of a count or rate-based factor, using
+  the Fisher's Exact Test. It does not calculate the significance of the OR if the factor has an
+  \emph{odds_ratio} grain.
 }

@@ -11,7 +11,7 @@ start_mill(cedar_version = 2)
 }
 \description{
 The \code{start_mill()} function prompts the user to select an exported
-  CEDAR query (timber) and runs the \code{mill()} pipeline with default values.
+  CEDAR query (raw timber) and runs the \code{mill()} pipeline with default values.
 }
 \details{
 The \code{start_mill()} function is the primary entry-point for end users -

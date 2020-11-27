@@ -1,7 +1,7 @@
 
 
 #' @title
-#'   Complete Contingency Tables for Count and Rate-based Factors
+#'   Complete contingency tables for count and rate-based factors
 #'
 #' @description
 #'   \code{build_table()} completes partially-specified contingency tables using simple arithmetic.
@@ -68,6 +68,7 @@ build_table <- function(timber, low_cell_correction = 0.5, low_cell_threshold = 
                                               yes = TRUE,
                                               no = FALSE))
 
+  # Apply the low_cell_correction to those factors with a low_cell_count
   timber <- dplyr::mutate(timber,
                    A = ifelse(low_cell_count == TRUE,
                               yes = A + low_cell_correction,

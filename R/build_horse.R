@@ -1,10 +1,12 @@
 
 
 #' @title
-#'   Calculate the Significance of a Factor
+#'   Calculate the significance of a factor
 #'
 #' @description
-#'   \code{build_horse()} calculates the significance of the OR of a factor.
+#'   \code{build_horse()} calculates the significance of the OR of a count or rate-based factor, using
+#'   the Fisher's Exact Test. It does not calculate the significance of the OR if the factor has an
+#'   \emph{odds_ratio} grain.
 #'
 #' @param timber
 #'   a tibble of timber, with a table built by \code{\link{build_table}}.

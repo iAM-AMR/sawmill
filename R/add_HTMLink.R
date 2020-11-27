@@ -1,7 +1,7 @@
 
 
 #' @title
-#'    Generate HTML Links Using a Document Identifier
+#'    Generate HTML links using a document identifier
 #'
 #' @description
 #'    \code{add_HTMLink()} adds a column to the passed tibble, containing the HTML Link
@@ -33,8 +33,7 @@
 #' @return
 #'    The passed tibble of timber with an additional column containing HTML Link(s).
 #'
-#' @importFrom dplyr mutate_all
-#' @importFrom tidyr replace_na
+#' @importFrom dplyr rowwise ungroup mutate case_when
 #' @importFrom stringr str_detect
 #'
 #' @export

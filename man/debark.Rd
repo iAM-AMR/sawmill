@@ -2,18 +2,30 @@
 % Please edit documentation in R/debark.R
 \name{debark}
 \alias{debark}
-\title{Standardize Column Names or "Debark" Timber}
+\title{Standardize column names and screen for data entry errors, or "debark" timber}
 \usage{
 debark(timber_path, cuts, col_data_types)
 }
 \arguments{
-\item{timber}{a tibble of timber.}
+\item{timber_path}{character: the file path to the raw timber}
 
-\item{cedar_version}{numeric [1,2]: the version of CEDAR that created the export..}
+\item{cuts}{named vector: a mapping of the input raw timber names to their standardized column names,
+produced by \code{set_blade_depth()}}
+
+\item{col_data_types}{a vector containing the expected data type for each column in the raw timber (i.e. "text"),
+produced by \code{set_blade_depth()}}
 }
 \value{
-A tibble of timber with standardized column names.
+A tibble of timber with standardized column names and additional columns
+  \emph{exclude_sawmill} and \emph{exclude_sawmill_reason}. If columns are missing and/or if
+  unexpected data types are present, a prompt and/or error message will be returned instead.
 }
 \description{
 \code{debark()} standardizes the column names of timber for use in \code{sawmill}.
+  It also reports the names of any missing required columns, as well as the row/column
+  locations of any cells of an unexpected data type (i.e. a string of text in a
+  column that is supposed to contain numeric values only), as per \code{col_data_types}.
+  Finally, \code{debark()} adds the columns \emph{exclude_sawmill} and
+  \emph{exclude_sawmill_reason}, to be filled in later by \code{sawmill} as it encounters
+  unusable factors that need to be excluded from further processing steps.
 }

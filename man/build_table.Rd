@@ -2,7 +2,7 @@
 % Please edit documentation in R/build_table.R
 \name{build_table}
 \alias{build_table}
-\title{Complete Contingency Tables for Count and Rate-based Factors}
+\title{Complete contingency tables for count and rate-based factors}
 \usage{
 build_table(timber, low_cell_correction = 0.5, low_cell_threshold = 0)
 }

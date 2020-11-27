@@ -4,21 +4,18 @@
 \alias{do_MA}
 \title{Perform meta-analyses on specified factors in timber}
 \usage{
-do_MA(timber, log_base = exp(1))
+do_MA(timber, log_base = exp(1), cedar_version = 2)
 }
 \arguments{
 \item{timber}{a tibble of timber, with a table built by \code{\link{build_table}}.}
 
-\item{log_base}{numeric: the logarithm base used in the calculation of the log(OR). Should
+\item{log_base}{numeric: the logarithm base used in the calculation of the log(OR). It should
 match that used to calculate SE(log(OR)) in \code{\link{build_chairs}}}
 
 \item{cedar_version}{numeric [1,2]: the version of CEDAR that created the export.}
-
-\item{dropRaw}{logical; where \code{dropRaw = TRUE} the individual studies used in the
-meta-analyses are dropped from the data frame.}
 }
 \value{
-The results of the meta-analyses, appended to the passed timber timber.
+The results of the meta-analyses, appended to the passed timber.
 }
 \description{
 \code{do_MA()} performs a meta-analysis on pre-identified factors in a CEDAR timber.

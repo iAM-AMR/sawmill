@@ -2,18 +2,18 @@
 % Please edit documentation in R/add_ident.R
 \name{add_ident}
 \alias{add_ident}
-\title{Generate a Suggested Analytica Identifier}
+\title{Generate a suggested Analytica identifier}
 \usage{
-add_ident(query, cedar_version = 2)
+add_ident(timber, cedar_version = 2)
 }
 \arguments{
-\item{query}{a tibble of timber, with a table built by \code{\link{build_table}}.}
+\item{timber}{a tibble of timber, with a table built by \code{\link{build_table}}.}
 
 \item{cedar_version}{numeric [1,2]: the version of CEDAR that created the export.}
 }
 \value{
-The passed tibble of timber with an additional column containing the generated
-   identifiers.
+The passed tibble of timber with an additional column \emph{identifier} containing the
+   generated identifiers.
 }
 \description{
 \code{add_ident()} adds a column to the passed tibble of timber, containing an
@@ -25,5 +25,6 @@ Each node in an Analytica model requires an identifier - a unique string,
    string, which includes the factor (or meta-analysis number), and is based
    on the title of the node.
 
-   The identifier is generated in the format "R00001_name_here".
+   The identifier is generated in the format "R00001_name_here" (or "M00001_name_here" if
+   for a meta-analysis result).
 }

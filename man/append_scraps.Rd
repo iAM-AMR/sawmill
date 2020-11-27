@@ -2,7 +2,7 @@
 % Please edit documentation in R/append_scraps.R
 \name{append_scraps}
 \alias{append_scraps}
-\title{Append the Scrap Pile to the Processed Timber}
+\title{Append the scrap pile to the processed timber (planks)}
 \usage{
 append_scraps(timber)
 }

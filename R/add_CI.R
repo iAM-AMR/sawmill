@@ -1,11 +1,11 @@
 
 
 #' @title
-#'   Fill in the Confidence Interval (CI) Column
+#'   Fill in the confidence interval (CI) column
 #'
 #' @description
-#'   \code{add_CI} fills in empty cells in the confidence interval column with the
-#'   value 95.
+#'   \code{add_CI} fills in any blank cells in the confidence interval column
+#'   with the assumed value of 95.
 #'
 #' @param timber
 #'   a tibble of timber.

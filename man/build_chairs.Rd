@@ -2,7 +2,7 @@
 % Please edit documentation in R/build_chairs.R
 \name{build_chairs}
 \alias{build_chairs}
-\title{Calculate the Odds Ratio (OR) and the SE(log(OR))}
+\title{Calculate the odds ratio (OR) and the SE(log(OR))}
 \usage{
 build_chairs(timber, log_base = exp(1))
 }
@@ -16,11 +16,11 @@ A tibble of timber with additional columns: \emph{odds_ratio} and \emph{se_log_o
 }
 \description{
 \code{build_chairs()} calculates the odds ratio [OR] and standard error of the log(odds ratio)
-  or SE(log(OR)).
+  or SE(log(OR)) for each factor.
 }
 \details{
 The odds ratio and the standard error of the log(odds ratio) can be calculated using a complete
-  contingency table, or the odds ratio and the confidence intervals (CIs).
+  contingency table, or using the odds ratio and the confidence intervals (CIs).
 
   \subsection{Contingency Table}{
     The formula to calculate the odds ratio from a contingency table is:
@@ -41,7 +41,7 @@ The odds ratio and the standard error of the log(odds ratio) can be calculated u
     \emph{where Z is the Z value corresponding to 1/2 alpha, and alpha = 1 - confidence level}.
 
     Note, the the choice of logarithm base for this calculation may be specified by the user as
-    \code{log_base} (default = 10).
+    \code{log_base} (default = \emph{e} or Euler's number).
 
   }
 }

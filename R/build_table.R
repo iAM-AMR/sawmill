@@ -1,7 +1,7 @@
 
 
 #' @title
-#'   Complete contingency tables for count and rate-based factors
+#'   Complete contingency tables for count and prevalence-based factors
 #'
 #' @description
 #'   \code{build_table()} completes partially-specified contingency tables using simple arithmetic.
@@ -17,7 +17,7 @@
 #'
 #' @details
 #'   A complete contingency table (counts in cells A, B, C, and D) is required to calculate
-#'   measures of association for count or rate-based data. Depending on the factor's \code{grain},
+#'   measures of association for count or prevalence-based data. Depending on the factor's \code{grain},
 #'   the set of fields used to complete the table differs. Simple arithmetic is used to complete the
 #'   table. The fields included in each grain are described in \code{\link{check_grain}}.
 #'
@@ -28,7 +28,7 @@
 #'   null comparison is noted in the \emph{null_comparison} column.
 #'
 #' @return
-#'   A tibble of timber, with complete A, B, C, and D columns for count and rate-based factors, and additional columns: \emph{low_cell_count}, and \emph{null_comparison}.
+#'   A tibble of timber, with complete A, B, C, and D columns for count and prevalence-based factors, and additional columns: \emph{low_cell_count}, and \emph{null_comparison}.
 #'
 #' @importFrom dplyr mutate case_when
 #'
@@ -37,28 +37,28 @@
 
 build_table <- function(timber, low_cell_correction = 0.5, low_cell_threshold = 0) {
 
-  table_grain <- c("con_table_pos_neg", "con_table_pos_tot", "rate_table_pos_tot")
+  table_grain <- c("con_table_pos_neg", "con_table_pos_tot", "prev_table_pos_tot")
 
   timber <- dplyr::mutate(timber,
                    A = dplyr::case_when(
                        grain == "con_table_pos_neg" ~ A,
                        grain == "con_table_pos_tot" ~ A,
-                       grain == "rate_table_pos_tot" ~ round(P * nexp * 0.01),
+                       grain == "prev_table_pos_tot" ~ round(P * nexp * 0.01),
                        TRUE ~ A),
                    B = dplyr::case_when(
                        grain == "con_table_pos_neg" ~ B,
                        grain == "con_table_pos_tot" ~ nexp - A,
-                       grain == "rate_table_pos_tot" ~ nexp - A,
+                       grain == "prev_table_pos_tot" ~ nexp - A,
                        TRUE ~ B),
                    C = dplyr::case_when(
                        grain == "con_table_pos_neg" ~ C,
                        grain == "con_table_pos_tot" ~ C,
-                       grain == "rate_table_pos_tot" ~ round(Q * nref * 0.01),
+                       grain == "prev_table_pos_tot" ~ round(Q * nref * 0.01),
                        TRUE ~ C),
                    D = dplyr::case_when(
                        grain == "con_table_pos_neg" ~ D,
                        grain == "con_table_pos_tot" ~ nref - C,
-                       grain == "rate_table_pos_tot" ~ nref - C,
+                       grain == "prev_table_pos_tot" ~ nref - C,
                        TRUE ~ D),
 
                    low_cell_count  = ifelse((grain %in% table_grain) & (A <= low_cell_threshold |  B <= low_cell_threshold | C <= low_cell_threshold | D <= low_cell_threshold),

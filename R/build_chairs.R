@@ -53,11 +53,11 @@ build_chairs <- function(timber, log_base = exp(1)) {
   dplyr::mutate(timber,
                 odds_ratio = dplyr::case_when(
                   grain == "odds_ratio" ~ odds,
-                  grain == "con_table_pos_neg" | grain == "con_table_pos_tot" | grain == "rate_table_pos_tot" ~ (A/B) / (C/D),
+                  grain == "con_table_pos_neg" | grain == "con_table_pos_tot" | grain == "prev_table_pos_tot" ~ (A/B) / (C/D),
                   TRUE ~ NA_real_),
                 se_log_or  = dplyr::case_when(
                   grain == "odds_ratio" ~ (log(oddsup, base = log_base) - log(oddslo, base = log_base)) / (2 * -qnorm((100 - oddsci)/200, mean = 0, sd = 1)),
-                  grain == "con_table_pos_neg" | grain == "con_table_pos_tot" | grain == "rate_table_pos_tot" ~ sqrt((1/A) + (1/B) + (1/C) + (1/D)),
+                  grain == "con_table_pos_neg" | grain == "con_table_pos_tot" | grain == "prev_table_pos_tot" ~ sqrt((1/A) + (1/B) + (1/C) + (1/D)),
                   TRUE ~ NA_real_))
 
 }

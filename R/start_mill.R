@@ -51,14 +51,14 @@ start_mill <- function(cedar_version = 2){
 
   # Save the processed timber (planks)
 
-  readline(prompt = paste0("\n\nYou will now be asked to save the processed timber.\n",
+  invisible(readline(prompt = paste0("\n\nYou will now be asked to save the processed timber.\n",
                            "You MUST save the file with a .csv extension.\n",
-                           "Press any key, followed by the Enter key, to continue."))
+                           "Press the [Enter] key to continue.")))
 
   readr::write_csv(planks, file.choose())
 
-  readline(prompt = paste0("\nDone.\n",
-                           "Press any key, followed by the Enter key, to exit."))
+  invisible(readline(prompt = paste0("\nDone.\n",
+                           "Press the [Enter] key to exit.")))
   return(planks)
 
 }

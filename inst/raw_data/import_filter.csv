@@ -21,10 +21,10 @@ A,tbl_a,contable_a,numeric
 B,tbl_b,contable_b,numeric
 C,tbl_c,contable_c,numeric
 D,tbl_d,contable_d,numeric
-P,tbl_p,ratetable_a,numeric
-R,,ratetable_b,numeric
-Q,tbl_q,ratetable_c,numeric
-S,,ratetable_d,numeric
+P,tbl_p,prevtable_a,numeric
+R,,prevtable_b,numeric
+Q,tbl_q,prevtable_c,numeric
+S,,prevtable_d,numeric
 nexp,tbl_m1,table_n_exp,numeric
 nref,tbl_m2,table_n_ref,numeric
 odds,factor_or,odds_ratio,numeric

@@ -13,7 +13,7 @@ build_horse(timber)
 A tibble of timber with additional columns: \emph{pval}.
 }
 \description{
-\code{build_horse()} calculates the significance of the OR of a count or rate-based factor, using
+\code{build_horse()} calculates the significance of the OR of a count or prevalence-based factor, using
   the Fisher's Exact Test. It does not calculate the significance of the OR if the factor has an
   \emph{odds_ratio} grain.
 }

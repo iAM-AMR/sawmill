@@ -2,7 +2,7 @@
 % Please edit documentation in R/build_table.R
 \name{build_table}
 \alias{build_table}
-\title{Complete contingency tables for count and rate-based factors}
+\title{Complete contingency tables for count and prevalence-based factors}
 \usage{
 build_table(timber, low_cell_correction = 0.5, low_cell_threshold = 0)
 }
@@ -14,14 +14,14 @@ build_table(timber, low_cell_correction = 0.5, low_cell_threshold = 0)
 \item{low_cell_threshold}{numeric: the threshold at or below which the \code{low_cell_correction} is applied to all cells.}
 }
 \value{
-A tibble of timber, with complete A, B, C, and D columns for count and rate-based factors, and additional columns: \emph{low_cell_count}, and \emph{null_comparison}.
+A tibble of timber, with complete A, B, C, and D columns for count and prevalence-based factors, and additional columns: \emph{low_cell_count}, and \emph{null_comparison}.
 }
 \description{
 \code{build_table()} completes partially-specified contingency tables using simple arithmetic.
 }
 \details{
 A complete contingency table (counts in cells A, B, C, and D) is required to calculate
-  measures of association for count or rate-based data. Depending on the factor's \code{grain},
+  measures of association for count or prevalence-based data. Depending on the factor's \code{grain},
   the set of fields used to complete the table differs. Simple arithmetic is used to complete the
   table. The fields included in each grain are described in \code{\link{check_grain}}.
 

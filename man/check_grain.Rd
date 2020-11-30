@@ -28,8 +28,8 @@ Every factor in CEDAR is described quantitatively using a different set (or coll
 
   \subsection{Raw Data Formats}{
      There are two types of two-by-two tables that can be populated in CEDAR: contingency
-     tables, containing count data, and rate tables, containing rate data. The odds ratio may
-     also be specified directly, provided the confidence intervals (CIs) are available.
+     tables, containing count data, and prevalence tables, containing prevalence (%) data. The odds ratio may
+     also be specified directly, provided the lower and upper confidence intervals (CIs) are available.
 
      \emph{A Contingency Table}
 
@@ -39,7 +39,7 @@ Every factor in CEDAR is described quantitatively using a different set (or coll
        Referent \tab C    \tab D    \tab M2    \cr
      }
 
-     \emph{A Rate Table}
+     \emph{A Prevalence Table}
 
      \tabular{lccc}{
                 \tab AMR+ \tab AMR- \tab Total \cr
@@ -62,8 +62,8 @@ Every factor in CEDAR is described quantitatively using a different set (or coll
     \itemize{
            \item{con_table_pos_neg: A, B, C, D}
            \item{con_table_pos_tot: A, C, M1, M2}
-           \item{rate_table_pos_tot: P, Q, M1, M2}
-           \item{rate_table_pos_neg: P, R, Q, S}
+           \item{prev_table_pos_tot: P, Q, M1, M2}
+           \item{prev_table_pos_neg: P, R, Q, S}
            \item{odds_ratio: oddslo, odds, oddsup}
     }
   }
@@ -74,16 +74,16 @@ Every factor in CEDAR is described quantitatively using a different set (or coll
     \itemize{
            \item{con_table_pos_neg: A, B, C, D}
            \item{con_table_pos_tot: A, C, M1, M2}
-           \item{rate_table_pos_tot: P, Q, M1, M2}
+           \item{prev_table_pos_tot: P, Q, M1, M2}
            \item{odds_ratio: oddslo, odds, oddsup}
     }
 
-    Please note that factors with a grain of \emph{rate_table_pos_tot} may also contain R and S,
+    Please note that factors with a grain of \emph{prev_table_pos_tot} may also contain R and S,
     however these fields are not useful in the calculation of the measure of association.
 
     Also note that, although an \emph{odds_ratio} grain is usable without a significance
     value (p-value), \code{sawmill} can only calculate a p-value (see \code{\link{build_horse}})
-    for contingency or rate table grains. So, the p-values for odds ratio factors should be extracted
+    for contingency or prevalence table grains. So, the p-values for odds ratio factors should be extracted
     whenever they are available. Otherwise, they will appear as \code{NA} in the processed timber.
   }
 

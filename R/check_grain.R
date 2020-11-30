@@ -22,8 +22,8 @@
 #'
 #'   \subsection{Raw Data Formats}{
 #'      There are two types of two-by-two tables that can be populated in CEDAR: contingency
-#'      tables, containing count data, and rate tables, containing rate data. The odds ratio may
-#'      also be specified directly, provided the confidence intervals (CIs) are available.
+#'      tables, containing count data, and prevalence tables, containing prevalence (%) data. The odds ratio may
+#'      also be specified directly, provided the lower and upper confidence intervals (CIs) are available.
 #'
 #'      \emph{A Contingency Table}
 #'
@@ -33,7 +33,7 @@
 #'        Referent \tab C    \tab D    \tab M2    \cr
 #'      }
 #'
-#'      \emph{A Rate Table}
+#'      \emph{A Prevalence Table}
 #'
 #'      \tabular{lccc}{
 #'                 \tab AMR+ \tab AMR- \tab Total \cr
@@ -56,8 +56,8 @@
 #'     \itemize{
 #'            \item{con_table_pos_neg: A, B, C, D}
 #'            \item{con_table_pos_tot: A, C, M1, M2}
-#'            \item{rate_table_pos_tot: P, Q, M1, M2}
-#'            \item{rate_table_pos_neg: P, R, Q, S}
+#'            \item{prev_table_pos_tot: P, Q, M1, M2}
+#'            \item{prev_table_pos_neg: P, R, Q, S}
 #'            \item{odds_ratio: oddslo, odds, oddsup}
 #'     }
 #'   }
@@ -68,16 +68,16 @@
 #'     \itemize{
 #'            \item{con_table_pos_neg: A, B, C, D}
 #'            \item{con_table_pos_tot: A, C, M1, M2}
-#'            \item{rate_table_pos_tot: P, Q, M1, M2}
+#'            \item{prev_table_pos_tot: P, Q, M1, M2}
 #'            \item{odds_ratio: oddslo, odds, oddsup}
 #'     }
 #'
-#'     Please note that factors with a grain of \emph{rate_table_pos_tot} may also contain R and S,
+#'     Please note that factors with a grain of \emph{prev_table_pos_tot} may also contain R and S,
 #'     however these fields are not useful in the calculation of the measure of association.
 #'
 #'     Also note that, although an \emph{odds_ratio} grain is usable without a significance
 #'     value (p-value), \code{sawmill} can only calculate a p-value (see \code{\link{build_horse}})
-#'     for contingency or rate table grains. So, the p-values for odds ratio factors should be extracted
+#'     for contingency or prevalence table grains. So, the p-values for odds ratio factors should be extracted
 #'     whenever they are available. Otherwise, they will appear as \code{NA} in the processed timber.
 #'   }
 #'
@@ -97,20 +97,20 @@
 
 check_grain <- function(timber) {
 
-  # Changes: 1) Fixed error in rate_table_pos_neg condition for v1 inputs, by allowing for
+  # Changes: 1) Fixed error in prev_table_pos_neg condition for v1 inputs, by allowing for
   #             cases when R and S columns do not exist
-  #          2) Check for rate_table_pos_tot before rate_table_pos_neg, so that all rate
+  #          2) Check for prev_table_pos_tot before prev_table_pos_neg, so that all prevalence
   #             tables with nexp and nref information can be retained for odds ratio calculations
 
-  # Process timber row by row, otherwise neither the vectorized if_else() or the non-vectorized ifelse() versions of the statements in the last case (rate_table_pos_neg) will work
+  # Process timber row by row, otherwise neither the vectorized if_else() or the non-vectorized ifelse() versions of the statements in the last case (prev_table_pos_neg) will work
   timber <- timber %>%
     dplyr::rowwise() %>%
     dplyr::mutate(grain = dplyr::case_when(
                     res_format == "Odds Ratio"        & !is.na(odds) & !is.na(oddslo) & !is.na(oddsup)                ~ "odds_ratio",
                     res_format == "Contingency Table" & !is.na(A)    & !is.na(B)      & !is.na(C)      & !is.na(D)    ~ "con_table_pos_neg",
                     res_format == "Contingency Table" & !is.na(A)    & !is.na(nexp)   & !is.na(C)      & !is.na(nref) ~ "con_table_pos_tot",
-                    res_format == "Rate Table"        & !is.na(P)    & !is.na(nexp)   & !is.na(Q)      & !is.na(nref) ~ "rate_table_pos_tot",
-                    res_format == "Rate Table"        & !is.na(P)    & ifelse("R" %in% names(timber), !is.na(R), FALSE)   & !is.na(Q)      & ifelse("S" %in% names(timber), !is.na(S), FALSE)    ~ "rate_table_pos_neg",
+                    res_format == "Prevalence Table"        & !is.na(P)    & !is.na(nexp)   & !is.na(Q)      & !is.na(nref) ~ "prev_table_pos_tot",
+                    res_format == "Prevalence Table"        & !is.na(P)    & ifelse("R" %in% names(timber), !is.na(R), FALSE)   & !is.na(Q)      & ifelse("S" %in% names(timber), !is.na(S), FALSE)    ~ "prev_table_pos_neg",
                     TRUE ~ NA_character_)) %>%
     dplyr::ungroup()
 

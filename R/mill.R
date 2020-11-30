@@ -9,7 +9,7 @@
 #' @export
 
 
-mill <- function(timber_path, cuts, col_data_types, cedar_version = 2, write_scrap = TRUE, low_cell_correction = 0.5, low_cell_threshold = 0, insensible_rt_lo = 99, insensible_rt_hi = 101, log_base = exp(1), dropRaw = FALSE){
+mill <- function(timber_path, cuts, col_data_types, cedar_version = 2, write_scrap = TRUE, low_cell_correction = 0.5, low_cell_threshold = 0, insensible_p_lo = 99, insensible_p_hi = 101, log_base = exp(1), dropRaw = FALSE){
 
   sub_mill(timber1 <- debark(timber_path = timber_path, cuts = cuts, col_data_types = col_data_types), "debark")
   sub_mill(timber2 <- check_grain(timber = timber1), "check_grain")
@@ -18,8 +18,8 @@ mill <- function(timber_path, cuts, col_data_types, cedar_version = 2, write_scr
                                   low_cell_threshold = low_cell_threshold), "build_table")
   sub_mill(timber5 <- polish_table(timber = timber4,
                                    cedar_version = cedar_version,
-                                   insensible_rt_lo = insensible_rt_lo,
-                                   insensible_rt_hi = insensible_rt_hi), "polish_table")
+                                   insensible_p_lo = insensible_p_lo,
+                                   insensible_p_hi = insensible_p_hi), "polish_table")
   sub_mill(timber6 <- add_CI(timber = timber5), "add_CI")
   sub_mill(timber7 <- build_chairs(timber = timber6, log_base = log_base), "build_chairs")
   sub_mill(timber8 <- build_horse(timber = timber7), "build_horse")

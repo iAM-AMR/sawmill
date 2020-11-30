@@ -12,8 +12,8 @@ mill(
   write_scrap = TRUE,
   low_cell_correction = 0.5,
   low_cell_threshold = 0,
-  insensible_rt_lo = 99,
-  insensible_rt_hi = 101,
+  insensible_p_lo = 99,
+  insensible_p_hi = 101,
   log_base = exp(1),
   dropRaw = FALSE
 )

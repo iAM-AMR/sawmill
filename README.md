@@ -123,7 +123,7 @@ The amount which is added to each of the four counts in the contingency table fo
 <br/>
 
 
-#### `insensible_rt_lo` (default = `99`)
+#### `insensible_p_lo` (default = `99`)
 
 ##### **Accepted values:** numeric values close to, but less than 100  
 

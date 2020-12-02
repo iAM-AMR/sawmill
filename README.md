@@ -130,25 +130,25 @@ The amount which is added to each of the four counts in the contingency table fo
 ##### **Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
 
 
-Some factors are defined by "insensible rate tables". This is the case when the sum of the % AMR+ and % AMR- within the exposed group, and/or when the sum of the % AMR+ and % AMR- within the referent group do not add up to approximately 100. 
+Some factors are defined by "insensible prevalence tables". This is the case when the sum of the % AMR+ and % AMR- within the exposed group, and/or when the sum of the % AMR+ and % AMR- within the referent group do not add up to approximately 100. 
 
-`insensible_rt_lo` specifies the lower bound of this range of acceptability surrounding 100.
+`insensible_p_lo` specifies the lower bound of this range of acceptability surrounding 100.
 <br/>
 <br/>
 <br/>
 
 
 
-#### `insensible_rt_hi` (default = `101`)
+#### `insensible_p_hi` (default = `101`)
 
 ##### **Accepted values:** numeric values close to, but greater than 100  
 
 
 ##### **Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
 
-See `insensible_rt_lo`. 
+See `insensible_p_lo`. 
 
-`insensible_rt_hi` specifies the upper bound of this range of acceptability surrounding 100.
+`insensible_p_hi` specifies the upper bound of this range of acceptability surrounding 100.
 <br/>
 <br/>
 <br/>

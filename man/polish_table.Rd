@@ -2,13 +2,13 @@
 % Please edit documentation in R/polish_table.R
 \name{polish_table}
 \alias{polish_table}
-\title{Flag Rate Tables as Sensible or Not}
+\title{Flag prevalence tables as sensible or insensible}
 \usage{
 polish_table(
   timber,
   cedar_version = 2,
-  insensible_rt_lo = 99,
-  insensible_rt_hi = 101
+  insensible_p_lo = 99,
+  insensible_p_hi = 101
 )
 }
 \arguments{
@@ -16,33 +16,34 @@ polish_table(
 
 \item{cedar_version}{numeric [1,2]: the version of CEDAR that created the export.}
 
-\item{insensible_rt_lo}{numeric: the lower bound of the range which rate table sums should fall within to be
+\item{insensible_p_lo}{numeric: the lower bound of the range which prevalence table sums should fall within to be
 considered "sensible", i.e. close to 100\%.}
 
-\item{insensible_rt_hi}{numeric: the upper bound of the range which rate table sums should fall within to be
+\item{insensible_p_hi}{numeric: the upper bound of the range which prevalence table sums should fall within to be
 considered "sensible", i.e. close to 100\%.}
 }
 \value{
-A tibble of timber, with an additional column added to inputs produced by CEDAR
-   v2: \emph{insensible_rate_table}.
+A tibble of timber, with an additional column added to timber produced by CEDAR
+   v2: \emph{insensible_prev_table}.
 }
 \description{
-\code{polish_table()} identifies factors with rate tables that do not sum to approximately 100%
+\code{polish_table()} identifies factors with prevalence tables that do not sum to approximately 100%, for
+   timber produced by CEDAR v2 only.
 }
 \details{
-For factors with a rate_table_pos_tot grain (see \code{\link{check_grain}} for more information),
+For factors with a \emph{prev_table_pos_tot} grain (see \code{\link{check_grain}} for more information),
    for which R and S (% AMR- individuals within the exposed and referent groups, respectively)
-   are also available, the resulting rate table may or not be sensible, i.e. each of P% + R%
+   are also available, the resulting prevalence table may or not be sensible, i.e. each of P% + R%
    and Q% + S% may or may not sum to approximately 100%. Where these sums do not fall within
-   an acceptable range surrounding 100%, bounded by \code{insensible_rt_lo} and
-   \code{insensible_rt_hi}, the \emph{insensible_rate_table} column will be TRUE. Where the
+   an acceptable range surrounding 100%, bounded by \code{insensible_p_lo} and
+   \code{insensible_p_hi}, the \emph{insensible_prev_table} column will be TRUE. Where the
    sums do fall within the acceptable range, this column will have a value of FALSE. For other
    grains, or for factors of this grain where R and S are not available, this column will
    have a value of NA.
 
-   Since inputs produced by CEDAR v2 are the only ones to contain R and S columns, this
-   new \emph{insensible_rate_table} column is only added to v2 inputs. If a CEDAR v1
-   query is provided as the input to the pipeline, the tibble produced by the
+   Since timber produced by CEDAR v2 are the only ones to contain R and S columns, this
+   new \emph{insensible_prev_table} column is only added to v2 timber. If timber from
+   CEDAR v1 is provided as the input to the pipeline, the tibble produced by the
    \code{polish_table} function will be exactly the same as the tibble passed into the
    function.
 }

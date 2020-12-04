@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_grain.R
 \name{check_grain}
 \alias{check_grain}
-\title{Check the Grain (Set of Numeric Fields) of Each Factor in Timber}
+\title{Check the grain (set of numeric fields) of each factor in the timber}
 \usage{
 check_grain(timber)
 }
@@ -10,10 +10,12 @@ check_grain(timber)
 \item{timber}{a tibble of timber.}
 }
 \value{
-A tibble of timber with additional column \emph{grain}.
+A tibble of timber with additional column \emph{grain}, and with unusable factors removed.
 }
 \description{
 \code{check_grain()} determines which set of numeric fields are used to specify each factor in timber (i.e. the factor's \emph{grain}).
+  It also flags unusable factors using the \emph{exclude_sawmill} field, passing the timber to \code{\link{trim_scraps}} for handling
+  of these factors.
 }
 \details{
 Every factor in CEDAR is described quantitatively using a different set (or collection) of fields.
@@ -26,8 +28,8 @@ Every factor in CEDAR is described quantitatively using a different set (or coll
 
   \subsection{Raw Data Formats}{
      There are two types of two-by-two tables that can be populated in CEDAR: contingency
-     tables, containing count data, and rate tables, containing rate data. The odds ratio may
-     also be specified directly, provided the confidence intervals (CIs) are available.
+     tables, containing count data, and prevalence tables, containing prevalence (%) data. The odds ratio may
+     also be specified directly, provided the lower and upper confidence intervals (CIs) are available.
 
      \emph{A Contingency Table}
 
@@ -37,7 +39,7 @@ Every factor in CEDAR is described quantitatively using a different set (or coll
        Referent \tab C    \tab D    \tab M2    \cr
      }
 
-     \emph{A Rate Table}
+     \emph{A Prevalence Table}
 
      \tabular{lccc}{
                 \tab AMR+ \tab AMR- \tab Total \cr
@@ -55,15 +57,34 @@ Every factor in CEDAR is described quantitatively using a different set (or coll
   }
 
   \subsection{Recognized Grains}{
-    There are currently four recognized grains:
+    There are currently five recognized grains:
 
     \itemize{
            \item{con_table_pos_neg: A, B, C, D}
            \item{con_table_pos_tot: A, C, M1, M2}
-           \item{rate_table_pos_tot: P, Q, M1, M2}
-           \item{rate_table_pos_neg: P, R, Q, S}
+           \item{prev_table_pos_tot: P, Q, M1, M2}
+           \item{prev_table_pos_neg: P, R, Q, S}
            \item{odds_ratio: oddslo, odds, oddsup}
     }
+  }
+
+  \subsection{Usable Grains}{
+    Of the five recognized grains, four are usable.
+
+    \itemize{
+           \item{con_table_pos_neg: A, B, C, D}
+           \item{con_table_pos_tot: A, C, M1, M2}
+           \item{prev_table_pos_tot: P, Q, M1, M2}
+           \item{odds_ratio: oddslo, odds, oddsup}
+    }
+
+    Please note that factors with a grain of \emph{prev_table_pos_tot} may also contain R and S,
+    however these fields are not useful in the calculation of the measure of association.
+
+    Also note that, although an \emph{odds_ratio} grain is usable without a significance
+    value (p-value), \code{sawmill} can only calculate a p-value (see \code{\link{build_horse}})
+    for contingency or prevalence table grains. So, the p-values for odds ratio factors should be extracted
+    whenever they are available. Otherwise, they will appear as \code{NA} in the processed timber.
   }
 
   \subsection{Unrecognized Grains}{

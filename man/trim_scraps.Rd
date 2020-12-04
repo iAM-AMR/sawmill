@@ -2,41 +2,20 @@
 % Please edit documentation in R/trim_scraps.R
 \name{trim_scraps}
 \alias{trim_scraps}
-\title{Trim Unusable Factors from Timber}
+\title{Trim unusable factors from timber}
 \usage{
-trim_scraps(timber, write_scrap = TRUE)
+trim_scraps(timber, reason)
 }
 \arguments{
 \item{timber}{a tibble of timber, with grain checked by \code{\link{check_grain}}.}
 
-\item{write_scrap}{logical: add tibble of unusable factors to the global \code{scrap_pile}.}
+\item{reason}{string: a description of why a given factor is unusable.}
 }
 \value{
 A tibble of timber without unusable factors.
 }
 \description{
-\code{trim_scraps()} removes unusable factors from timber.
-}
-\details{
-The \code{trim_scraps()} function removes unusable factors from timber. Generally, factors are
-  unusable where they contain missing or invalid data, and their presence would otherwise cause
-  errors in later processing. This acts as input sanitization for downstream functions.
-
-  Optionally, a tibble of the unusable factors is written to the \code{scrap_pile}
-  in the global environment.
-
-  \subsection{Grain}{
-    In \code{\link{check_grain}} we introduced the concept of \emph{grain} -- the set of numerical
-    fields specifying the factor. Factors have \emph{bad grain} where they are specified by an
-    uninformative combination of values (an unrecognized grain) or missing values.
-
-    The supported grains include:
-
-    \itemize{
-      \item odds_ratio
-      \item con_table_pos_neg
-      \item con_table_pos_tot
-      \item rate_table_pos_tot
-    }
-  }
+\code{trim_scraps()} removes unusable factors from timber, as marked in the \emph{exclude_sawmill}
+  field, attaches a reason for exclusion using \emph{exclude_sawmill_reason}, and sends these factors to
+  the \code{scrap_pile}.
 }

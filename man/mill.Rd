@@ -5,17 +5,19 @@
 \title{The sawmill Pipeline}
 \usage{
 mill(
-  timber,
+  timber_path,
+  cuts,
+  col_data_types,
   cedar_version = 2,
   write_scrap = TRUE,
   low_cell_correction = 0.5,
   low_cell_threshold = 0,
-  insensible_rt_lo = 99,
-  insensible_rt_hi = 101,
+  insensible_p_lo = 99,
+  insensible_p_hi = 101,
   log_base = exp(1),
   dropRaw = FALSE
 )
 }
 \description{
-The \code{mill()} runs the CEDAR pipeline with useful defaults.
+The \code{mill()} runs the sawmill pipeline with useful defaults.
 }

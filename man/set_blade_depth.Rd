@@ -2,26 +2,30 @@
 % Please edit documentation in R/set_blade_depth.R
 \name{set_blade_depth}
 \alias{set_blade_depth}
-\title{Generate a Named Vector Mapping CEDAR Export Column Names to Standardized Timber Column Names}
+\title{Generate a mapping of timber column names to their standardized names and expected data types}
 \usage{
 set_blade_depth(cedar_version = 2)
 }
 \description{
-\code{set_blade_depth()} generates a named vector, containing CEDAR export column names as
-  values, and their equivalent standardized timber column names as names.
+\code{set_blade_depth()} generates a named vector, where the raw timber's column names are
+  stored as values, and the names mapped to those values correspond to the standardized column
+  names. It also generates a vector of the expected data type for each timber column.
 
  @param cedar_version
    numeric [1,2]: the version of CEDAR that created the export.
 
  @details
-   The \code{set_blade_depth()} maps original, non-standardized CEDAR export column names to
+   The \code{set_blade_depth()} maps original, non-standardized timber column names to
    standardized timber column names -- for both versions of CEDAR. These column names are provided
-   in an external .CSV: \code{/inst/raw_data/import_filter.csv}.
+   in an external .CSV: \code{/inst/raw_data/import_filter.csv}. The expected data types (i.e.
+   "numeric", "text") are also provided by this external .CSV.
 
  @return
-   A named vector.
+   A list containing a named vector and a "value-only" vector.
 
  @importFrom readr cols read_csv
+ @importFrom tidyr drop_na
+ @importFrom dplyr pull %>%
 
  @export
 }

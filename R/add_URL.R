@@ -1,7 +1,7 @@
 
 
 #' @title
-#'    Generate URLs Using Document Identifiers
+#'    Generate URLs using document identifiers
 #'
 #' @description
 #'    \code{add_URL()} adds a column to the passed tibble, containing the URL corresponding
@@ -33,8 +33,7 @@
 #' @return
 #'    The passed tibble of timber with an additional column containing URL(s).
 #'
-#' @importFrom dplyr mutate_all
-#' @importFrom tidyr replace_na
+#' @importFrom dplyr rowwise ungroup mutate case_when
 #' @importFrom stringr str_detect
 #'
 #' @export

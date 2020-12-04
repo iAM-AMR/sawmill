@@ -2,30 +2,26 @@
 % Please edit documentation in R/do_MA.R
 \name{do_MA}
 \alias{do_MA}
-\title{Perform Meta-analyses on Factors in a CEDAR Query}
+\title{Perform meta-analyses on specified factors in timber}
 \usage{
-do_MA(query, cedar_version = 2, dropRaw = FALSE, log_base = exp(1))
+do_MA(timber, log_base = exp(1), cedar_version = 2)
 }
 \arguments{
-\item{query}{a tibble of timber, with a table built by \code{\link{build_table}}.}
+\item{timber}{a tibble of timber, with a table built by \code{\link{build_table}}.}
+
+\item{log_base}{numeric: the logarithm base used in the calculation of the log(OR). It should
+match that used to calculate SE(log(OR)) in \code{\link{build_chairs}}}
 
 \item{cedar_version}{numeric [1,2]: the version of CEDAR that created the export.}
-
-\item{dropRaw}{logical; where \code{dropRaw = TRUE} the individual studies used in the
-meta-analyses are dropped from the data frame.}
-
-\item{log_base}{numeric: the logarithm base used in the calculation of the log(OR). Should
-match that used to calculate SE(log(OR)) in \code{\link{build_chairs}}}
 }
 \value{
-The results of the meta-analyses, appended to the passed timber query.
+The results of the meta-analyses, appended to the passed timber.
 }
 \description{
-\code{do_MA()} performs a meta-analysis on pre-identified factors in a CEDAR query.
-   It was adapted from the now depreciated cedarr package for Sawmill.
+\code{do_MA()} performs a meta-analysis on pre-identified factors in a CEDAR timber.
 }
 \details{
-Similar factors are combined in the IAM.AMR models using random-effect
+Similar factors are combined in the iAM.AMR models using random-effect
    meta-analysis. The \code{do_MA} function performs meta-analyses on
    groups of factors indicated as alike by their metaID.
 }

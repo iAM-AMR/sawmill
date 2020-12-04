@@ -1,11 +1,11 @@
 
 
 #' @title
-#'   Calculate the Odds Ratio (OR) and the SE(log(OR))
+#'   Calculate the odds ratio (OR) and the SE(log(OR))
 #'
 #' @description
 #'   \code{build_chairs()} calculates the odds ratio [OR] and standard error of the log(odds ratio)
-#'   or SE(log(OR)).
+#'   or SE(log(OR)) for each factor.
 #'
 #' @param timber
 #'   a tibble of timber, with a table built by \code{\link{build_table}}.
@@ -15,7 +15,7 @@
 #'
 #' @details
 #'   The odds ratio and the standard error of the log(odds ratio) can be calculated using a complete
-#'   contingency table, or the odds ratio and the confidence intervals (CIs).
+#'   contingency table, or using the odds ratio and the confidence intervals (CIs).
 #'
 #'   \subsection{Contingency Table}{
 #'     The formula to calculate the odds ratio from a contingency table is:
@@ -36,7 +36,7 @@
 #'     \emph{where Z is the Z value corresponding to 1/2 alpha, and alpha = 1 - confidence level}.
 #'
 #'     Note, the the choice of logarithm base for this calculation may be specified by the user as
-#'     \code{log_base} (default = 10).
+#'     \code{log_base} (default = \emph{e} or Euler's number).
 #'
 #'   }
 #'
@@ -53,11 +53,11 @@ build_chairs <- function(timber, log_base = exp(1)) {
   dplyr::mutate(timber,
                 odds_ratio = dplyr::case_when(
                   grain == "odds_ratio" ~ odds,
-                  grain == "con_table_pos_neg" | grain == "con_table_pos_tot" | grain == "rate_table_pos_tot" ~ (A/B) / (C/D),
+                  grain == "con_table_pos_neg" | grain == "con_table_pos_tot" | grain == "prev_table_pos_tot" ~ (A/B) / (C/D),
                   TRUE ~ NA_real_),
                 se_log_or  = dplyr::case_when(
                   grain == "odds_ratio" ~ (log(oddsup, base = log_base) - log(oddslo, base = log_base)) / (2 * -qnorm((100 - oddsci)/200, mean = 0, sd = 1)),
-                  grain == "con_table_pos_neg" | grain == "con_table_pos_tot" | grain == "rate_table_pos_tot" ~ sqrt((1/A) + (1/B) + (1/C) + (1/D)),
+                  grain == "con_table_pos_neg" | grain == "con_table_pos_tot" | grain == "prev_table_pos_tot" ~ sqrt((1/A) + (1/B) + (1/C) + (1/D)),
                   TRUE ~ NA_real_))
 
 }

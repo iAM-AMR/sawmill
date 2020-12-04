@@ -1,77 +1,41 @@
 
 
 #' @title
-#'   Trim Unusable Factors from Timber
+#'   Trim unusable factors from timber
 #'
 #' @description
-#'   \code{trim_scraps()} removes unusable factors from timber.
+#'   \code{trim_scraps()} removes unusable factors from timber, as marked in the \emph{exclude_sawmill}
+#'   field, attaches a reason for exclusion using \emph{exclude_sawmill_reason}, and sends these factors to
+#'   the \code{scrap_pile}.
 #'
 #' @param timber
 #'   a tibble of timber, with grain checked by \code{\link{check_grain}}.
 #'
-#' @param write_scrap
-#'   logical: add tibble of unusable factors to the global \code{scrap_pile}.
-#'
-#' @details
-#'   The \code{trim_scraps()} function removes unusable factors from timber. Generally, factors are
-#'   unusable where they contain missing or invalid data, and their presence would otherwise cause
-#'   errors in later processing. This acts as input sanitization for downstream functions.
-#'
-#'   Optionally, a tibble of the unusable factors is written to the \code{scrap_pile}
-#'   in the global environment.
-#'
-#'   \subsection{Grain}{
-#'     In \code{\link{check_grain}} we introduced the concept of \emph{grain} -- the set of numerical
-#'     fields specifying the factor. Factors have \emph{bad grain} where they are specified by an
-#'     uninformative combination of values (an unrecognized grain) or missing values.
-#'
-#'     The supported grains include:
-#'
-#'     \itemize{
-#'       \item odds_ratio
-#'       \item con_table_pos_neg
-#'       \item con_table_pos_tot
-#'       \item rate_table_pos_tot
-#'     }
-#'   }
+#' @param reason
+#'   string: a description of why a given factor is unusable.
 #'
 #' @return
 #'   A tibble of timber without unusable factors.
 #'
-#' @importFrom dplyr filter mutate
+#' @importFrom dplyr filter
 #'
 #' @export
 
 
-trim_scraps <- function(timber, write_scrap = TRUE) {
 
-  # GRAIN
-  good_grain <- c("odds_ratio",
-                  "con_table_pos_neg",
-                  "con_table_pos_tot",
-                  "rate_table_pos_tot")
+trim_scraps <- function(timber, reason) {
 
-  exclude_grain_message <- paste0("one or more values required to calculate the odds ratio are ",
-                                  "missing -- check that the data were extracted correctly")
+  # Select excluded factors
+  new_scraps <- dplyr::filter(timber, exclude_sawmill)
 
-  exclude_grain         <- dplyr::filter(timber,
-                                         !grain %in% good_grain)
+  # Add reason for exclusion
+  new_scraps$exclude_sawmill_reason <- reason
 
-  exclude_grain         <- dplyr::mutate(exclude_grain,
-                                         scrap_because = exclude_grain_message)
+  # Write excluded factors to the scrap_pile
+  scrap_pile <<- bind_rows(scrap_pile, new_scraps)
 
-  # WRITE SCRAPS
-  if (write_scrap) {
-    scrap_pile <<- exclude_grain
-    message("Reminder, scrap_pile was written to global environment.")
-  }
+  # Return timber without exclusions
+  return(dplyr::filter(timber, !exclude_sawmill))
 
-  # INCLUDE
-  timber                <- dplyr::filter(timber,  grain %in% good_grain)
-  return(timber)
 
 }
-
-
-
-

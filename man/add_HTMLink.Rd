@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_HTMLink.R
 \name{add_HTMLink}
 \alias{add_HTMLink}
-\title{Generate HTML Links Using a Document Identifier}
+\title{Generate HTML links using a document identifier}
 \usage{
 add_HTMLink(timber)
 }

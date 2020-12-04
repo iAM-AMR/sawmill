@@ -1,10 +1,12 @@
 
 
 #' @title
-#'   Calculate the Significance of a Factor
+#'   Calculate the significance of a factor
 #'
 #' @description
-#'   \code{build_horse()} calculates the significance of the OR of a factor.
+#'   \code{build_horse()} calculates the significance of the OR of a count or prevalence-based factor, using
+#'   the Fisher's Exact Test. It does not calculate the significance of the OR if the factor has an
+#'   \emph{odds_ratio} grain.
 #'
 #' @param timber
 #'   a tibble of timber, with a table built by \code{\link{build_table}}.
@@ -19,7 +21,7 @@
 
 build_horse <- function(timber) {
 
-  dplyr::mutate(timber, pval = ifelse(grain %in% c("con_table_pos_neg", "con_table_pos_tot", "rate_table_pos_tot"),
+  dplyr::mutate(timber, pval = ifelse(grain %in% c("con_table_pos_neg", "con_table_pos_tot", "prev_table_pos_tot"),
                                       apply(timber, 1, fisher_p),
                                       oddsig))
 

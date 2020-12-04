@@ -26,3 +26,29 @@ sub_mill <- function(mill_step, step_name) {
            finally = message(paste("Processed function: ", step_name))
   )
 }
+
+
+
+
+
+
+# sub_mill_2 <- function(fun_run) {
+#
+#   call_set <- substitute(fun_run)
+#
+#   if("<-" %in% as.character(call_set)) {
+#     fun_name <- as.character(call_set[[3]])
+#   } else {
+#     fun_name <- as.character(call_set[[1]])
+#   }
+#
+#   tryCatch(
+#     {eval(call_set)
+#     },
+#     error = function(cond) {message(paste("\n", "ERR @", fun_name, "function: \n", cond))}
+#   )
+#
+#   return(fun_name)
+#
+# }
+

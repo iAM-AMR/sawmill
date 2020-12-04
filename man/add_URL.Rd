@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_URL.R
 \name{add_URL}
 \alias{add_URL}
-\title{Generate URLs Using Document Identifiers}
+\title{Generate URLs using document identifiers}
 \usage{
 add_URL(timber)
 }

@@ -23,14 +23,15 @@ The **sawmill** package processes CEDAR timber, performing quality control, and 
 
 ### Bootstrap Installation
 
-The bootstrap installation method is the quickest and easiest way of getting started with `sawmill`, and is best-suited for novice R users, or experienced R users who want to quickly process timber with default settings.
+The bootstrap installation method is the quickest and easiest way of getting started with `sawmill`, and is best-suited for novice R users, or experienced R users who want to quickly process timber with default settings. 
+
+Please note that the bootstrap setup is *designed to work with timber produced by CEDAR version 2 only*, as timber produced by CEDAR version 1 is mostly depreciated.
 
 These instructions will walk you through how to download and install `sawmill`, and run its processing pipeline.
 
 #### You Will Need:
 
 - timber
-- the CEDAR version number (version 1, or version 2)
 - R and (optionally) RStudio
 - the [bootstrap code](bootstrap/)
 
@@ -38,7 +39,7 @@ These instructions will walk you through how to download and install `sawmill`, 
 
 1. Download or copy the [bootstrap code](bootstrap) and run it in R or RStudio
    to download and install `sawmill` and start the processing pipeline.
-1. When prompted, supply the timber, CEDAR version number (1 or 2), and choose a save location for the output.
+1. When prompted, supply the timber and choose a save location for the output.
 1. Enjoy.
 
 

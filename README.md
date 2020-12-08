@@ -15,7 +15,7 @@ An R package used to prepare queries from CEDAR (timber) for use in the iAM.AMR 
 ## About sawmill
 Each of the iAM.AMR models are informed by one or more queries to the CEDAR (*Collection of Epidemiologically Derived Factors Associated with Resistance*) database. The exported query results are called **timber**. Unfortunately, these raw timber are not usable, as they lack key calculated fields (such as the odds ratio), and have not been screened for simple errors.
 
-The **sawmill** package processes CEDAR timber, performing quality control, and calculating measures of association (odds ratios). CEDAR timber should be in the form of an Excel file, where each row represents an individual factor.
+The **sawmill** package processes CEDAR timber, performing quality control, and calculating measures of association (odds ratios). Optionally, **sawmill** can also be used to perform meta-analysis. CEDAR timber should be in the form of an Excel file, where each row represents an individual factor.
 
 
 
@@ -61,8 +61,8 @@ The standard installation method is also quick and easy, but is best suited for 
 1. Either:
    - run the interactive, default pipeline with `sawmill::start_mill()`, in the RStudio console. This will allow you to load your timber and will automatically run the main function, `sawmill::mill()`, using default arguments.
    - run the pipeline with custom arguments:
-        * open the main function, `sawmill::mill()`, by opening [mill.R](R/mill.R) in RStudio
-        * change the default values for sawmill's arguments. For more information, see [**Sawmill Arguments**](#sawmill-arguments).
+        * open the main functions, `sawmill::start_mill()` and `sawmill::mill()`, by opening [start_mill.R](R/start_mill.R) and [mill.R](R/mill.R) in RStudio
+        * change the default values for sawmill's arguments as necessary. For more information, see [**Sawmill Arguments**](#sawmill-arguments).
         * use RStudio's *Install and Restart* feature in the *Build* tab to apply your changes
         * run the pipeline with `sawmill::start_mill()`
         
@@ -70,36 +70,27 @@ The standard installation method is also quick and easy, but is best suited for 
 ### Sawmill Arguments  
 <br/>
 
-Each argument is assigned a default value in [mill.R](R/mill.R) and subsequently passed to specific processing step(s) (a.k.a. function(s)) within the `sawmill` pipeline. For more information about the main functions in `sawmill`, please see the [**Where can I find more information about the package?**](#where-can-i-find-more-information-about-the-package) section of the [**General FAQs**](#general-faqs) below.
+Each argument is assigned a default value in either [start_mill.R](R/start_mill.R) or [mill.R](R/mill.R) and subsequently passed to specific processing step(s) (a.k.a. function(s)) within the `sawmill` pipeline. For more information about the main functions in `sawmill`, please see the [**Where can I find more information about the package?**](#where-can-i-find-more-information-about-the-package) section of the [**General FAQs**](#general-faqs) below.
 <br/>
 <br/>
 
 
 #### `cedar_version` (default = `2`)
 
+##### **Edit in:** [start_mill.R](R/start_mill.R)
+
 ##### **Accepted values:** `1`, `2`  
 
-##### **Passed to functions:** [`sawmill::debark()`](R/debark.R), [`sawmill::polish_table()`](R/polish_table.R), [`sawmill::do_MA()`](R/do_MA.R), [`sawmill::add_ident()`](R/add_ident.R)  
+##### **Passed to functions:** [`sawmill::set_blade_depth()`](R/set_blade_depth.R), [`sawmill::polish_table()`](R/polish_table.R), [`sawmill::do_MA()`](R/do_MA.R), [`sawmill::add_ident()`](R/add_ident.R)  
 
 
-Please note that this default value will be overwritten by the version you enter into the console, when prompted, upon running `sawmill::start_mill()`.   
 <br/>
 <br/>
 
-#### `write_scrap` (default = `TRUE`)
-
-##### **Accepted values:** `TRUE`, `FALSE`
-
-##### **Passed to functions:** [`sawmill::trim_scraps()`](R/trim_scraps.R)
-
-
-When set to `TRUE`, `write_scrap` allows the `scrap_pile` to be written to the global environment.
-
-- `scrap_pile` contains all of those factors for which inadequate data is available to calculate a measure of association; they are discarded at the "trimming" stage of the pipeline
-- Once written to the global environment, `scrap_pile` is easily accessible from the console. After the pipeline is finished running, you can view the discarded factors by entering `scrap_pile` into the console.
-<br/>
 
 #### `low_cell_threshold` (default = `0`)
+
+##### **Edit in:** [mill.R](R/mill.R)
 
 ##### **Passed to functions:** [`sawmill::build_table()`](R/build_table.R)
 
@@ -114,6 +105,8 @@ If any of the four counts for a given factor do not meet this threshold, all fou
 
 #### `low_cell_correction` (default = `0.5`)
 
+##### **Edit in:** [mill.R](R/mill.R)
+
 ##### **Passed to functions:** [`sawmill::build_table()`](R/build_table.R)
 
 
@@ -124,6 +117,8 @@ The amount which is added to each of the four counts in the contingency table fo
 
 
 #### `insensible_p_lo` (default = `99`)
+
+##### **Edit in:** [mill.R](R/mill.R)
 
 ##### **Accepted values:** numeric values close to, but less than 100  
 
@@ -141,8 +136,9 @@ Some factors are defined by "insensible prevalence tables". This is the case whe
 
 #### `insensible_p_hi` (default = `101`)
 
-##### **Accepted values:** numeric values close to, but greater than 100  
+##### **Edit in:** [mill.R](R/mill.R)
 
+##### **Accepted values:** numeric values close to, but greater than 100  
 
 ##### **Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
 
@@ -154,7 +150,9 @@ See `insensible_p_lo`.
 <br/>
 
 
-#### `log_base` (default = `exp(1)`, a.k.a. Euler's number)
+#### `log_base` (default = `exp(1)`, or Euler's number)
+
+##### **Edit in:** [mill.R](R/mill.R)
 
 ##### **Passed to functions:** [`sawmill::build_chairs()`](R/build_chairs.R), [`sawmill::do_MA()`](R/do_MA.R)
 
@@ -167,18 +165,6 @@ With the default value, the natural logarithm is used. This is the recommended `
 <br/>
 
 
-#### `dropRaw` (default = `FALSE`)
-
-##### **Accepted values:** `TRUE`, `FALSE`  
-
-##### **Passed to functions:** [`sawmill::do_MA()`](R/do_MA.R)
-
-
-Certain factors in the input timber may be flagged for meta-analysis with a unique meta-analysis ID: `ID_meta`. `sawmill` performs one meta-analysis calculation for each unique meta-analysis ID, incorporating all factors with that specific meta-analysis ID. When set to TRUE, `dropRaw` deletes all individual factors with meta-analysis IDs from sawmill's output, leaving only the results of the meta-analysis.
-<br/>
-<br/>
-
-
 
 ## Getting Help
 
@@ -186,7 +172,7 @@ Certain factors in the input timber may be flagged for meta-analysis with a uniq
 
 #### What is going on here? I'm new.
 
-CEDAR is a database of factors along the agri-food production system that influence antimicrobial resistance. The iAM.AMR project aims to create integrated assessment models (IAMs) using these data.
+CEDAR is a database of factors along the agri-food production system that influence antimicrobial resistance. The iAM.AMR project aims to create integrated assessment models (iAMs) using these data.
 
 When queries from CEDAR are exported, we call the export *timber*. The data need to be processed after they are exported from the database, before they can be used in the models.
 

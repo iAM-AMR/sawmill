@@ -31,7 +31,7 @@ odds,factor_or,odds_ratio,numeric
 oddslo,or_lo,odds_ratio_lo,numeric
 oddsup,or_up,odds_ratio_up,numeric
 oddsig,or_sig,odds_ratio_sig,text
-oddsci,,odds_ratio_confidence,numeric
+oddsci,odds_ratio_confidence,odds_ratio_confidence,numeric
 exclude,exclude_iam,,text
 ID_meta,metaID,ID_meta,text
 meta_amr,ma_resistance,meta_amr,text

@@ -9,7 +9,7 @@
 #' @export
 
 
-mill <- function(timber_path, cuts, col_data_types, cedar_version = 2, write_scrap = TRUE, low_cell_correction = 0.5, low_cell_threshold = 0, insensible_p_lo = 99, insensible_p_hi = 101, log_base = exp(1), dropRaw = FALSE){
+mill <- function(timber_path, cuts, col_data_types, cedar_version, low_cell_threshold = 0, low_cell_correction = 0.5, insensible_p_lo = 99, insensible_p_hi = 101, log_base = exp(1)){
 
   sub_mill(timber1 <- debark(timber_path = timber_path, cuts = cuts, col_data_types = col_data_types), "debark")
   sub_mill(timber2 <- check_grain(timber = timber1), "check_grain")

@@ -18,8 +18,6 @@
 #' @param cedar_version
 #'   numeric [1,2]: the version (1 or 2) of CEDAR, used to create timber.
 #'
-#' @importFrom readr write_csv
-#'
 #' @export
 
 
@@ -49,13 +47,14 @@ start_mill <- function(cedar_version = 2){
 
   sub_mill(planks  <- mill(timber_path = file_path, cuts = depth_guide, col_data_types = timber_col_types, cedar_version = cedar_version), "mill")
 
-  # Save the processed timber (planks)
+  # Save the processed timber (planks), as well as the meta-analysis results and scrap_pile if they exist
 
-  invisible(readline(prompt = paste0("\n\nYou will now be asked to save the processed timber.\n",
-                           "You MUST save the file with a .csv extension.\n",
-                           "Press the [Enter] key to continue.")))
+  sub_mill(save_csv("processed timber", planks), "save_csv")
 
-  readr::write_csv(planks, file.choose())
+  if (exists("scrap_pile")) {sub_mill(save_csv("scrap pile", scrap_pile), "save_csv")}
+
+  # TO DO: extract relevant fields from the meta-analysis results, and save them to a csv
+  #if (exists("ma_results")) {sub_mill(save_csv("meta-analysis results", ma_results), "save_csv")}
 
   invisible(readline(prompt = paste0("\nDone.\n",
                            "Press the [Enter] key to exit.")))

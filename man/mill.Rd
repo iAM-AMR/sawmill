@@ -8,14 +8,12 @@ mill(
   timber_path,
   cuts,
   col_data_types,
-  cedar_version = 2,
-  write_scrap = TRUE,
-  low_cell_correction = 0.5,
+  cedar_version,
   low_cell_threshold = 0,
+  low_cell_correction = 0.5,
   insensible_p_lo = 99,
   insensible_p_hi = 101,
-  log_base = exp(1),
-  dropRaw = FALSE
+  log_base = exp(1)
 )
 }
 \description{

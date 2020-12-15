@@ -27,7 +27,7 @@ mill <- function(timber_path, cuts, col_data_types, cedar_version, low_cell_thre
   sub_mill(timber10 <- add_URL(timber = timber9), "add_URL")
   sub_mill(timber11 <- add_HTMLink(timber = timber10), "add_HTMLink")
   sub_mill(timber12 <- add_ident(timber = timber11, cedar_version = cedar_version), "add_ident")
-  sub_mill(planks <- append_scraps(timber = timber12), "append_scraps")
+  sub_mill(planks <- reorder_fields(timber = timber12, cedar_version = cedar_version), "reorder_fields")
 
   return(planks)
 

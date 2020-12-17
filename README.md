@@ -1,4 +1,6 @@
 
+![Version Badge](https://img.shields.io/badge/VERSION-2.1.0-blue)
+
 # sawmill
 An R package used to prepare queries from CEDAR (timber) for use in the iAM.AMR models.
 

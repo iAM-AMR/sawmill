@@ -44,7 +44,7 @@ These instructions will walk you through how to download and install `sawmill`, 
 1. When prompted, supply the timber and choose a save location for the output.
 1. Enjoy.
 
-**IMPORTANT**: Enter the command `rm(list = ls())` into the **Console** each time you rerun sawmill. This way, variables saved during sawmill's previous run will not carry over to the new one.
+**IMPORTANT**: You will likely rerun sawmill many times, as deciding which factors to include in a model is an iterative process. You will need to enter the command `rm(list = ls())` into the **Console** before rerunning sawmill. This must be done once for every rerun. This way, variables saved during sawmill's previous run will not carry over to the new one.
 
 
 ### Standard Installation
@@ -71,7 +71,7 @@ The standard installation method is also quick and easy, but is best suited for 
         * use RStudio's *Install and Restart* feature in the *Build* tab to apply your changes
         * run the pipeline with `sawmill::start_mill()`
         
-**IMPORTANT**: Enter the command `rm(list = ls())` into the **Console** each time you rerun sawmill. This way, variables saved during sawmill's previous run will not carry over to the new one.
+**IMPORTANT**: You will likely rerun sawmill many times, as deciding which factors to include in a model is an iterative process. You will need to enter the command `rm(list = ls())` into the **Console** before rerunning sawmill. This must be done once for every rerun. This way, variables saved during sawmill's previous run will not carry over to the new one.
         
 
 ### Sawmill Arguments  

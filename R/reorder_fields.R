@@ -31,19 +31,35 @@ reorder_fields <- function(timber, cedar_version) {
   # Delete exclude_sawmill and exclude_sawmill_reason fields
   timber_del <- dplyr::select(timber, -c("exclude_sawmill", "exclude_sawmill_reason"))
 
+  # Only include the logOR field if a meta-analysis was done
+  if (exists("ma_results")) {field_names <- c("ID", "RWID", "identifier", "factor_title",
+                                              "factor_description", "ref_key", "html_link",
+                                              "group_exposed", "group_referent",
+                                              "odds_ratio", "se_log_or", "pval", "logOR",
+                                              "ID_meta", "meta_amr", "meta_type",
+                                              "AMR", "host_01", "host_02", "microbe_01",
+                                              "microbe_02", "stage_allocate", "stage_observe",
+                                              "res_unit", "res_format", "grain", "A", "B", "C", "D",
+                                              "P", "R", "Q", "S", "nexp", "nref", "odds",
+                                              "oddslo", "oddsup", "oddsig", "oddsci",
+                                              "low_cell_count", "null_comparison",
+                                              "insensible_prev_table", "doi", "pmid", "url")}
+
+  else {field_names <- c("ID", "RWID", "identifier", "factor_title",
+                         "factor_description", "ref_key", "html_link",
+                         "group_exposed", "group_referent",
+                         "odds_ratio", "se_log_or", "pval",
+                         "ID_meta", "meta_amr", "meta_type",
+                         "AMR", "host_01", "host_02", "microbe_01",
+                         "microbe_02", "stage_allocate", "stage_observe",
+                         "res_unit", "res_format", "grain", "A", "B", "C", "D",
+                         "P", "R", "Q", "S", "nexp", "nref", "odds",
+                         "oddslo", "oddsup", "oddsig", "oddsci",
+                         "low_cell_count", "null_comparison",
+                         "insensible_prev_table", "doi", "pmid", "url")}
+
   # Reorder the fields
-  timber_reordered <- timber_del[c("ID", "RWID", "identifier", "factor_title",
-                     "factor_description", "ref_key", "html_link",
-                     "group_exposed", "group_referent",
-                     "odds_ratio", "se_log_or", "pval",
-                     "ID_meta", "meta_amr", "meta_type",
-                     "AMR", "host_01", "host_02", "microbe_01",
-                     "microbe_02", "stage_allocate", "stage_observe",
-                     "res_unit", "res_format", "grain", "A", "B", "C", "D",
-                     "P", "R", "Q", "S", "nexp", "nref", "odds",
-                     "oddslo", "oddsup", "oddsig", "oddsci",
-                     "low_cell_count", "null_comparison",
-                     "insensible_prev_table", "doi", "pmid", "url")]
+  timber_reordered <- timber_del[field_names]
 
   return(timber_reordered)
 

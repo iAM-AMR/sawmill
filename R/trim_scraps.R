@@ -25,6 +25,9 @@
 
 trim_scraps <- function(timber, reason) {
 
+  # Create Scrap Pile for unusable factors, and save it to the global environment
+  scrap_pile <<- data.frame()
+
   # Select excluded factors
   new_scraps <- dplyr::filter(timber, exclude_sawmill)
 

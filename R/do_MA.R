@@ -56,6 +56,10 @@ do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
 
   ma_results <<- list()
 
+  # Create a vector to store each unique meta-analysis ID
+
+  ma_ids <- vector()
+
   # For each pod: extract the factors, run the meta-analysis, save a copy of the
   # results to the global environment,
 
@@ -72,7 +76,6 @@ do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
     # Save meta-analysis result objects in the global environment for review.
 
     ma_results[[paste0("ma_", pod_num)]] <<- pod_ma
-
 
     # Gather fields for the meta-analysis result rows that will be added to the timber
 
@@ -132,6 +135,10 @@ do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
 
 
   }
+
+  # Format the ma_results
+
+  sub_mill(format_ma_results(ma_results = ma_results, ma_ids = pod_set), "format_ma_results")
 
   return(timber)
 

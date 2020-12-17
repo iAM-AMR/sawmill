@@ -53,11 +53,11 @@ start_mill <- function(cedar_version = 2){
 
   if (exists("scrap_pile")) {sub_mill(save_csv("scrap pile", scrap_pile), "save_csv")}
 
-  # TO DO: extract relevant fields from the meta-analysis results, and save them to a csv
-  #if (exists("ma_results")) {sub_mill(save_csv("meta-analysis results", ma_results), "save_csv")}
+  if (exists("ma_results_formatted")) {sub_mill(save_csv("meta-analysis results", ma_results_formatted), "save_csv")}
 
   invisible(readline(prompt = paste0("\nDone.\n",
                            "Press the [Enter] key to exit.")))
+
   return(planks)
 
 }

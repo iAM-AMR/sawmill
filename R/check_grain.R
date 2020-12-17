@@ -114,11 +114,15 @@ check_grain <- function(timber) {
                     TRUE ~ NA_character_)) %>%
     dplyr::ungroup()
 
-  # Flag unusable factors and send them to be added to the scrap pile
+  # Flag unusable factors
   timber <- dplyr::mutate(timber, exclude_sawmill = dplyr::if_else(is.na(grain), TRUE, FALSE))
 
-  timber <- sub_mill(trim_scraps(timber, reason = paste0("one or more values required to calculate the odds ratio are ",
-                                       "missing -- check that the data were extracted correctly")), "trim_scraps")
+  # If any unusable factors are present, send them to be added to the scrap pile
+  if (TRUE %in% timber$exclude_sawmill) {
+    timber <- sub_mill(trim_scraps(timber, reason = paste0("one or more values required to calculate the odds ratio are ",
+                                                           "missing -- check that the data were extracted correctly")), "trim_scraps")
+
+  }
 
 
   return(timber)

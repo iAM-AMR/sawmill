@@ -68,10 +68,6 @@ debark <- function(timber_path, cuts, col_data_types){
   timber$exclude_sawmill <- FALSE
   timber$exclude_sawmill_reason <- NA
 
-  # Create Scrap Pile for unusable factors, and save it to the global environment
-
-  scrap_pile <<- data.frame()
-
   return(timber)
 
 }

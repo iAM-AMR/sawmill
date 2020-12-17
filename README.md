@@ -42,6 +42,8 @@ These instructions will walk you through how to download and install `sawmill`, 
 1. When prompted, supply the timber and choose a save location for the output.
 1. Enjoy.
 
+**IMPORTANT**: Enter the command `rm(list = ls())` into the **Console** each time you rerun sawmill. This way, variables saved during sawmill's previous run will not carry over to the new one.
+
 
 ### Standard Installation
 
@@ -67,6 +69,8 @@ The standard installation method is also quick and easy, but is best suited for 
         * use RStudio's *Install and Restart* feature in the *Build* tab to apply your changes
         * run the pipeline with `sawmill::start_mill()`
         
+**IMPORTANT**: Enter the command `rm(list = ls())` into the **Console** each time you rerun sawmill. This way, variables saved during sawmill's previous run will not carry over to the new one.
+        
 
 ### Sawmill Arguments  
 <br/>
@@ -82,7 +86,7 @@ Each argument is assigned a default value in either [start_mill.R](R/start_mill.
 
 ##### **Accepted values:** `1`, `2`  
 
-##### **Passed to functions:** [`sawmill::set_blade_depth()`](R/set_blade_depth.R), [`sawmill::polish_table()`](R/polish_table.R), [`sawmill::do_MA()`](R/do_MA.R), [`sawmill::add_ident()`](R/add_ident.R)  
+##### **Passed to functions:** [`sawmill::set_blade_depth()`](R/set_blade_depth.R), [`sawmill::polish_table()`](R/polish_table.R), [`sawmill::do_MA()`](R/do_MA.R), [`sawmill::add_ident()`](R/add_ident.R), [`sawmill::reorder_fields()`](R/reorder_fields.R)
 
 
 <br/>

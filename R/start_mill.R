@@ -18,10 +18,13 @@
 #' @param cedar_version
 #'   numeric [1,2]: the version (1 or 2) of CEDAR, used to create timber.
 #'
+#' @param clear_scrap
+#'   logical: set the scrap_pile object to 'NULL' after export.
+#'
 #' @export
 
 
-start_mill <- function(cedar_version = 2){
+start_mill <- function(cedar_version = 2, clear_scrap = TRUE){
 
   # Prompt the user to press [Enter] to continue, and select a timber.
   # readline() is wrapped in invisible(), to avoid printing keys to console.
@@ -57,6 +60,8 @@ start_mill <- function(cedar_version = 2){
 
   invisible(readline(prompt = paste0("\nDone.\n",
                            "Press the [Enter] key to exit.")))
+
+  if (clear_scrap) {scrap_pile <<- NULL}    # Assign to Global to overwrite
 
   return(planks)
 

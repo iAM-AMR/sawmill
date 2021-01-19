@@ -23,6 +23,13 @@
 
 start_mill <- function(cedar_version = 2){
 
+  # Remove existing objects from the global environment, from previous sawmill
+  # runs. Suppress not found warnings (generated on first run in clean env).
+
+  suppressWarnings(
+    rm(scrap_pile, ma_results, ma_results_formatted, pos = globalenv())
+  )
+
   # Prompt the user to press [Enter] to continue, and select a timber.
   # readline() is wrapped in invisible(), to avoid printing keys to console.
 

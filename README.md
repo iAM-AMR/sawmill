@@ -15,11 +15,33 @@ An R package used to prepare queries from CEDAR (timber) for use in the iAM.AMR 
 
 
 ## About sawmill
+
 Each of the iAM.AMR models are informed by one or more queries to the CEDAR (*Collection of Epidemiologically Derived Factors Associated with Resistance*) database. The exported query results are called **timber**. Unfortunately, these raw timber are not usable, as they lack key calculated fields (such as the odds ratio), and have not been screened for simple errors.
 
 The **sawmill** package processes CEDAR timber, performing quality control, and calculating measures of association (odds ratios). Optionally, **sawmill** can also be used to perform meta-analysis. CEDAR timber should be in the form of an Excel file, where each row represents an individual factor.
 
 
+## Contents 
+
+  - [Installation and Use](#installation-and-use)
+    - [Bootstrap Installation](#bootstrap-installation)
+      - [You Will Need:](#you-will-need)
+      - [Instructions](#instructions)
+    - [Standard Installation](#standard-installation)
+    - [Sawmill Arguments](#sawmill-arguments)
+  - [Getting Help](#getting-help)
+    - [General FAQs](#general-faqs)
+      - [What is going on here? I'm new.](#what-is-going-on-here-im-new)
+      - [So what does `sawmill` actually do (in a nutshell)?](#so-what-does-sawmill-actually-do-in-a-nutshell)
+      - [I normally install packages using `install.packages()`, why doesn't this work for `sawmill`?](#i-normally-install-packages-using-installpackages-why-doesnt-this-work-for-sawmill)
+      - [Why is `sawmill` not available in CRAN?](#why-is-sawmill-not-available-in-cran)
+      - [What is an R Package?](#what-is-an-r-package)
+      - [What is an R, an RStudio, and how do I get them?](#what-is-an-r-an-rstudio-and-how-do-i-get-them)
+      - [Where can I find more information about the package?](#where-can-i-find-more-information-about-the-package)
+    - [Specific FAQs](#specific-faqs)
+      - [I don't know my CEDAR version number. Can you help?](#i-dont-know-my-cedar-version-number-can-you-help)
+      - [I made changes to the code in RStudio and saved them. When I run the pipeline, it behaves as though the changes were never made. What am I doing wrong?](#i-made-changes-to-the-code-in-rstudio-and-saved-them-when-i-run-the-pipeline-it-behaves-as-though-the-changes-were-never-made-what-am-i-doing-wrong)
+    - [Contact](#contact)
 
 ## Installation and Use
 

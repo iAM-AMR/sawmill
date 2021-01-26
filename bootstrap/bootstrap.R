@@ -37,7 +37,7 @@ usePackage("remotes")
 
 # Install sawmill -----------------------------------------------------------------------------
 
-remotes::install_github("iAM-AMR/sawmill")
+remotes::install_github("iAM-AMR/sawmill@*release")
 
 
 

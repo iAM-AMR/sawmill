@@ -30,6 +30,3 @@ It *should* be a 'one-click' install and run.
 ## Restart Processing Pipeline
 
 If you need to restart the pipeline, run `sawmill::start_mill()` -- the last line of code in [bootstrap.R](bootstrap.R).
-
-
-**IMPORTANT**: You will likely rerun sawmill many times, as deciding which factors to include in a model is an iterative process. You will need to enter the command `rm(list = ls())` into the **Console** before rerunning sawmill. This must be done once for every rerun. This way, variables saved during sawmill's previous run will not carry over to the new one.

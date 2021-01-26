@@ -70,9 +70,6 @@ The standard installation method is also quick and easy, but is best suited for 
         * change the default values for sawmill's arguments as necessary. For more information, see [**Sawmill Arguments**](#sawmill-arguments).
         * use RStudio's *Install and Restart* feature in the *Build* tab to apply your changes
         * run the pipeline with `sawmill::start_mill()`
-        
-**IMPORTANT**: You will likely rerun sawmill many times, as deciding which factors to include in a model is an iterative process. You will need to enter the command `rm(list = ls())` into the **Console** before rerunning sawmill. This must be done once for every rerun. This way, variables saved during sawmill's previous run will not carry over to the new one.
-        
 
 ### Sawmill Arguments  
 <br/>

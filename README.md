@@ -1,5 +1,5 @@
 
-![Version Badge](https://img.shields.io/badge/VERSION-2.1.0-blue)
+![Version Badge](https://img.shields.io/badge/VERSION-2.1.1-blue)
 
 # sawmill
 An R package used to prepare queries from CEDAR (timber) for use in the iAM.AMR models.
@@ -65,9 +65,6 @@ These instructions will walk you through how to download and install `sawmill`, 
    to download and install `sawmill` and start the processing pipeline.
 1. When prompted, supply the timber and choose a save location for the output.
 1. Enjoy.
-
-**IMPORTANT**: You will likely rerun sawmill many times, as deciding which factors to include in a model is an iterative process. You will need to enter the command `rm(list = ls())` into the **Console** before rerunning sawmill. This must be done once for every rerun. This way, variables saved during sawmill's previous run will not carry over to the new one.
-
 
 ### Standard Installation
 

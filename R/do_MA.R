@@ -100,6 +100,10 @@ do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
       pod_microbe_02  <- pod[1,]$microbe_02
     }
 
+    main_ma_results <<- pod_ma
+
+    #return(timber)
+
 
     timber <- tibble::add_row(timber,
                               #status
@@ -128,7 +132,7 @@ do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
                               null_comparison   = any(pod$null_comparison), #
                               odds_ratio        = log_base ^ (as.numeric(pod_ma$beta)),
                               se_log_or         = pod_ma$se,
-                              pval              = as.character(pod_ma$pval)
+                              pval              = pod_ma$pval
                               #URL
                               #Link
                               )

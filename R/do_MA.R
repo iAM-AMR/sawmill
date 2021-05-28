@@ -100,7 +100,6 @@ do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
       pod_microbe_02  <- pod[1,]$microbe_02
     }
 
-    main_ma_results <<- pod_ma
 
     #return(timber)
 

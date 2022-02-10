@@ -131,7 +131,7 @@ do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
                               null_comparison   = any(pod$null_comparison), #
                               odds_ratio        = log_base ^ (as.numeric(pod_ma$beta)),
                               se_log_or         = pod_ma$se,
-                              pval              = pod_ma$pval
+                              pval              = as.character(pod_ma$pval)
                               #URL
                               #Link
                               )

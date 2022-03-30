@@ -42,7 +42,7 @@ format_ma_results <- function(ma_results, ma_ids) {
   }
 
   # Delete the call column
-  ma_results_df <- dplyr::select(ma_results_df, -"call")
+  #ma_results_df <- dplyr::select(ma_results_df, -"call")
 
   # Add a column for the meta-analysis IDs
   ma_results_df <- cbind(ID_meta = ma_ids, ma_results_df)

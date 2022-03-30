@@ -74,6 +74,8 @@ do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
     pod_ma <- metafor::rma(yi = logOR, sei = se_log_or, method = "REML", data = pod)
 
     # Save meta-analysis result objects in the global environment for review.
+    pod_num_global <<- pod_num
+    pod_ma_global <<- pod_ma
 
     ma_results[[paste0("ma_", pod_num)]] <<- pod_ma
 
@@ -100,6 +102,7 @@ do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
       pod_microbe_02  <- pod[1,]$microbe_02
     }
 
+    before_add_row <<- TRUE
 
     timber <- tibble::add_row(timber,
                               #status
@@ -129,12 +132,15 @@ do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
                               odds_ratio        = log_base ^ (as.numeric(pod_ma$beta)),
                               se_log_or         = pod_ma$se,
                               pval              = as.character(pod_ma$pval)
+                              #pval = pod_ma$pval
                               #URL
                               #Link
                               )
 
 
   }
+
+  after_add_row <<- TRUE
 
   # Format the ma_results
 

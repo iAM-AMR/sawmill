@@ -1,4 +1,5 @@
 uniform,cedar_v1,cedar_v2,col_type
+grdi,,grdi,text
 ID,ID,ID_factor,numeric
 RWID,,RWID,text
 doi,docID,ident_doi,text
@@ -36,3 +37,19 @@ exclude,exclude_iam,,text
 ID_meta,metaID,ID_meta,text
 meta_amr,ma_resistance,meta_amr,text
 meta_type,type,meta_type,text
+year,,year,text
+entered_3,,entered_3,text
+notes_3,,notes_3,text
+initials_3,,initials_3,text
+entered_2,,entered_2,text
+notes_2,,notes_2,text
+initials_2,,initials_2,text
+entered_1,,entered_1,text
+notes_1,,notes_1,text
+initials_1,,initials_1,text
+from_2020.05.05_v2,,from_2020.05.05_v2,text
+from_2020.04.14_v1,,from_2020.04.14_v1,text
+am_class,,am_class,text
+last_name,,last_name,text
+core_data_match,,core_data_match,text
+moved_from_other_sheet,,moved_from_other_sheet,text

@@ -6,8 +6,6 @@
 \usage{
 mill(
   timber_path,
-  cuts,
-  col_data_types,
   cedar_version,
   low_cell_threshold = 0,
   low_cell_correction = 0.5,
@@ -15,6 +13,20 @@ mill(
   insensible_p_hi = 101,
   log_base = exp(1)
 )
+}
+\arguments{
+\item{timber_path}{string: a path to a timber file.}
+
+\item{low_cell_threshold}{numeric: the two-by-two (contingency) table cell count at which (or lower)
+the Haldane correction (alt: Woolf-Haldane correction, Haldane-Anscombe correction)
+should apply.}
+
+\item{low_cell_correction}{numeric: the value of the Haldane correction to apply; must be > 0.}
+
+\item{log_base}{numeric: the logarithmic base to use when calculating the log(Odds Ratio),
+and the standard error of the log(Odds Ratio).}
+
+\item{timber_version}{numeric: a supported timber version number (1|2|3). Currently unsupported.}
 }
 \description{
 The \code{mill()} runs the sawmill pipeline with useful defaults.

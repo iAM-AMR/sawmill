@@ -1,9 +1,6 @@
 
-![Version Badge](https://img.shields.io/badge/VERSION-3.0.0-blue)
-
-# sawmill
-An R package used to prepare queries from CEDAR (timber) for use in the iAM.AMR models.
-
+[![TLP White Level Badge](https://img.shields.io/badge/TLP-WHITE-lightgrey)](https://github.com/iAM-AMR/start_here/blob/main/sharing.md)
+[![Version Badge](https://img.shields.io/badge/VERSION-3.0.0-blue)](https://github.com/iAM-AMR/sawmill/releases) 
 
 ```
  ______     ______     __     __     __    __     __     __         __        
@@ -13,60 +10,63 @@ An R package used to prepare queries from CEDAR (timber) for use in the iAM.AMR 
   \/_____/   \/_/\/_/   \/_/   \/_/   \/_/  \/_/   \/_/   \/_____/   \/_____/ 
 ```
 
+# sawmill: an R package to use CEDAR data for an iAM.AMR model
 
-## About sawmill
+The [iAM.AMR](https://github.com/iAM-AMR) models are informed by one or more queries (*timber*) from the CEDAR (*Collection of Epidemiologically Derived Associations with Resistance*) database. The **sawmill** package processes timber by performing basic quality control, calculating model parameters (e.g., odds ratios), and performing meta-analyses. 
 
-Each of the iAM.AMR models are informed by one or more queries to the CEDAR (*Collection of Epidemiologically Derived Factors Associated with Resistance*) database. The exported query results are called **timber**. Unfortunately, these raw timber are not usable, as they lack key calculated fields (such as the odds ratio), and have not been screened for simple errors.
-
-The **sawmill** package processes CEDAR timber, performing quality control, and calculating measures of association (odds ratios). Optionally, **sawmill** can also be used to perform meta-analysis. CEDAR timber should be in the form of an Excel file, where each row represents an individual factor.
-
-
-## Contents 
-
+- [sawmill: an R package to use CEDAR data for an iAM.AMR model](#sawmill-an-r-package-to-use-cedar-data-for-an-iamamr-model)
   - [Installation and Use](#installation-and-use)
-    - [Bootstrap Installation](#bootstrap-installation)
-      - [You Will Need:](#you-will-need)
-      - [Instructions](#instructions)
-    - [Standard Installation](#standard-installation)
-    - [Sawmill Arguments](#sawmill-arguments)
-  - [Getting Help](#getting-help)
-    - [General FAQs](#general-faqs)
-      - [What is going on here? I'm new.](#what-is-going-on-here-im-new)
-      - [So what does `sawmill` actually do (in a nutshell)?](#so-what-does-sawmill-actually-do-in-a-nutshell)
-      - [I normally install packages using `install.packages()`, why doesn't this work for `sawmill`?](#i-normally-install-packages-using-installpackages-why-doesnt-this-work-for-sawmill)
-      - [Why is `sawmill` not available in CRAN?](#why-is-sawmill-not-available-in-cran)
-      - [What is an R Package?](#what-is-an-r-package)
-      - [What is an R, an RStudio, and how do I get them?](#what-is-an-r-an-rstudio-and-how-do-i-get-them)
-      - [Where can I find more information about the package?](#where-can-i-find-more-information-about-the-package)
-    - [Specific FAQs](#specific-faqs)
-      - [I don't know my CEDAR version number. Can you help?](#i-dont-know-my-cedar-version-number-can-you-help)
-      - [I made changes to the code in RStudio and saved them. When I run the pipeline, it behaves as though the changes were never made. What am I doing wrong?](#i-made-changes-to-the-code-in-rstudio-and-saved-them-when-i-run-the-pipeline-it-behaves-as-though-the-changes-were-never-made-what-am-i-doing-wrong)
+    - [Before You Start](#before-you-start)
+    - [Install sawmill](#install-sawmill)
+    - [Install sawmill for Developers](#install-sawmill-for-developers)
+    - [Use sawmill](#use-sawmill)
+    - [Update sawmill](#update-sawmill)
+      - [v3.0.0 and later](#v300-and-later)
+      - [v2.4.0 or earlier](#v240-or-earlier)
+  - [Get Help](#get-help)
+    - [FAQ](#faq)
+      - [What is CEDAR? iAM.AMR?](#what-is-cedar-iamamr)
+      - [Why is an R package, and why do I need this one?](#why-is-an-r-package-and-why-do-i-need-this-one)
+      - [I normally install packages from CRAN using `install.packages()`; why doesn't this work for `sawmill`?](#i-normally-install-packages-from-cran-using-installpackages-why-doesnt-this-work-for-sawmill)
+      - [Where can I find more information about the package or individual functions?](#where-can-i-find-more-information-about-the-package-or-individual-functions)
     - [Contact](#contact)
+
 
 ## Installation and Use
 
-### Bootstrap Installation
+### Before You Start
 
-The bootstrap installation method is the quickest and easiest way of getting started with `sawmill`, and is best-suited for novice R users, or experienced R users who want to quickly process timber with default settings. 
+Before you start, we reccomend you install a modern (v4+) version of [R](https://cran.r-project.org/) and the latest version of [RStudio](https://www.rstudio.com/).
 
-Please note that the bootstrap setup is *designed to work with timber produced by CEDAR version 2 only*, as timber produced by CEDAR version 1 is mostly depreciated.
+See the documentation for instructions on installing R and RStudio [without administrative privileges](https://docs.iam.amr.pub/en/latest/09_technology/software.html).
 
-These instructions will walk you through how to download and install `sawmill`, and run its processing pipeline.
 
-#### You Will Need:
+### Install sawmill
 
-- timber
-- R and (optionally) RStudio
-- the [bootstrap code](bootstrap/)
+To install **sawmill** using the bootstrap method (recommended), follow [the instructions](bootstrap/) to download and execute the [bootstrap.R](bootstrap/bootstrap.R) script. 
 
-#### Instructions
 
-1. Download or copy the [bootstrap code](bootstrap) and run it in R or RStudio
-   to download and install `sawmill` and start the processing pipeline.
-1. When prompted, supply the timber and choose a save location for the output.
-1. Enjoy.
+### Install sawmill for Developers
 
-### Update
+To build **sawmill** locally:
+
+1. Use the ![Code Badge](https://img.shields.io/badge/-Code-brightgreen) button to clone or download the repo. 
+1. Launch the `sawmill.Rproj` in RStudio
+1. Use *Install and Restart* in the *Buid* tab to build and attach the package locally.
+
+
+### Use sawmill
+
+- Obtain a *timber* file in .xlsx format.
+  - **sawmill** currently **does not support .CSVs**.
+  - [How to convert a .csv to a .xlsx.](https://www.howtogeek.com/770734/how-to-convert-a-csv-file-to-microsoft-excel/).
+  - The column specification is given in [raw_timber_specs.csv](inst/raw_timber_specs.csv).  
+- To run the interactive pipeline with default settings, use: `sawmill::start_mill()`.
+- To specify custom settings, use: `sawmill::mill()`. 
+  - To see the supported arguements, use: `?sawmill::mill()`.
+
+
+### Update sawmill
 
 #### v3.0.0 and later
 
@@ -79,185 +79,42 @@ To update to the latest release, navigate to [update_sawmill()](https://github.c
 Then run `update_sawmill()`.
 
 
-### Sawmill Arguments  
-<br/>
 
-Each argument is assigned a default value in either [start_mill.R](R/start_mill.R) or [mill.R](R/mill.R) and subsequently passed to specific processing step(s) (a.k.a. function(s)) within the `sawmill` pipeline. For more information about the main functions in `sawmill`, please see the [**Where can I find more information about the package?**](#where-can-i-find-more-information-about-the-package) section of the [**General FAQs**](#general-faqs) below.
-<br/>
-<br/>
+## Get Help
 
+### FAQ
 
-#### `cedar_version` (default = `2`)
+#### What is CEDAR? iAM.AMR?
 
-##### **Edit in:** [start_mill.R](R/start_mill.R)
-
-##### **Accepted values:** `1`, `2`  
-
-##### **Passed to functions:** [`sawmill::set_blade_depth()`](R/set_blade_depth.R), [`sawmill::polish_table()`](R/polish_table.R), [`sawmill::do_MA()`](R/do_MA.R), [`sawmill::add_ident()`](R/add_ident.R), [`sawmill::reorder_fields()`](R/reorder_fields.R)
+- CEDAR (*Collection of Epidemiologically Derived Associations with Resistance*) is a database of factors associated with antimicrobial resistance in the argi-food production system. 
+  - See [the documentation](https://docs.iam.amr.pub/en/latest/cedar_database/cedar_database.html).
+- iAM.AMR is the Integrated Assessment Model for Antimicrobial Resistance project.
+  - See [the documentation](https://docs.iam.amr.pub/).
+  - See [the GitHub Organization](https://github.com/iAM-AMR).
 
 
-<br/>
-<br/>
+#### Why is an R package, and why do I need this one?
 
-
-#### `low_cell_threshold` (default = `0`)
-
-##### **Edit in:** [mill.R](R/mill.R)
-
-##### **Passed to functions:** [`sawmill::build_table()`](R/build_table.R)
-
-
-All four counts in the contingency table (# AMR+ and # AMR- individuals in the exposed group, # AMR+ and # AMR- individuals in the referent group) for a given factor should be greater than `low_cell_threshold`, as value(s) of 0 will create divide by 0 error(s) in the measure of association calculation. 
-
-If any of the four counts for a given factor do not meet this threshold, all four values will be incremented by `low_cell_correction`, to prevent such errors.
-<br/>
-<br/>
-<br/>
-
-
-#### `low_cell_correction` (default = `0.5`)
-
-##### **Edit in:** [mill.R](R/mill.R)
-
-##### **Passed to functions:** [`sawmill::build_table()`](R/build_table.R)
-
-
-The amount which is added to each of the four counts in the contingency table for a given factor, in the event that at least one of them does not meet `low_cell_threshold`.
-<br/>
-<br/>
-<br/>
-
-
-#### `insensible_p_lo` (default = `99`)
-
-##### **Edit in:** [mill.R](R/mill.R)
-
-##### **Accepted values:** numeric values close to, but less than 100  
-
-##### **Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
-
-
-Some factors are defined by "insensible prevalence tables". This is the case when the sum of the % AMR+ and % AMR- within the exposed group, and/or when the sum of the % AMR+ and % AMR- within the referent group do not add up to approximately 100. 
-
-`insensible_p_lo` specifies the lower bound of this range of acceptability surrounding 100.
-<br/>
-<br/>
-<br/>
-
-
-
-#### `insensible_p_hi` (default = `101`)
-
-##### **Edit in:** [mill.R](R/mill.R)
-
-##### **Accepted values:** numeric values close to, but greater than 100  
-
-##### **Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
-
-See `insensible_p_lo`. 
-
-`insensible_p_hi` specifies the upper bound of this range of acceptability surrounding 100.
-<br/>
-<br/>
-<br/>
-
-
-#### `log_base` (default = `exp(1)`, or Euler's number)
-
-##### **Edit in:** [mill.R](R/mill.R)
-
-##### **Passed to functions:** [`sawmill::build_chairs()`](R/build_chairs.R), [`sawmill::do_MA()`](R/do_MA.R)
-
-
-This parameter provides the base with which the logarithm of the odds ratio (`log(OR)`), as well as the standard error of the log odds ratio (`SE(log(OR))`), are calculated. The latter is one of sawmill's key outputs, and both are used in meta-analysis calculations.
-
-With the default value, the natural logarithm is used. This is the recommended `log_base`.
-<br/>
-<br/>
-<br/>
-
-
-
-## Getting Help
-
-### General FAQs
-
-#### What is going on here? I'm new.
-
-CEDAR is a database of factors along the agri-food production system that influence antimicrobial resistance. The iAM.AMR project aims to create integrated assessment models (iAMs) using these data.
-
-When queries from CEDAR are exported, we call the export *timber*. The data need to be processed after they are exported from the database, before they can be used in the models.
-
-`sawmill` is the R package that does that processing.
-
-
-#### So what does `sawmill` actually do (in a nutshell)?
-
-`sawmill` looks at each factor in the timber, checks that the raw data required to calculate an odds ratio and standard error of the log(odds ratio) is available and usable, and then performs those calculations.  
-
-#### I normally install packages using `install.packages()`, why doesn't this work for `sawmill`?
-
-The `install.packages()` function only searches [CRAN](https://cran.r-project.org/), and `sawmill` is not currently available in CRAN.
-
-#### Why is `sawmill` not available in CRAN?
-
-Submitting to CRAN involves meeting submission requirements, which not yet been met by the project. Some of these requirements are time prohibitory, given the small user base and alternative download methods available here.
-
-We may submit the package to CRAN in the future.
-
-#### What is an R Package?
-
-[According to](https://r-pkgs.org/intro.html) Hadley Wickham and Jennifer Bryan:
+[According to Hadley Wickham and Jennifer Bryan](https://r-pkgs.org/intro.html):
 
 > In R, the fundamental unit of shareable code is the package. A package bundles together code, data, documentation, and tests, and is easy to share with others.
 
-#### What is an R, an RStudio, and how do I get them?
-
-I can tell I'm going to get an email... that's outside our scope here, but [see the official R homepage](https://www.r-project.org/), and [R for Data Science](https://r4ds.had.co.nz/).
-
-#### Where can I find more information about the package?
-
-Try accessing the individual function help files -- using R's `?function()` notation -- or consulting the iAM.AMR project's [documentation](https://docs.iam.amr.pub/en/latest/). 
-
-`sawmill` is set up so that its main functions (a.k.a. main steps in the processing pipeline) exist within their own `.R` files, found in the [R](R) directory of this repository. For example, the function `sawmill::debark()` is found in [debark.R](R/debark.R). To access the help file for this function, enter `?debark()` or `?sawmill::debark()` into the RStudio console. Make sure you install and load `sawmill` as per the instructions in [**Installation and Use**](#installation-and-use) above before doing this.
+When we export queries from CEDAR (which we call *timber*), they lack important information for modelling. The **sawmill** package is a collection of functions that prepare the queries for use in the iAM.AMR models.
 
 
-### Specific FAQs
+#### I normally install packages from CRAN using `install.packages()`; why doesn't this work for `sawmill`?
 
-#### I don't know my CEDAR version number. Can you help?
-
-Nope, just try both.  
-
-#### I made changes to the code in RStudio and saved them. When I run the pipeline, it behaves as though the changes were never made. What am I doing wrong?
-
-The package needs to be re-loaded using RStudio's *Install and Restart* feature in the *Build* tab to ensure your changes take effect.
+`sawmill` is not currently available in CRAN.
 
 
-### Standard Installation
+#### Where can I find more information about the package or individual functions?
 
-The standard installation method is also quick and easy, but is best suited for more experienced users, those looking to run `sawmill` with non-default settings, and those looking to perform development tasks.
+Try accessing the individual function help files -- using R's `?function()` notation -- or consulting the iAM.AMR project's [documentation](https://docs.iam.amr.pub). 
 
-#### You Will Need:
-
-- timber
-- the CEDAR version number (version 1, or version 2)
-- R and RStudio
-
-#### Instructions
-
-1. Download or clone the repository.
-1. Either:
-   - use RStudio's *Install and Restart* feature in the *Build* tab to install the package.
-   - use devtools to load the package.
-1. Either:
-   - run the interactive, default pipeline with `sawmill::start_mill()`, in the RStudio console. This will allow you to load your timber and will automatically run the main function, `sawmill::mill()`, using default arguments.
-   - run the pipeline with custom arguments:
-        * open the main functions, `sawmill::start_mill()` and `sawmill::mill()`, by opening [start_mill.R](R/start_mill.R) and [mill.R](R/mill.R) in RStudio
-        * change the default values for sawmill's arguments as necessary. For more information, see [**Sawmill Arguments**](#sawmill-arguments).
-        * use RStudio's *Install and Restart* feature in the *Build* tab to apply your changes
-        * run the pipeline with `sawmill::start_mill()`
+`sawmill` is set up so that its main functions (a.k.a. main steps in the processing pipeline) exist within their own `.R` files, found in the [R](R) directory of this repository. For example, the function `sawmill::debark()` is found in [debark.R](R/debark.R). To access the help file for this function, enter `?debark()` or `?sawmill::debark()` into the RStudio console. M
 
 
 ### Contact
 
-`@chapb` is the creator and maintainer of `sawmill`.
+Created by @chapb and @phillipsclynn.
+Maintained by [@chapb](https://chapmanb.com/).

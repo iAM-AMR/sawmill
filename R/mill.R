@@ -6,10 +6,53 @@
 #' @description
 #'  The \code{mill()} runs the sawmill pipeline with useful defaults.
 #'
+#' @param timber_path
+#'   string: a path to a timber file.
+#'
+#' @param timber_version
+#'   numeric: a supported timber version number (1|2|3). Currently unsupported.
+#'
+#' @param low_cell_threshold
+#'   numeric: the two-by-two (contingency) table cell count at which (or lower)
+#'            the Haldane correction (alt: Woolf-Haldane correction, Haldane-Anscombe correction)
+#'            should apply.
+#'
+#' @param low_cell_correction
+#'    numeric: the value of the Haldane correction to apply; must be > 0.
+#'
+#' @param log_base
+#'    numeric: the logarithmic base to use when calculating the log(Odds Ratio),
+#'             and the standard error of the log(Odds Ratio).
+#'
 #' @export
 
+# To Document
 
-mill <- function(timber_path, cuts, col_data_types, cedar_version, low_cell_threshold = 0, low_cell_correction = 0.5, insensible_p_lo = 99, insensible_p_hi = 101, log_base = exp(1)){
+
+
+
+# `insensible_p_lo` (default = `99`)
+#
+# **Accepted values:** numeric values close to, but less than 100
+#
+# **Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
+#
+# Some factors are defined by "insensible prevalence tables". This is the case when the sum of the % AMR+ and % AMR- within the exposed group, and/or when the sum of the % AMR+ and % AMR- within the referent group do not add up to approximately 100.
+#
+# `insensible_p_lo` specifies the lower bound of this range of acceptability surrounding 100.
+#
+#
+# `insensible_p_hi` (default = `101`)
+# **Accepted values:** numeric values close to, but greater than 100
+#   **Passed to functions:** [`sawmill::polish_table()`](R/polish_table.R)
+#
+# See `insensible_p_lo`.
+#
+# `insensible_p_hi` specifies the upper bound of this range of acceptability surrounding 100.
+
+
+
+mill <- function(timber_path, cedar_version, low_cell_threshold = 0, low_cell_correction = 0.5, insensible_p_lo = 99, insensible_p_hi = 101, log_base = exp(1)){
 
   sub_mill(timber1 <- debark2(timber_path = timber_path), "debark")
   sub_mill(timber2 <- check_grain(timber = timber1), "check_grain")

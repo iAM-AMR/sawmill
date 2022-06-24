@@ -1,5 +1,5 @@
 
-![Version Badge](https://img.shields.io/badge/VERSION-2.1.1-blue)
+![Version Badge](https://img.shields.io/badge/VERSION-3.0.0-blue)
 
 # sawmill
 An R package used to prepare queries from CEDAR (timber) for use in the iAM.AMR models.
@@ -66,29 +66,18 @@ These instructions will walk you through how to download and install `sawmill`, 
 1. When prompted, supply the timber and choose a save location for the output.
 1. Enjoy.
 
-### Standard Installation
+### Update
 
-The standard installation method is also quick and easy, but is best suited for more experienced users, those looking to run `sawmill` with non-default settings, and those looking to perform development tasks.
+#### v3.0.0 and later
 
-#### You Will Need:
+To update to the latest release, run `sawmill::update_sawmill()`.
 
-- timber
-- the CEDAR version number (version 1, or version 2)
-- R and RStudio
+#### v2.4.0 or earlier
 
-#### Instructions
+To update to the latest release, navigate to [update_sawmill()](https://github.com/iAM-AMR/sawmill/blob/main/R/update_sawmill.R), and download/copy and run the script. 
 
-1. Download or clone the repository.
-1. Either:
-   - use RStudio's *Install and Restart* feature in the *Build* tab to install the package.
-   - use devtools to load the package.
-1. Either:
-   - run the interactive, default pipeline with `sawmill::start_mill()`, in the RStudio console. This will allow you to load your timber and will automatically run the main function, `sawmill::mill()`, using default arguments.
-   - run the pipeline with custom arguments:
-        * open the main functions, `sawmill::start_mill()` and `sawmill::mill()`, by opening [start_mill.R](R/start_mill.R) and [mill.R](R/mill.R) in RStudio
-        * change the default values for sawmill's arguments as necessary. For more information, see [**Sawmill Arguments**](#sawmill-arguments).
-        * use RStudio's *Install and Restart* feature in the *Build* tab to apply your changes
-        * run the pipeline with `sawmill::start_mill()`
+Then run `update_sawmill()`.
+
 
 ### Sawmill Arguments  
 <br/>
@@ -243,6 +232,30 @@ Nope, just try both.
 
 The package needs to be re-loaded using RStudio's *Install and Restart* feature in the *Build* tab to ensure your changes take effect.
 
+
+### Standard Installation
+
+The standard installation method is also quick and easy, but is best suited for more experienced users, those looking to run `sawmill` with non-default settings, and those looking to perform development tasks.
+
+#### You Will Need:
+
+- timber
+- the CEDAR version number (version 1, or version 2)
+- R and RStudio
+
+#### Instructions
+
+1. Download or clone the repository.
+1. Either:
+   - use RStudio's *Install and Restart* feature in the *Build* tab to install the package.
+   - use devtools to load the package.
+1. Either:
+   - run the interactive, default pipeline with `sawmill::start_mill()`, in the RStudio console. This will allow you to load your timber and will automatically run the main function, `sawmill::mill()`, using default arguments.
+   - run the pipeline with custom arguments:
+        * open the main functions, `sawmill::start_mill()` and `sawmill::mill()`, by opening [start_mill.R](R/start_mill.R) and [mill.R](R/mill.R) in RStudio
+        * change the default values for sawmill's arguments as necessary. For more information, see [**Sawmill Arguments**](#sawmill-arguments).
+        * use RStudio's *Install and Restart* feature in the *Build* tab to apply your changes
+        * run the pipeline with `sawmill::start_mill()`
 
 
 ### Contact

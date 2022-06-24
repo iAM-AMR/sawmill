@@ -54,3 +54,25 @@ set_blade_depth <- function(cedar_version = 2) {
 
 
 
+# The new function should read the cols in XLSX or CSV. Then, select only cols applicable to the version.
+# Create a new data frame with the extra information, and save it until the end. Then, write it back.
+
+
+# Read the CSV of Specs
+# x1 <- read_csv(file.choose())
+
+# Create a Named List of Cols and Specs
+# x2 <- as.list(setNames(tryspec$col_spec2, tryspec$col_name))
+
+# Create a ColSpec
+# x3 <- do.call(cols_only, x2)
+
+# Read
+# read_csv(file.choose() , col_types = x3)
+
+
+
+
+
+
+

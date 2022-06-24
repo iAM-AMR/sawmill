@@ -63,28 +63,25 @@ debark2 <- function(timber_path){
                                      col_spec_csv        = readr::col_character(),
                                      col_spec_xlsx       = readr::col_character())
 
-
   # Read raw_timber_specs
   raw_timber_specs <- readr::read_csv(file      = system.file("raw_timber_specs.csv", package = "sawmill"),
                                       col_types = raw_timber_specs_col_types)
 
-
-  # Get the names and types of required columns.
+  # Get the names of required columns.
   raw_timber_req_col_names     <- raw_timber_specs$timber_col_name[raw_timber_specs$timber_col_required]
-  raw_timber_req_col_type_xlsx <- raw_timber_specs$col_spec_xlsx[raw_timber_specs$timber_col_required]
-
-  # Create a column specification for raw timber.
-  raw_timber_colspec           <- set_names(raw_timber_req_col_type_xlsx, raw_timber_req_col_names)
 
   # Are required columns present in the input timber?
-  raw_timber_req_cols_here <- raw_timber_req_col_names %in% timber_in_col_names
+  raw_timber_req_cols_here     <- raw_timber_req_col_names %in% timber_in_col_names
 
   # If any required columns are missing, abort.
   if(any(!raw_timber_req_cols_here)){
     rlang::abort(message = glue::glue("Column '{raw_timber_req_col_names[!raw_timber_req_cols_here]}' is missing or improperly named."))
   }
 
-    # Create a column specification for the input timber. Default = "guess".
+  # Create a column specification for raw timber.
+  raw_timber_colspec           <- set_names(raw_timber_specs$col_spec_xlsx, raw_timber_specs$timber_col_name)
+
+  # Create a column specification for the input timber. Default = "guess".
   timber_in_colspec            <- set_names(rep("guess", length(timber_in_col_names)), timber_in_col_names)
 
   # Replace the column specification for the input timber for the required fields in raw timber.
@@ -92,6 +89,19 @@ debark2 <- function(timber_path){
 
   # Re-read the timber with column specification.
   timber_in                    <- readxl::read_excel(timber_path, col_types = timber_in_colspec)
+
+
+  # Get the old column names (sawmill).
+  raw_timber_req_col_names_old <- raw_timber_specs$sawmill_col_name[raw_timber_specs$timber_col_required]
+
+  # Map the old names onto the new names.
+  names(raw_timber_req_col_names) <- raw_timber_req_col_names_old
+
+  # Rename required columns.
+  timber_in <- rename(timber_in, raw_timber_req_col_names)
+
+  if(!"exclude_sawmill" %in% timber_in_col_names){timber_in$exclude_sawmill <- FALSE}
+  if(!"exclude_sawmill_reason" %in% timber_in_col_names){timber_in$exclude_sawmill_reason <- NA}
 
   return(timber_in)
 

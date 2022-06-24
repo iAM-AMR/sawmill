@@ -34,13 +34,17 @@
 # Requires: ID_meta, logOR, se_log_OR
 
 
-
-
 do_MA <- function(timber, log_base = exp(1), cedar_version = 2) {
 
   # Extract the set of all pods of meta-analyses specified in timber. Note,
   # unique() does not support igmore.na or rm.na, so we must use a more complex
   # function.
+
+  # If the requisite columns do not exist, create them now.
+  for (i in c("meta_ID", "meta_amr", "meta_type")) {
+
+    if(!i %in% colnames(timber)) {timber[[i]]  <- NA}
+  }
 
   pod_set <- unique(timber$ID_meta[!is.na(timber$ID_meta) & !(timber$ID_meta == "NA")])
 

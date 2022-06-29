@@ -1,6 +1,6 @@
 
 [![TLP White Level Badge](https://img.shields.io/badge/TLP-WHITE-lightgrey)](https://github.com/iAM-AMR/start_here/blob/main/sharing.md)
-[![Version Badge](https://img.shields.io/badge/VERSION-3.0.0-blue)](https://github.com/iAM-AMR/sawmill/releases) 
+[![Version Badge](https://img.shields.io/badge/VERSION-3.0.1-blue)](https://github.com/iAM-AMR/sawmill/releases) 
 
 ```
  ______     ______     __     __     __    __     __     __         __        

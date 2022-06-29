@@ -20,6 +20,7 @@ The [iAM.AMR](https://github.com/iAM-AMR) models are informed by one or more que
     - [Install sawmill](#install-sawmill)
     - [Install sawmill for Developers](#install-sawmill-for-developers)
     - [Use sawmill](#use-sawmill)
+    - [Use sawmill with a cached copy of timber](#use-sawmill-with-a-cached-copy-of-timber)
     - [Update sawmill](#update-sawmill)
       - [v3.0.0 and later](#v300-and-later)
       - [v2.4.0 or earlier](#v240-or-earlier)
@@ -50,7 +51,7 @@ To install **sawmill** using the bootstrap method (recommended), follow [the ins
 
 To build **sawmill** locally:
 
-1. Use the ![Code Badge](https://img.shields.io/badge/-Code-brightgreen) button to clone or download the repo. 
+1. Use the ![Code Badge](https://img.shields.io/badge/-Code-brightgreen) button above to clone or download the repo. 
 1. Launch the `sawmill.Rproj` in RStudio
 1. Use *Install and Restart* in the *Buid* tab to build and attach the package locally.
 
@@ -65,6 +66,20 @@ To build **sawmill** locally:
 - To specify custom settings, use: `sawmill::mill()`. 
   - To see the supported arguements, use: `?sawmill::mill()`.
 
+### Use sawmill with a cached copy of timber
+
+A cached copy of a timber object with all resistance-outcomes in CEDAR is included as  `local_timber`. To use this cached copy, first filter as necessary, then write to a .CSV. Open this file in Excel or another editor to make any required changes (e.g., add meta-analysis groupings), and save as a .XLSX. Then, use **sawmill** as instructed above. An exmaple of the R code:
+
+```
+library(tidyverse)
+
+local_timber %>% 
+  dplyr::filter(is_archived == FALSE,                     # Filter out archived references
+                is_excluded_extract == FALSE,             # Filter out excluded references
+                capture_search_2019 == TRUE) %>%          # Select only the iAM.AMR.SEARCH project references
+  dplyr::select(-is_archived, -is_excluded_extract, -capture_search_2019, -cedar_extract_esr) %>%
+  readr::write_csv(file.choose())
+```
 
 ### Update sawmill
 

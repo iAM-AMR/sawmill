@@ -61,7 +61,10 @@ debark2 <- function(timber_path){
                                      timber_col_required = readr::col_logical(),
                                      sawmill_col_name    = readr::col_character(),
                                      col_spec_csv        = readr::col_character(),
-                                     col_spec_xlsx       = readr::col_character())
+                                     col_spec_xlsx       = readr::col_character(),
+                                     timber_obj_name     = readr::col_character(),
+                                     timber_field_name   = readr::col_character(),
+                                     timber_field_name_r = readr::col_character())
 
   # Read raw_timber_specs
   raw_timber_specs <- readr::read_csv(file      = system.file("raw_timber_specs.csv", package = "sawmill"),

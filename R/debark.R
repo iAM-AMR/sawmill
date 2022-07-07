@@ -42,7 +42,7 @@ test_path_xls <- "C:/Users/test/timber.xls"
 test_path_xlsx <- "C:/Users/test/timber.xlsx"
 
 
-timber_path <- here::here("timber_test.xlsx")
+# timber_path <- here::here("timber_test.xlsx")
 
 
 

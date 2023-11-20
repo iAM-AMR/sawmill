@@ -59,8 +59,15 @@ add_ident <- function(timber, cedar_version = 2) {
   # Combine prefix, number, and suffix
   iden <- as.vector(mapply(paste, prefix, number, "_", suffix, MoreArgs = list(sep = "")))
 
-  # Add identifiers to the timber
-  timber["identifier"] <- iden
+  if ( length(iden) == 0 ) {
+
+    timber["identifier"] <- "NA"
+
+  } else {
+    # Add identifiers to the timber
+    timber["identifier"] <- iden
+  }
+
 
   return(timber)
 

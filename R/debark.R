@@ -57,7 +57,7 @@ debark2 <- function(timber_path){
   timber_in_col_names <- colnames(timber_in)
 
   # Column types for reading raw_timber_specs
-  raw_timber_specs_col_types <- cols(timber_col_name     = readr::col_character(),
+  raw_timber_specs_col_types <- readr::cols(timber_col_name     = readr::col_character(),
                                      timber_col_required = readr::col_logical(),
                                      sawmill_col_name    = readr::col_character(),
                                      col_spec_csv        = readr::col_character(),
@@ -82,10 +82,10 @@ debark2 <- function(timber_path){
   }
 
   # Create a column specification for raw timber.
-  raw_timber_colspec           <- set_names(raw_timber_specs$col_spec_xlsx, raw_timber_specs$timber_col_name)
+  raw_timber_colspec           <- rlang::set_names(raw_timber_specs$col_spec_xlsx, raw_timber_specs$timber_col_name)
 
   # Create a column specification for the input timber. Default = "guess".
-  timber_in_colspec            <- set_names(rep("guess", length(timber_in_col_names)), timber_in_col_names)
+  timber_in_colspec            <- rlang::set_names(rep("guess", length(timber_in_col_names)), timber_in_col_names)
 
   # Replace the column specification for the input timber for the required fields in raw timber.
   timber_in_colspec[intersect(names(raw_timber_colspec), names(timber_in_colspec))] <- raw_timber_colspec[intersect(names(raw_timber_colspec), names(timber_in_colspec))]

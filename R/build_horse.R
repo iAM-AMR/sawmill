@@ -1,7 +1,7 @@
 
 
 #' @title
-#'   Calculate the significance of a factor
+#'   Calculate the significance of a resistance outcome
 #'
 #' @description
 #'   \code{build_horse()} calculates the significance of the OR of a count or prevalence-based factor, using

@@ -2,7 +2,7 @@
 % Please edit documentation in R/build_horse.R
 \name{build_horse}
 \alias{build_horse}
-\title{Calculate the significance of a factor}
+\title{Calculate the significance of a resistance outcome}
 \usage{
 build_horse(timber)
 }

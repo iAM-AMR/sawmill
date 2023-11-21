@@ -6,7 +6,7 @@
 \usage{
 mill(
   timber_path,
-  cedar_version,
+  cedar_version = 2,
   low_cell_threshold = 0,
   low_cell_correction = 0.5,
   insensible_p_lo = 99,

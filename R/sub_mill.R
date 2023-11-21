@@ -23,7 +23,7 @@ sub_mill <- function(mill_step, step_name) {
            error = function(e) {
              stop(paste("ERROR in ", step_name, "function: \n", e))
            },
-           finally = message(paste("Processed function: ", step_name))
+           finally = message(paste("Step Complete:", step_name))
   )
 }
 

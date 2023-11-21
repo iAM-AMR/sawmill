@@ -6,9 +6,6 @@
 \usage{
 update_sawmill()
 }
-\value{
-
-}
 \description{
-
+Update sawmill
 }

@@ -4,10 +4,7 @@
 \alias{start_mill}
 \title{Start the interactive sawmill pipeline}
 \usage{
-start_mill(cedar_version = 2)
-}
-\arguments{
-\item{cedar_version}{numeric: a supported timber version number (1|2|3). Currently unsupported.}
+start_mill()
 }
 \description{
 The \code{start_mill()} function prompts the user to select a CEDAR query

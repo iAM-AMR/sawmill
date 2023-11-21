@@ -15,13 +15,6 @@
 #' @param timber_path
 #'   character: the file path to the raw timber
 #'
-#' @param cuts
-#'   named vector: a mapping of the input raw timber names to their standardized column names,
-#'   produced by \code{set_blade_depth()}
-#'
-#' @param col_data_types
-#'   a vector containing the expected data type for each column in the raw timber (i.e. "text"),
-#'   produced by \code{set_blade_depth()}
 #'
 #' @return
 #'   A tibble of timber with standardized column names and additional columns
@@ -35,64 +28,128 @@
 
 
 
-# This function reads the XLSX. Then, it converts cols to standard. Then it sees which are missing.
+debark <- function(timber_path){
 
-test_path_csv <- "C:/Users/test/timber.csv"
-test_path_xls <- "C:/Users/test/timber.xls"
-test_path_xlsx <- "C:/Users/test/timber.xlsx"
+  # CHECK: File Type Supported ------------------------------------------------
 
+  # Get file extension (lower case for later string comparisons).
+  timber_file_ext <- tolower(tools::file_ext(timber_path))
 
-# timber_path <- here::here("timber_test.xlsx")
+  # Set supported extensions.
+  supported_file_exts  <- c("csv", "xls", "xlsx")
 
-
-
-debark2 <- function(timber_path){
-
-  # Check file type compatibility.
-  # Future use for import of CSV.
-  timber_file_type <- get_supported_file_type(timber_path)
-
-  # Read in timber without column specification.
-  timber_in           <- readxl::read_excel(timber_path)
-  timber_in_col_names <- colnames(timber_in)
-
-  # Column types for reading raw_timber_specs
-  raw_timber_specs_col_types <- readr::cols(timber_col_name     = readr::col_character(),
-                                     timber_col_required = readr::col_logical(),
-                                     sawmill_col_name    = readr::col_character(),
-                                     col_spec_csv        = readr::col_character(),
-                                     col_spec_xlsx       = readr::col_character(),
-                                     timber_obj_name     = readr::col_character(),
-                                     timber_field_name   = readr::col_character(),
-                                     timber_field_name_r = readr::col_character())
-
-  # Read raw_timber_specs
-  raw_timber_specs <- readr::read_csv(file      = system.file("raw_timber_specs.csv", package = "sawmill"),
-                                      col_types = raw_timber_specs_col_types)
-
-  # Get the names of required columns.
-  raw_timber_req_col_names     <- raw_timber_specs$timber_col_name[raw_timber_specs$timber_col_required]
-
-  # Are required columns present in the input timber?
-  raw_timber_req_cols_here     <- raw_timber_req_col_names %in% timber_in_col_names
-
-  # If any required columns are missing, abort.
-  if(any(!raw_timber_req_cols_here)){
-    rlang::abort(message = glue::glue("Column '{raw_timber_req_col_names[!raw_timber_req_cols_here]}' is missing or improperly named."))
+  # Abort run if timber file extension is not supported.
+  if (! timber_file_ext %in% supported_file_exts) {
+    errmsg <- glue::glue("'.{timber_file_ext}' files are not supported by",
+                         "sawmill. Please specify one of the following file types:",
+                         paste(supported_file_exts, collapse = ", "),
+                         ".")
+    rlang::abort(message = errmsg)
   }
 
-  # Create a column specification for raw timber.
-  raw_timber_colspec           <- rlang::set_names(raw_timber_specs$col_spec_xlsx, raw_timber_specs$timber_col_name)
+  # This abort was previously doubled; asses impact of refactor.
+  # rlang::abort(message = errmsg, rlang::abort(message = errmsg))
 
-  # Create a column specification for the input timber. Default = "guess".
-  timber_in_colspec            <- rlang::set_names(rep("guess", length(timber_in_col_names)), timber_in_col_names)
 
-  # Replace the column specification for the input timber for the required fields in raw timber.
-  timber_in_colspec[intersect(names(raw_timber_colspec), names(timber_in_colspec))] <- raw_timber_colspec[intersect(names(raw_timber_colspec), names(timber_in_colspec))]
 
-  # Re-read the timber with column specification.
-  timber_in                    <- readxl::read_excel(timber_path, col_types = timber_in_colspec)
+  # READ: Raw Timber Specifications -------------------------------------------
+  # The raw timber format (column names and data types) is specified in an
+  # external file ("raw_timber_specs.csv"). This file is sparse; read with
+  # column specifications to avoid guessing.
 
+  # Column types for reading raw_timber_specs
+  raw_timber_specs_col_types <- readr::cols(
+                                  timber_col_name     = readr::col_character(),
+                                  timber_col_required = readr::col_logical(),
+                                  sawmill_col_name    = readr::col_character(),
+                                  col_spec_csv        = readr::col_character(),
+                                  col_spec_xlsx       = readr::col_character(),
+                                  timber_obj_name     = readr::col_character(),
+                                  timber_field_name   = readr::col_character(),
+                                  timber_field_name_r = readr::col_character())
+
+  # Read raw_timber_specs
+  raw_timber_specs <- readr::read_csv(file      = system.file("raw_timber_specs.csv",
+                                                              package = "sawmill"),
+                                      col_types = raw_timber_specs_col_types)
+
+
+
+  # CHECK: Required Columns Exist ---------------------------------------------
+  # Check if requisite columns exist, abort if requisite columns are missing.
+
+  # Get the names of required columns.
+  raw_timber_req_col_names <- raw_timber_specs$timber_col_name[raw_timber_specs$timber_col_required]
+
+  # Read the header of the raw timber to get passed column names.
+  if (timber_file_ext == 'csv') {
+
+    timber_passed_col_names <- names(readr::read_csv(file           = timber_path,
+                                                     n_max          = 0,
+                                                     show_col_types = FALSE))
+
+  } else if (timber_file_ext %in% c("xls", "xlsx")) {
+
+    timber_passed_col_names <- names(readxl::read_excel(path        = timber_path,
+                                                        n_max       = 0))
+
+  }
+
+  # Are required columns present?
+  raw_timber_req_cols_here  <- raw_timber_req_col_names %in% timber_passed_col_names
+
+  # Abort run if required columns are missing.
+  if(any(!raw_timber_req_cols_here)){
+    rlang::abort(message = glue::glue("Columns '{raw_timber_req_col_names[!raw_timber_req_cols_here]}' is missing or improperly named."))
+  }
+
+
+
+  # READ: Timber --------------------------------------------------------------
+  # Create a named vector of column specifications for known columns.
+  # Timber may contain unknown columns; create a named vector of default (guess)
+  # specifications for passed timber. Then, replace guess for known columns.
+
+  if (timber_file_ext == 'csv') {
+
+    # Create a named vector of column specifications (CSV) for raw timber.
+    raw_timber_colspec           <- rlang::set_names(raw_timber_specs$col_spec_csv,
+                                                     raw_timber_specs$timber_col_name)
+
+    # Create a column specification for the input timber. Default = "?".
+    timber_in_colspec            <- rlang::set_names(rep("?", length(timber_passed_col_names)),
+                                                     timber_passed_col_names)
+
+    # Replace the column specification for the input timber for the required fields in raw timber.
+    timber_in_colspec[intersect(names(raw_timber_colspec), names(timber_in_colspec))] <- raw_timber_colspec[intersect(names(raw_timber_colspec), names(timber_in_colspec))]
+
+    # Re-read the timber with column specification.
+    timber_in                    <- readr::read_csv(file      = timber_path,
+                                                    col_types = timber_in_colspec,
+                                                    show_col_types = FALSE)
+
+  } else if (timber_file_ext %in% c("xls", "xlsx")) {
+
+    # Create a named vector of column specifications (XLS/X) for raw timber.
+    raw_timber_colspec           <- rlang::set_names(raw_timber_specs$col_spec_xlsx,
+                                                     raw_timber_specs$timber_col_name)
+
+    # Create a column specification for the input timber. Default = "guess".
+    timber_in_colspec            <- rlang::set_names(rep("guess", length(timber_passed_col_names)),
+                                                     timber_passed_col_names)
+
+    # Replace the column specification for the input timber for the required fields in raw timber.
+    timber_in_colspec[intersect(names(raw_timber_colspec), names(timber_in_colspec))] <- raw_timber_colspec[intersect(names(raw_timber_colspec), names(timber_in_colspec))]
+
+    # Re-read the timber with column specification.
+    timber_in                    <- readxl::read_excel(path      = timber_path,
+                                                       col_types = timber_in_colspec)
+
+  }
+
+
+
+  # Remap Names ---------------------------------------------------------------
 
   # Get the old column names (sawmill).
   raw_timber_req_col_names_old <- raw_timber_specs$sawmill_col_name[raw_timber_specs$timber_col_required]
@@ -101,77 +158,20 @@ debark2 <- function(timber_path){
   names(raw_timber_req_col_names) <- raw_timber_req_col_names_old
 
   # Rename required columns.
-  timber_in <- rename(timber_in, raw_timber_req_col_names)
+  timber_in <- dplyr::rename(timber_in, dplyr::all_of(raw_timber_req_col_names))
 
-  if(!"exclude_sawmill" %in% timber_in_col_names){timber_in$exclude_sawmill <- FALSE}
-  if(!"exclude_sawmill_reason" %in% timber_in_col_names){timber_in$exclude_sawmill_reason <- NA}
+
+
+  # Add Extra Columns ---------------------------------------------------------
+
+  if(!"ID_meta" %in% timber_passed_col_names){timber_in$ID_meta <- NA_integer_}
+  if(!"exclude_sawmill" %in% timber_passed_col_names){timber_in$exclude_sawmill <- FALSE}
+  if(!"exclude_sawmill_reason" %in% timber_passed_col_names){timber_in$exclude_sawmill_reason <- NA}
+
+
 
   return(timber_in)
 
 }
-
-
-get_supported_file_type <- function(path){
-
-  extn   <- tools::file_ext(path)
-  errmsg <- glue::glue("Filetype '.{extn}' is not supported. Please use .xlsx.")
-
-  ifelse(extn %in% c("xls", "xlsx"), "xlsx",
-    ifelse(extn == "csv", rlang::abort(message = errmsg, rlang::abort(message = errmsg))))
-
-}
-
-#get_supported_file_type(test_path_xlsx)
-#get_supported_file_type(test_path_csv)
-
-#timber_col_name	timber_col_required	sawmill_col_name	col_spec_csv	col_spec_xlsx
-
-
-
-
-
-
-
-
-debark <- function(timber_path, cuts, col_data_types){
-
-  raw_timber <- readxl::read_excel(timber_path)
-
-  # Screen for missing columns (report which ones are missing)
-  missing <- setdiff(as.vector(cuts), names(raw_timber))
-
-  if(length(missing)>0) {
-    stop(paste('ERROR: The following requisite columns are missing from your timber: ',
-               paste(missing, collapse = ", ")
-        )
-    )
-  }
-
-  # Screen for cells that do not match the expected data type for their column(s)
-
-  sub_mill(log_warnings(raw_timber <- readxl::read_excel(timber_path, col_types = col_data_types)), "log_warnings")
-
-  tryCatch(raw_timber <- readxl::read_excel(timber_path, col_types = col_data_types),
-    warning = function(w) {
-      sub_mill(handle_col_warnings(), "handle_col_warnings")
-    })
-
-
-  timber <- dplyr::rename(raw_timber, cuts)
-
-
-  # Add exclude_sawmill and exclude_sawmill_reason columns to indicate factors
-  # to omit from further processing.
-
-  timber$exclude_sawmill <- FALSE
-  timber$exclude_sawmill_reason <- NA
-
-  return(timber)
-
-}
-
-
-
-
 
 
